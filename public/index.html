@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ted With The Houses</title>
+    <style>
+        :root {
+            --primary: #c62828;
+            --primary-dark: #8e0000;
+            --dark: #111827;
+            --light: #f3f4f6;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --border: #e5e7eb;
+            --whatsapp: #25d366;
+            --call: #0284c7;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--light); color: var(--dark); }
+        header { background: var(--white); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .logo { font-weight: 800; color: var(--primary); font-size: 1.5rem; letter-spacing: -0.5px; }
+        .container { max-width: 1180px; margin: 1.5rem auto; padding: 0 1rem; }
+        .hidden { display: none !important; }
+        
+        button { background: var(--primary); color: var(--white); border: none; padding: 0.6rem 1.2rem; cursor: pointer; border-radius: 6px; font-weight: 600; }
+        button:hover { opacity: 0.95; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--dark); }
+        .btn-secondary { background: #374151; }
+        .btn-whatsapp { background: var(--whatsapp); color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 0.85rem; font-weight: 600; }
+        .btn-call { background: var(--call); color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 0.85rem; font-weight: 600; }
+
+        .filter-panel { background: var(--white); padding: 1.2rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .filter-panel input, .filter-panel select { flex: 1; min-width: 160px; padding: 0.65rem; border: 1px solid var(--border); border-radius: 5px; }
+
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .property-card { background: var(--white); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.2s; position: relative; }
+        .property-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+        
+        .media-container { position: relative; height: 210px; background: #000; overflow: hidden; }
+        .media-container img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: white; padding: 3px 8px; font-size: 0.75rem; border-radius: 4px; }
+        .video-badge { position: absolute; top: 8px; left: 8px; background: var(--primary); color: white; padding: 3px 8px; font-size: 0.75rem; border-radius: 4px; font-weight: bold; }
+
+        .status-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
+        .status-available { background: #10b981; color: white; }
+        .status-sold { background: #ef4444; color: white; }
+        .status-rented { background: #f59e0b; color: white; }
+
+        .card-body { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-price { color: var(--primary); font-size: 1.3rem; font-weight: bold; margin-bottom: 0.3rem; }
+        .card-specs { display: flex; gap: 15px; font-size: 0.85rem; color: var(--gray); margin: 0.5rem 0; }
+        .badge-pill { background: #f0f2f5; font-size: 0.75rem; padding: 3px 8px; border-radius: 12px; margin-right: 5px; margin-top: 5px; display: inline-block; }
+
+        .lock-banner { background: #fff8e1; border: 2px dashed #ffb300; border-radius: 8px; padding: 2.5rem; text-align: center; margin-top: 2rem; }
+        .analytics-container { background: var(--white); border-radius: 8px; border: 1px solid var(--border); padding: 2rem; margin-bottom: 2rem; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+        .kpi-card { background: #f9fafb; border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; text-align: center; }
+        .kpi-val { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-top: 5px; }
+        .kpi-title { font-size: 0.85rem; color: var(--gray); text-transform: uppercase; font-weight: 600; }
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+        .data-table th, .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
+        .data-table th { background: #f9fafb; color: var(--gray); }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 5px; box-sizing: border-box; }
+        
+        /* Amenities Checkbox Grid */
+        .checkbox-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-top: 6px; }
+        .checkbox-label { font-weight: normal !important; display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.88rem; }
+        
+        .pwd-wrapper { position: relative; display: flex; align-items: center; }
+        .pwd-toggle { position: absolute; right: 10px; background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #666; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Ted With The Houses</div>
+        <div id="nav-actions" style="display:flex; align-items:center; gap: 10px;">
+            <span id="session-display" style="font-size: 0.9rem; font-weight: 600;"></span>
+            <button class="btn-outline" onclick="openContactModal()">Contact Us</button>
+            <button id="auth-entry-btn" onclick="openAuthModal()">Login / Register</button>
+            <button id="logout-btn" class="hidden btn-outline" onclick="logout()">Log Out</button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- SEARCH & FILTER PANEL -->
+        <div class="filter-panel">
+            <input type="text" id="filter-location" placeholder="Search Location (e.g. Kikuyu, Karen)...">
+            <select id="filter-type">
+                <option value="">All Property Types</option>
+                <option value="Apartment">Apartment</option>
+                <option value="Townhouse">Townhouse</option>
+                <option value="Villa">Villa</option>
+                <option value="Standalone House">Standalone House</option>
+                <option value="Mansion">Mansion</option>
+            </select>
+            <input type="number" id="filter-maxprice" placeholder="Max Price (KSh)...">
+            <button onclick="loadListings()">Filter Listings</button>
+        </div>
+
+        <!-- OWNER / CREATOR EXECUTIVE SUITE -->
+        <section id="creator-section" class="hidden">
+            
+            <!-- ANALYTICS SUITE -->
+            <div class="analytics-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+                    <h2 style="margin: 0;">📊 Executive Performance Analytics</h2>
+                    <button class="btn-outline" onclick="loadAnalytics()">🔄 Refresh Analytics</button>
+                </div>
+                <div class="kpi-grid">
+                    <div class="kpi-card"><div class="kpi-title">Registered Leads</div><div class="kpi-val" id="metric-customers">0</div></div>
+                    <div class="kpi-card"><div class="kpi-title">Catalog Impressions</div><div class="kpi-val" id="metric-views">0</div></div>
+                    <div class="kpi-card"><div class="kpi-title">Engagement Clicks</div><div class="kpi-val" id="metric-clicks">0</div></div>
+                    <div class="kpi-card"><div class="kpi-title">Avg. Conversion (CTR)</div><div class="kpi-val" id="metric-ctr">0%</div></div>
+                </div>
+
+                <h3>📈 Listing Metrics & Traffic</h3>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead><tr><th>Title</th><th>Location</th><th>Price</th><th>Status</th><th>Views</th><th>Clicks</th><th>CTR</th></tr></thead>
+                        <tbody id="table-property-metrics"></tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 2rem;">🔍 Customer Search Queries</h3>
+                <div style="max-height: 200px; overflow-y: auto;">
+                    <table class="data-table">
+                        <thead><tr><th>Query</th><th>Location</th><th>Max Price</th><th>Date</th></tr></thead>
+                        <tbody id="table-search-logs"></tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 2rem;">👥 Registered Customer Leads (CRM)</h3>
+                <div style="max-height: 200px; overflow-y: auto;">
+                    <table class="data-table">
+                        <thead><tr><th>Email Address</th><th>Role</th><th>Registered Date</th></tr></thead>
+                        <tbody id="table-customer-crm"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CREATOR STUDIO: PUBLISH MULTI-PHOTO & MULTI-VIDEO LISTING -->
+            <div style="background: var(--white); padding: 2rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 2rem;">
+                <h2>Creator Studio: Publish New Listing</h2>
+                
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Property Title</label>
+                        <input type="text" id="add-title" placeholder="e.g. 4-Bedroom Townhouse with Private Elevator Lift">
+                    </div>
+                    <div class="form-group">
+                        <label>Property Type</label>
+                        <select id="add-type">
+                            <option value="Apartment">Apartment</option>
+                            <option value="Townhouse">Townhouse</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Standalone House">Standalone House</option>
+                            <option value="Mansion">Mansion</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="add-location" placeholder="e.g. Gikambura, Kikuyu">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (KSh)</label>
+                        <input type="number" id="add-price" placeholder="e.g. 16500000">
+                    </div>
+                    <div class="form-group">
+                        <label>Bedrooms / Bathrooms</label>
+                        <div style="display:flex; gap: 5px;">
+                            <input type="number" id="add-beds" placeholder="Beds" value="3">
+                            <input type="number" id="add-baths" placeholder="Baths" value="3">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description & Key Features</label>
+                    <textarea id="add-desc" rows="3" placeholder="Describe property finishes, compound, DSQ, etc..."></textarea>
+                </div>
+
+                <!-- AMENITIES TICK CHECKLIST (INCLUDING ELEVATOR LIFT) -->
+                <div class="form-group">
+                    <label>Amenities Checklist</label>
+                    <div class="checkbox-group" id="add-amenities-group">
+                        <label class="checkbox-label"><input type="checkbox" value="Elevator Lift"> Elevator Lift</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Gated Community"> Gated Community</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Borehole"> Borehole Water</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Swimming Pool"> Swimming Pool</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Parking"> Reserved Parking</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Garden"> Private Garden</label>
+                        <label class="checkbox-label"><input type="checkbox" value="24/7 Security"> 24/7 Security</label>
+                        <label class="checkbox-label"><input type="checkbox" value="DSQ"> Detached DSQ</label>
+                        <label class="checkbox-label"><input type="checkbox" value="CCTV Surveillance"> CCTV Surveillance</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Solar Water Heating"> Solar Water Heating</label>
+                    </div>
+                </div>
+
+                <!-- MULTIPLE PHOTOS & MULTIPLE VIDEO LINKS -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Upload Multiple Photos (Up to 15 images)</label>
+                        <input type="file" id="add-photos" multiple accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label>Listing Status</label>
+                        <select id="add-status">
+                            <option value="Available">Available</option>
+                            <option value="Sold Out">Sold Out</option>
+                            <option value="Rented Out">Rented Out</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Multiple YouTube Video Tour Links (Enter one per line or comma-separated)</label>
+                    <textarea id="add-videos" rows="2" placeholder="https://www.youtube.com/watch?v=...\nhttps://youtu.be/..."></textarea>
+                </div>
+
+                <button onclick="publishListing()">Publish Listing</button>
+            </div>
+
+            <h3>Active Inventory Management</h3>
+            <div id="creator-admin-list" class="property-grid"></div>
+        </section>
+
+        <!-- PUBLIC LISTINGS FEED -->
+        <section id="listings-section">
+            <div id="property-card-list" class="property-grid"></div>
+            
+            <div id="guest-lock-banner" class="lock-banner hidden">
+                <h3 style="margin-top:0;">🔒 Unlock Exclusive Listings</h3>
+                <p id="lock-desc">Sign in or register for free to browse all properties across Kenya.</p>
+                <button onclick="openAuthModal()">Sign Up to View All</button>
+            </div>
+        </section>
+
+        <!-- PROPERTY DETAILS MODAL (MULTI-PHOTO, MULTI-VIDEO & INQUIRY) -->
+        <div id="details-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 250;">
+            <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 650px; max-height: 90vh; overflow-y: auto; position: relative;">
+                <button onclick="closeDetailsModal()" style="position: absolute; right: 15px; top: 15px; background: none; color: black; font-size: 1.2rem;">✕</button>
+                <h3 id="modal-title" style="margin-top:0; color: var(--primary);"></h3>
+                
+                <!-- MULTI-PHOTO GALLERY STRIP -->
+                <h4>Photo Gallery</h4>
+                <div id="modal-gallery" style="display: flex; gap: 8px; overflow-x: auto; margin-bottom: 1rem;"></div>
+
+                <!-- EMBEDDED VIDEO TOURS CONTAINER -->
+                <div id="modal-videos-section" class="hidden">
+                    <h4>Video Tours</h4>
+                    <div id="modal-videos-container" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 1rem;"></div>
+                </div>
+
+                <p id="modal-location" style="font-weight: 600; color: var(--gray);"></p>
+                <h4 id="modal-price" style="font-size: 1.4rem; color: var(--primary); margin: 0.5rem 0;"></h4>
+                <p id="modal-specs"></p>
+                <p id="modal-desc" style="color: #444; line-height: 1.5;"></p>
+                
+                <h4>Amenities</h4>
+                <div id="modal-amenities" style="margin-bottom: 1.2rem;"></div>
+
+                <!-- WHATSAPP & PHONE CALL ACTION BUTTONS -->
+                <div style="display: flex; gap: 10px; margin: 1.5rem 0;">
+                    <a id="modal-whatsapp-btn" href="#" target="_blank" class="btn-whatsapp">💬 WhatsApp Owner</a>
+                    <a id="modal-call-btn" href="#" class="btn-call">📞 Call Owner</a>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
+
+                <!-- PROPERTY INQUIRY EMAIL FORM -->
+                <h4>Inquire About This Listing</h4>
+                <div id="property-inquiry-box">
+                    <div class="form-group" id="property-email-group">
+                        <label>Your Email Address</label>
+                        <input type="email" id="property-guest-email" placeholder="buyer@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Your Message</label>
+                        <textarea id="property-inquiry-msg" rows="3" placeholder="Hello, I am interested in viewing this property. Please contact me."></textarea>
+                    </div>
+                    <button onclick="sendPropertyInquiry()">Send Email to Owner</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EDIT LISTING MODAL -->
+        <div id="edit-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 300;">
+            <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; position: relative;">
+                <button onclick="closeEditModal()" style="position: absolute; right: 15px; top: 15px; background: none; color: black; font-size: 1.2rem;">✕</button>
+                <h3>Edit Listing & Status</h3>
+                
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="edit-title">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="edit-location">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (KSh)</label>
+                        <input type="number" id="edit-price">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="edit-status">
+                            <option value="Available">Available</option>
+                            <option value="Sold Out">Sold Out</option>
+                            <option value="Rented Out">Rented Out</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Property Type</label>
+                        <select id="edit-type">
+                            <option value="Apartment">Apartment</option>
+                            <option value="Townhouse">Townhouse</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Standalone House">Standalone House</option>
+                            <option value="Mansion">Mansion</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="edit-desc" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Amenities Checklist</label>
+                    <div class="checkbox-group" id="edit-amenities-group">
+                        <label class="checkbox-label"><input type="checkbox" value="Elevator Lift"> Elevator Lift</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Gated Community"> Gated Community</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Borehole"> Borehole Water</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Swimming Pool"> Swimming Pool</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Parking"> Reserved Parking</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Garden"> Private Garden</label>
+                        <label class="checkbox-label"><input type="checkbox" value="24/7 Security"> 24/7 Security</label>
+                        <label class="checkbox-label"><input type="checkbox" value="DSQ"> Detached DSQ</label>
+                        <label class="checkbox-label"><input type="checkbox" value="CCTV Surveillance"> CCTV Surveillance</label>
+                        <label class="checkbox-label"><input type="checkbox" value="Solar Water Heating"> Solar Water Heating</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>YouTube Video Tour Links</label>
+                    <textarea id="edit-videos" rows="2"></textarea>
+                </div>
+                <button onclick="submitEdit()">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- GENERAL CONTACT US MODAL -->
+        <div id="contact-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 280;">
+            <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 450px; position: relative;">
+                <button onclick="closeContactModal()" style="position: absolute; right: 15px; top: 15px; background: none; color: black; font-size: 1.2rem;">✕</button>
+                <h3>Contact Us</h3>
+                <p style="font-size: 0.85rem; color: var(--gray);">Send a message straight to our office inbox.</p>
+                <div class="form-group" id="general-email-group">
+                    <label>Your Email Address</label>
+                    <input type="email" id="general-guest-email" placeholder="buyer@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea id="general-inquiry-msg" rows="4" placeholder="How can we assist you?"></textarea>
+                </div>
+                <button onclick="sendGeneralInquiry()" style="width: 100%;">Send Email</button>
+            </div>
+        </div>
+
+        <!-- AUTH MODAL -->
+        <div id="auth-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 200;">
+            <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 400px; position: relative;">
+                <button onclick="closeAuthModal()" style="position: absolute; right: 10px; top: 10px; background: none; color: black;">✕</button>
+                <div id="modal-login">
+                    <h3>Account Login</h3>
+                    <div class="form-group"><label>Email Address</label><input type="email" id="log-email"></div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="pwd-wrapper">
+                            <input type="password" id="log-password">
+                            <button type="button" class="pwd-toggle" onclick="togglePeek('log-password', this)">👁️</button>
+                        </div>
+                    </div>
+                    <button onclick="handleLogin()" style="width: 100%;">Sign In</button>
+                    <p style="font-size: 0.85rem; margin-top: 15px; text-align: center;"><a href="javascript:void(0)" onclick="toggleAuthViews()">Create Customer Account</a></p>
+                </div>
+                <div id="modal-register" class="hidden">
+                    <h3>Create Free Account</h3>
+                    <div class="form-group"><label>Email Address</label><input type="email" id="reg-email"></div>
+                    <div class="form-group">
+                        <label>Create Password</label>
+                        <div class="pwd-wrapper">
+                            <input type="password" id="reg-password">
+                            <button type="button" class="pwd-toggle" onclick="togglePeek('reg-password', this)">👁️</button>
+                        </div>
+                    </div>
+                    <button onclick="handleRegister()" style="width: 100%;">Register</button>
+                    <p style="font-size: 0.85rem; margin-top: 15px; text-align: center;"><a href="javascript:void(0)" onclick="toggleAuthViews()">Back to Sign In</a></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentUser = null;
+        let allPropertiesCache = [];
+        let activePropertyTitle = "";
+        const OWNER_PHONE = "+254700000000"; // <-- Put your WhatsApp/phone number here
+
+        window.onload = async () => {
+            await verifySession();
+            await loadListings();
+        };
+
+        async function verifySession() {
+            const res = await fetch('/api/session');
+            const data = await res.json();
+            if (data.loggedIn) {
+                currentUser = data;
+                document.getElementById('session-display').innerText = `${data.email} (${data.role.toUpperCase()})`;
+                document.getElementById('auth-entry-btn').classList.add('hidden');
+                document.getElementById('logout-btn').classList.remove('hidden');
+
+                document.getElementById('property-email-group').classList.add('hidden');
+                document.getElementById('general-email-group').classList.add('hidden');
+
+                if (data.role === 'owner') {
+                    document.getElementById('creator-section').classList.remove('hidden');
+                    loadAnalytics();
+                }
+            } else {
+                currentUser = null;
+                document.getElementById('session-display').innerText = "";
+                document.getElementById('auth-entry-btn').classList.remove('hidden');
+                document.getElementById('logout-btn').classList.add('hidden');
+                document.getElementById('creator-section').classList.add('hidden');
+
+                document.getElementById('property-email-group').classList.remove('hidden');
+                document.getElementById('general-email-group').classList.remove('hidden');
+            }
+        }
+
+        async function loadAnalytics() {
+            if (!currentUser || currentUser.role !== 'owner') return;
+            const res = await fetch('/api/admin/analytics');
+            if (!res.ok) return;
+            const data = await res.json();
+
+            document.getElementById('metric-customers').innerText = data.summary.totalCustomers;
+            document.getElementById('metric-views').innerText = data.summary.totalViews;
+            document.getElementById('metric-clicks').innerText = data.summary.totalClicks;
+            document.getElementById('metric-ctr').innerText = data.summary.overallCTR;
+
+            const propTbody = document.getElementById('table-property-metrics');
+            propTbody.innerHTML = "";
+            data.propertyMetrics.forEach(p => {
+                const ctr = p.views > 0 ? ((p.clicks / p.views) * 100).toFixed(1) + '%' : '0.0%';
+                propTbody.innerHTML += `
+                    <tr>
+                        <td><strong>${p.title}</strong></td>
+                        <td>${p.location}</td>
+                        <td>KSh ${Number(p.price).toLocaleString()}</td>
+                        <td><span class="badge-pill">${p.status}</span></td>
+                        <td>${p.views}</td>
+                        <td>${p.clicks}</td>
+                        <td><strong>${ctr}</strong></td>
+                    </tr>
+                `;
+            });
+
+            const searchTbody = document.getElementById('table-search-logs');
+            searchTbody.innerHTML = "";
+            data.searches.forEach(s => {
+                searchTbody.innerHTML += `
+                    <tr>
+                        <td>${s.queryTerm || 'N/A'}</td>
+                        <td>${s.location || 'All Locations'}</td>
+                        <td>${s.maxPrice ? 'KSh ' + Number(s.maxPrice).toLocaleString() : 'Any'}</td>
+                        <td><small>${new Date(s.createdAt).toLocaleString()}</small></td>
+                    </tr>
+                `;
+            });
+
+            const custTbody = document.getElementById('table-customer-crm');
+            custTbody.innerHTML = "";
+            data.customers.forEach(c => {
+                custTbody.innerHTML += `
+                    <tr>
+                        <td><strong>${c.email}</strong></td>
+                        <td><span class="badge-pill">${c.role}</span></td>
+                        <td><small>${new Date(c.createdAt).toLocaleDateString()}</small></td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function loadListings() {
+            const location = document.getElementById('filter-location').value;
+            const propertyType = document.getElementById('filter-type').value;
+            const maxPrice = document.getElementById('filter-maxprice').value;
+
+            let url = `/api/properties?`;
+            if (location) url += `location=${encodeURIComponent(location)}&`;
+            if (propertyType) url += `propertyType=${encodeURIComponent(propertyType)}&`;
+            if (maxPrice) url += `maxPrice=${maxPrice}`;
+
+            const res = await fetch(url);
+            const data = await res.json();
+            allPropertiesCache = data.properties;
+
+            const feedContainer = document.getElementById('property-card-list');
+            feedContainer.innerHTML = "";
+
+            data.properties.forEach(prop => {
+                feedContainer.innerHTML += generateCardHtml(prop, false);
+                recordMetric(prop._id, 'view');
+            });
+
+            const lockBanner = document.getElementById('guest-lock-banner');
+            if (data.isLocked) {
+                lockBanner.classList.remove('hidden');
+                document.getElementById('lock-desc').innerText = `Showing 5 of ${data.totalCount} listings. Sign in to view all properties!`;
+            } else {
+                lockBanner.classList.add('hidden');
+            }
+
+            if (currentUser && currentUser.role === 'owner') {
+                const adminList = document.getElementById('creator-admin-list');
+                adminList.innerHTML = "";
+                data.properties.forEach(prop => adminList.innerHTML += generateCardHtml(prop, true));
+            }
+        }
+
+        function generateCardHtml(prop, isEditable) {
+            const displayImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80';
+            const countBadge = prop.images && prop.images.length > 1 ? `<span class="photo-badge">📷 ${prop.images.length} photos</span>` : '';
+            const videoBadge = prop.videoUrls && prop.videoUrls.length > 0 ? `<span class="video-badge">▶ ${prop.videoUrls.length} Video${prop.videoUrls.length > 1 ? 's' : ''}</span>` : '';
+
+            let statusClass = prop.status === 'Sold Out' ? 'status-sold' : (prop.status === 'Rented Out' ? 'status-rented' : 'status-available');
+            const statusBadge = `<span class="status-badge ${statusClass}">${prop.status || 'Available'}</span>`;
+
+            const amenitiesHtml = (prop.amenities || []).map(a => `<span class="badge-pill">${a}</span>`).join('');
+
+            const waText = encodeURIComponent(`Hello, I am interested in: "${prop.title}" in ${prop.location}.`);
+            const waLink = `https://wa.me/${OWNER_PHONE.replace('+', '')}?text=${waText}`;
+
+            return `
+                <div class="property-card" onclick="openDetailsModal('${prop._id}')">
+                    <div class="media-container">
+                        <img src="${displayImage}" alt="${prop.title}">
+                        ${countBadge}
+                        ${videoBadge}
+                        ${statusBadge}
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <div class="card-price">KSh ${Number(prop.price).toLocaleString()}</div>
+                            <h4 style="margin: 0 0 5px 0;">${prop.title}</h4>
+                            <p style="color: var(--gray); font-size: 0.85rem; margin: 0;">📍 ${prop.location} • <em>${prop.propertyType}</em></p>
+                            <div class="card-specs">
+                                <span>🛏️ ${prop.bedrooms} Beds</span>
+                                <span>🚿 ${prop.bathrooms} Baths</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: #444; margin: 8px 0;">${prop.description || ''}</p>
+                            <div>${amenitiesHtml}</div>
+                            <div style="display: flex; gap: 8px; margin-top: 10px;" onclick="event.stopPropagation()">
+                                <a href="${waLink}" target="_blank" class="btn-whatsapp">💬 WhatsApp</a>
+                                <a href="tel:${OWNER_PHONE}" class="btn-call">📞 Call</a>
+                            </div>
+                        </div>
+                        ${isEditable ? `
+                            <div style="display:flex; gap: 5px; margin-top: 12px;" onclick="event.stopPropagation()">
+                                <button onclick="openEditModal('${prop._id}')" class="btn-secondary" style="flex:1; font-size:0.8rem; padding: 6px;">Edit / Status</button>
+                                <button onclick="deleteListing('${prop._id}')" style="background:#ef4444; font-size:0.8rem; padding: 6px;">Delete</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function openDetailsModal(id) {
+            const prop = allPropertiesCache.find(p => p._id === id);
+            if (!prop) return;
+
+            await recordMetric(id, 'click');
+            activePropertyTitle = prop.title;
+
+            document.getElementById('modal-title').innerText = prop.title;
+            document.getElementById('modal-location').innerText = `📍 ${prop.location} (${prop.propertyType})`;
+            document.getElementById('modal-price').innerText = `KSh ${Number(prop.price).toLocaleString()}`;
+            document.getElementById('modal-specs').innerText = `🛏️ ${prop.bedrooms} Beds | 🚿 ${prop.bathrooms} Baths | Status: ${prop.status}`;
+            document.getElementById('modal-desc').innerText = prop.description || '';
+
+            // Render Multi-Photo Gallery
+            const gallery = document.getElementById('modal-gallery');
+            gallery.innerHTML = "";
+            (prop.images || []).forEach(img => {
+                gallery.innerHTML += `<img src="${img}" style="height: 100px; width: 140px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border);">`;
+            });
+
+            // Render Embedded Video Tours
+            const videosSec = document.getElementById('modal-videos-section');
+            const videosBox = document.getElementById('modal-videos-container');
+            videosBox.innerHTML = "";
+            if (prop.videoUrls && prop.videoUrls.length > 0) {
+                videosSec.classList.remove('hidden');
+                prop.videoUrls.forEach(url => {
+                    videosBox.innerHTML += `<iframe width="100%" height="240" src="${url}" frameborder="0" allowfullscreen style="border-radius:6px;"></iframe>`;
+                });
+            } else {
+                videosSec.classList.add('hidden');
+            }
+
+            const amenitiesBox = document.getElementById('modal-amenities');
+            amenitiesBox.innerHTML = (prop.amenities || []).map(a => `<span class="badge-pill">${a}</span>`).join('');
+
+            const waText = encodeURIComponent(`Hello, I am inquiring about "${prop.title}" (${prop.location}).`);
+            document.getElementById('modal-whatsapp-btn').href = `https://wa.me/${OWNER_PHONE.replace('+', '')}?text=${waText}`;
+            document.getElementById('modal-call-btn').href = `tel:${OWNER_PHONE}`;
+
+            document.getElementById('details-modal').classList.remove('hidden');
+        }
+
+        function closeDetailsModal() { document.getElementById('details-modal').classList.add('hidden'); }
+
+        async function recordMetric(id, action) {
+            try { 
+                await fetch(`/api/properties/${id}/track`, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ action }) 
+                }); 
+            } catch (err) {}
+        }
+
+        // PUBLISH WITH MULTI-PHOTO, MULTI-VIDEO & AMENITIES TICK CHECKLIST
+        async function publishListing() {
+            const title = document.getElementById('add-title').value;
+            const location = document.getElementById('add-location').value;
+            const propertyType = document.getElementById('add-type').value;
+            const price = document.getElementById('add-price').value;
+            const bedrooms = document.getElementById('add-beds').value;
+            const bathrooms = document.getElementById('add-baths').value;
+            const description = document.getElementById('add-desc').value;
+            const status = document.getElementById('add-status').value;
+            const videoUrls = document.getElementById('add-videos').value;
+            const photoFiles = document.getElementById('add-photos').files;
+
+            if (!title || !location || !price) {
+                alert("Please fill in Title, Location, and Price.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('location', location);
+            formData.append('propertyType', propertyType);
+            formData.append('price', price);
+            formData.append('bedrooms', bedrooms);
+            formData.append('bathrooms', bathrooms);
+            formData.append('description', description);
+            formData.append('status', status);
+            formData.append('videoUrls', videoUrls);
+
+            // Append multiple uploaded photos
+            for (let i = 0; i < photoFiles.length; i++) {
+                formData.append('propertyImages', photoFiles[i]);
+            }
+
+            // Append ticked amenities
+            const checkboxes = document.querySelectorAll('#add-amenities-group input[type="checkbox"]:checked');
+            checkboxes.forEach(cb => formData.append('amenities', cb.value));
+
+            const res = await fetch('/api/properties', { method: 'POST', body: formData });
+            if (res.ok) {
+                alert("Property published with multiple media successfully!");
+                // Clear fields
+                document.getElementById('add-title').value = "";
+                document.getElementById('add-location').value = "";
+                document.getElementById('add-price').value = "";
+                document.getElementById('add-desc').value = "";
+                document.getElementById('add-videos').value = "";
+                document.getElementById('add-photos').value = "";
+                document.querySelectorAll('#add-amenities-group input[type="checkbox"]').forEach(cb => cb.checked = false);
+
+                // AUTOMATIC REFRESH WITHOUT FULL PAGE RELOAD
+                await loadListings();
+                await loadAnalytics();
+            } else {
+                const err = await res.json();
+                alert(err.error);
+            }
+        }
+
+        // EDIT MODAL HANDLERS
+        function openEditModal(id) {
+            const prop = allPropertiesCache.find(p => p._id === id);
+            if (!prop) return;
+
+            document.getElementById('edit-id').value = prop._id;
+            document.getElementById('edit-title').value = prop.title;
+            document.getElementById('edit-location').value = prop.location;
+            document.getElementById('edit-price').value = prop.price;
+            document.getElementById('edit-type').value = prop.propertyType;
+            document.getElementById('edit-status').value = prop.status || 'Available';
+            document.getElementById('edit-desc').value = prop.description || '';
+            document.getElementById('edit-videos').value = (prop.videoUrls || []).join('\n');
+
+            // Populate Checkboxes
+            const boxes = document.querySelectorAll('#edit-amenities-group input[type="checkbox"]');
+            boxes.forEach(cb => {
+                cb.checked = (prop.amenities || []).includes(cb.value);
+            });
+
+            document.getElementById('edit-modal').classList.remove('hidden');
+        }
+
+        function closeEditModal() { document.getElementById('edit-modal').classList.add('hidden'); }
+
+        async function submitEdit() {
+            const id = document.getElementById('edit-id').value;
+            const title = document.getElementById('edit-title').value;
+            const location = document.getElementById('edit-location').value;
+            const propertyType = document.getElementById('edit-type').value;
+            const price = document.getElementById('edit-price').value;
+            const status = document.getElementById('edit-status').value;
+            const description = document.getElementById('edit-desc').value;
+            const videoUrls = document.getElementById('edit-videos').value;
+
+            const selectedAmenities = [];
+            document.querySelectorAll('#edit-amenities-group input[type="checkbox"]:checked').forEach(cb => {
+                selectedAmenities.push(cb.value);
+            });
+
+            const res = await fetch(`/api/properties/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    title, location, propertyType, price, status, description, 
+                    videoUrls, amenities: selectedAmenities, bedrooms: 3, bathrooms: 3 
+                })
+            });
+
+            if (res.ok) {
+                alert("Listing updated successfully!");
+                closeEditModal();
+                await loadListings();
+                await loadAnalytics();
+            } else {
+                alert("Failed to update listing.");
+            }
+        }
+
+        async function deleteListing(id) {
+            if (confirm("Are you sure you want to remove this listing?")) {
+                await fetch(`/api/properties/${id}`, { method: 'DELETE' });
+                await loadListings();
+                await loadAnalytics();
+            }
+        }
+
+        // EMAIL INQUIRY DISPATCH
+        async function sendPropertyInquiry() {
+            const guestEmail = currentUser ? currentUser.email : document.getElementById('property-guest-email').value;
+            const message = document.getElementById('property-inquiry-msg').value;
+
+            if (!guestEmail || !message) {
+                alert("Please provide your email and message.");
+                return;
+            }
+
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ guestEmail, message, propertyTitle: activePropertyTitle })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert(data.message);
+                document.getElementById('property-inquiry-msg').value = "";
+                closeDetailsModal();
+            } else {
+                alert(data.error);
+            }
+        }
+
+        function openContactModal() { document.getElementById('contact-modal').classList.remove('hidden'); }
+        function closeContactModal() { document.getElementById('contact-modal').classList.add('hidden'); }
+
+        async function sendGeneralInquiry() {
+            const guestEmail = currentUser ? currentUser.email : document.getElementById('general-guest-email').value;
+            const message = document.getElementById('general-inquiry-msg').value;
+
+            if (!guestEmail || !message) {
+                alert("Please provide your email and message.");
+                return;
+            }
+
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ guestEmail, message, propertyTitle: "General Platform Inquiry" })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert(data.message);
+                document.getElementById('general-inquiry-msg').value = "";
+                closeContactModal();
+            } else {
+                alert(data.error);
+            }
+        }
+
+        // AUTH & MODALS
+        function openAuthModal() { document.getElementById('auth-modal').classList.remove('hidden'); }
+        function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); }
+        function toggleAuthViews() {
+            document.getElementById('modal-login').classList.toggle('hidden');
+            document.getElementById('modal-register').classList.toggle('hidden');
+        }
+        function togglePeek(id, btn) {
+            const input = document.getElementById(id);
+            if (input.type === 'password') { input.type = 'text'; btn.innerText = '🙈'; }
+            else { input.type = 'password'; btn.innerText = '👁️'; }
+        }
+
+        async function handleRegister() {
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const res = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+            const data = await res.json();
+            if (res.ok) { alert(data.message); toggleAuthViews(); } else alert(data.error);
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('log-email').value;
+            const password = document.getElementById('log-password').value;
+            const res = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+            const data = await res.json();
+            if (res.ok) {
+                closeAuthModal();
+                await verifySession();
+                await loadListings();
+            } else alert(data.error);
+        }
+
+        async function logout() {
+            await fetch('/api/logout', { method: 'POST' });
+            location.reload();
+        }
+    </script>
+</body>
+</html>
