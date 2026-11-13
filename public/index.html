@@ -1,869 +1,1707 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ted With The Houses</title>
-    <style>
-        :root {
-            --primary: #c62828;
-            --primary-dark: #8e0000;
-            --dark: #111827;
-            --light: #f3f4f6;
-            --white: #ffffff;
-            --gray: #6b7280;
-            --border: #e5e7eb;
-            --whatsapp: #25d366;
-            --call: #0284c7;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ted With The House | Luxury Real Estate & Homes Kenya</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for Executive Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              alabaster: '#FAFAFA',
+              snow: '#FFFFFF',
+              crimson: '#C62828',
+              darkred: '#8E0000',
+              softred: '#FEE2E2',
+              charcoal: '#18181B',
+              slate: '#27272A',
+              border: '#E4E4E7'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Inter"', 'sans-serif']
+          },
+          boxShadow: {
+            'crimson': '0 10px 25px -5px rgba(198, 40, 40, 0.22)',
+            'crimson-lg': '0 18px 35px -5px rgba(198, 40, 40, 0.30)'
+          }
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--light); color: var(--dark); }
-        header { background: var(--white); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-        .logo { font-weight: 800; color: var(--primary); font-size: 1.5rem; letter-spacing: -0.5px; }
-        .container { max-width: 1180px; margin: 1.5rem auto; padding: 0 1rem; }
-        .hidden { display: none !important; }
-        
-        button { background: var(--primary); color: var(--white); border: none; padding: 0.6rem 1.2rem; cursor: pointer; border-radius: 6px; font-weight: 600; }
-        button:hover { opacity: 0.95; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--dark); }
-        .btn-secondary { background: #374151; }
-        .btn-whatsapp { background: var(--whatsapp); color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 0.85rem; font-weight: 600; }
-        .btn-call { background: var(--call); color: white; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; padding: 6px 12px; border-radius: 5px; font-size: 0.85rem; font-weight: 600; }
+      }
+    }
+  </script>
 
-        .filter-panel { background: var(--white); padding: 1.2rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.5rem; }
-        .filter-panel input, .filter-panel select { flex: 1; min-width: 160px; padding: 0.65rem; border: 1px solid var(--border); border-radius: 5px; }
+  <style>
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #FAFAFA; }
+    ::-webkit-scrollbar-thumb { background: #C62828; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #8E0000; }
 
-        .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
-        .property-card { background: var(--white); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.2s; position: relative; }
-        .property-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
-        
-        .media-container { position: relative; height: 210px; background: #000; overflow: hidden; }
-        .media-container img { width: 100%; height: 100%; object-fit: cover; }
-        .photo-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: white; padding: 3px 8px; font-size: 0.75rem; border-radius: 4px; }
-        .video-badge { position: absolute; top: 8px; left: 8px; background: var(--primary); color: white; padding: 3px 8px; font-size: 0.75rem; border-radius: 4px; font-weight: bold; }
-
-        .status-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
-        .status-available { background: #10b981; color: white; }
-        .status-sold { background: #ef4444; color: white; }
-        .status-rented { background: #f59e0b; color: white; }
-
-        .card-body { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-price { color: var(--primary); font-size: 1.3rem; font-weight: bold; margin-bottom: 0.3rem; }
-        .card-specs { display: flex; gap: 15px; font-size: 0.85rem; color: var(--gray); margin: 0.5rem 0; }
-        .badge-pill { background: #f0f2f5; font-size: 0.75rem; padding: 3px 8px; border-radius: 12px; margin-right: 5px; margin-top: 5px; display: inline-block; }
-
-        .lock-banner { background: #fff8e1; border: 2px dashed #ffb300; border-radius: 8px; padding: 2.5rem; text-align: center; margin-top: 2rem; }
-        .analytics-container { background: var(--white); border-radius: 8px; border: 1px solid var(--border); padding: 2rem; margin-bottom: 2rem; }
-        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
-        .kpi-card { background: #f9fafb; border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; text-align: center; }
-        .kpi-val { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-top: 5px; }
-        .kpi-title { font-size: 0.85rem; color: var(--gray); text-transform: uppercase; font-weight: 600; }
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
-        .data-table th, .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
-        .data-table th { background: #f9fafb; color: var(--gray); }
-
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 5px; box-sizing: border-box; }
-        
-        /* Amenities Checkbox Grid */
-        .checkbox-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-top: 6px; }
-        .checkbox-label { font-weight: normal !important; display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.88rem; }
-        
-        .pwd-wrapper { position: relative; display: flex; align-items: center; }
-        .pwd-toggle { position: absolute; right: 10px; background: none; border: none; cursor: pointer; font-size: 1.1rem; color: #666; }
-    </style>
+    .crimson-gradient-bg {
+      background: linear-gradient(135deg, #DC2626 0%, #C62828 55%, #8E0000 100%);
+    }
+    .crimson-text-gradient {
+      background: linear-gradient(135deg, #8E0000 0%, #C62828 60%, #EF4444 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 30px -10px rgba(198, 40, 40, 0.18);
+    }
+  </style>
 </head>
-<body>
 
-    <header>
-        <div class="logo">Ted With The Houses</div>
-        <div id="nav-actions" style="display:flex; align-items:center; gap: 10px;">
-            <span id="session-display" style="font-size: 0.9rem; font-weight: 600;"></span>
-            <button class="btn-outline" onclick="openContactModal()">Contact Us</button>
-            <button id="auth-entry-btn" onclick="openAuthModal()">Login / Register</button>
-            <button id="logout-btn" class="hidden btn-outline" onclick="logout()">Log Out</button>
-        </div>
-    </header>
+<body class="bg-brand-alabaster text-brand-charcoal font-sans antialiased selection:bg-brand-crimson selection:text-white flex flex-col min-h-screen">
 
-    <div class="container">
+  <!-- ================= TOP PROMO & QUICK CONTACT BAR ================= -->
+  <aside aria-label="Announcement bar" class="crimson-gradient-bg text-white text-xs sm:text-sm font-medium tracking-wide py-2 px-4 shadow-sm flex items-center justify-between">
+    <div class="hidden sm:flex items-center space-x-4 w-1/3">
+      <a href="tel:+254700000000" class="hover:underline flex items-center">
+        <i class="fa-solid fa-phone mr-1.5 text-red-200"></i> +254 700 000 000
+      </a>
+      <a href="https://wa.me/254700000000" target="_blank" class="hover:underline flex items-center text-emerald-200 font-semibold">
+        <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Direct
+      </a>
+    </div>
+    <div class="w-full sm:w-1/3 text-center flex items-center justify-center space-x-2 font-semibold">
+      <span>🏛️</span>
+      <span>Verified Homes, Villas & Prime Land Across Kenya</span>
+    </div>
+    <div class="w-1/3 text-right flex items-center justify-end space-x-2">
+      <div id="topBarAuthControls" class="flex items-center space-x-2"></div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN NAVIGATION ================= -->
+  <header class="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-brand-border transition-all shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
         
-        <!-- SEARCH & FILTER PANEL -->
-        <div class="filter-panel">
-            <input type="text" id="filter-location" placeholder="Search Location (e.g. Kikuyu, Karen)...">
-            <select id="filter-type">
-                <option value="">All Property Types</option>
-                <option value="Apartment">Apartment</option>
-                <option value="Townhouse">Townhouse</option>
-                <option value="Villa">Villa</option>
-                <option value="Standalone House">Standalone House</option>
-                <option value="Mansion">Mansion</option>
+        <!-- Brand Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchCategory('All')">
+          <div class="w-11 h-11 rounded-2xl crimson-gradient-bg flex items-center justify-center shadow-crimson border-2 border-white">
+            <i class="fa-solid fa-house-chimney text-white text-lg"></i>
+          </div>
+          <div>
+            <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight crimson-text-gradient block leading-none">Ted With The House</span>
+            <span class="text-[10px] uppercase font-bold tracking-[0.22em] text-gray-500 block mt-1">Premier Kenya Realty</span>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav id="visitorNavLinks" class="hidden lg:flex items-center space-x-7 text-sm font-medium text-brand-slate">
+          <button onclick="switchCategory('All')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">All Properties</button>
+          <button onclick="switchCategory('Townhouse')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">Townhouses</button>
+          <button onclick="switchCategory('Villa')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">Luxury Villas</button>
+          <button onclick="switchCategory('Standalone House')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">Standalone</button>
+          <button onclick="switchCategory('Mansion')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">Mansions</button>
+          <button onclick="openContactModal()" class="text-brand-crimson font-semibold hover:text-brand-darkred transition flex items-center space-x-1">
+            <i class="fa-regular fa-envelope text-xs"></i>
+            <span>Contact Us</span>
+          </button>
+        </nav>
+
+        <!-- Right Action Controls -->
+        <div class="flex items-center space-x-3">
+          <!-- Quick Search -->
+          <div class="relative hidden sm:block">
+            <input type="text" id="topSearchInput" oninput="handleQuickSearch(this.value)" placeholder="Search Karen, Kikuyu..." class="pl-9 pr-4 py-1.5 text-xs rounded-full border border-brand-border focus:outline-none focus:border-brand-crimson bg-brand-alabaster w-40 xl:w-56 transition">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-gray-400"></i>
+          </div>
+
+          <!-- User Profile / Auth Pill -->
+          <div id="navUserArea"></div>
+
+          <!-- Saved / Shortlisted Properties Button -->
+          <button onclick="openSavedModal()" title="Saved Properties" class="relative p-2.5 rounded-full bg-brand-alabaster hover:bg-brand-softred text-brand-charcoal transition border border-brand-border flex items-center">
+            <i class="fa-regular fa-heart text-base text-brand-crimson"></i>
+            <span id="savedCountBadge" class="absolute -top-1 -right-1 bg-brand-crimson text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+          </button>
+
+          <!-- Mobile Menu Button -->
+          <button onclick="toggleMobileNav()" class="lg:hidden text-brand-charcoal p-2 focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <nav id="mobileNavMenu" class="hidden lg:hidden py-4 border-t border-brand-border flex flex-col space-y-2.5 text-sm">
+        <input type="text" oninput="handleQuickSearch(this.value)" placeholder="Search location or title..." class="w-full px-4 py-2 text-xs rounded-xl border border-brand-border mb-1">
+        <div id="mobileAuthRow" class="pb-2 mb-1 border-b border-brand-border flex items-center justify-between"></div>
+        <button onclick="switchCategory('All'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">All Properties</button>
+        <button onclick="switchCategory('Townhouse'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">Townhouses</button>
+        <button onclick="switchCategory('Villa'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">Luxury Villas</button>
+        <button onclick="switchCategory('Standalone House'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">Standalone Houses</button>
+        <button onclick="switchCategory('Mansion'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">Mansions</button>
+        <button onclick="openContactModal(); toggleMobileNav();" class="text-left font-semibold text-brand-crimson py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">✉️ Contact Office</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= TOAST NOTIFICATION ================= -->
+  <div id="toast" class="fixed top-24 right-5 z-50 transform translate-x-full opacity-0 transition-all duration-300 ease-out bg-brand-charcoal text-white px-5 py-3.5 rounded-2xl shadow-2xl border-l-4 border-brand-crimson flex items-center space-x-3 pointer-events-none">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-brand-crimson text-lg"></i>
+    <span id="toastMsg" class="text-xs sm:text-sm font-medium">Notification</span>
+  </div>
+
+  <!-- ############################################################# -->
+  <!-- #################### VISITOR STOREFRONT #################### -->
+  <!-- ############################################################# -->
+  <main id="visitorView" class="flex-grow">
+    
+    <!-- HERO SPOTLIGHT BANNER CAROUSEL -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div class="relative rounded-3xl overflow-hidden shadow-crimson border border-brand-border bg-brand-charcoal h-[280px] sm:h-[360px] md:h-[420px]">
+        <div id="bannerSlider" class="w-full h-full relative"></div>
+        <div id="bannerDots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20"></div>
+        <button onclick="prevBanner()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md flex items-center justify-center transition z-20">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button onclick="nextBanner()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md flex items-center justify-center transition z-20">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- TRUST & VALUE PROPOSITION STRIP -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white p-4 rounded-2xl border border-brand-border flex items-center space-x-3.5 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-brand-softred text-brand-crimson flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-file-contract text-lg"></i>
+          </div>
+          <div>
+            <h4 class="text-xs sm:text-sm font-bold text-brand-charcoal">Clean Title Deeds</h4>
+            <p class="text-[11px] text-gray-500">100% verified ownership</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-brand-border flex items-center space-x-3.5 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-brand-softred text-brand-crimson flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-video text-lg"></i>
+          </div>
+          <div>
+            <h4 class="text-xs sm:text-sm font-bold text-brand-charcoal">HD Video Tours</h4>
+            <p class="text-[11px] text-gray-500">Walkthroughs before visiting</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-brand-border flex items-center space-x-3.5 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-brand-softred text-brand-crimson flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-calendar-check text-lg"></i>
+          </div>
+          <div>
+            <h4 class="text-xs sm:text-sm font-bold text-brand-charcoal">Instant Site Visits</h4>
+            <p class="text-[11px] text-gray-500">Direct WhatsApp scheduling</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-brand-border flex items-center space-x-3.5 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-brand-softred text-brand-crimson flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-building-shield text-lg"></i>
+          </div>
+          <div>
+            <h4 class="text-xs sm:text-sm font-bold text-brand-charcoal">Gated & Modern</h4>
+            <p class="text-[11px] text-gray-500">Curated prime neighborhoods</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER & SEARCH CONTROL BAR -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+      <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        
+        <div class="flex items-center space-x-3">
+          <span class="w-2.5 h-8 crimson-gradient-bg rounded-full inline-block"></span>
+          <div>
+            <h2 id="currentCategoryHeading" class="font-serif text-2xl font-bold text-brand-charcoal">Featured Kenya Properties</h2>
+            <p id="productCountSubtitle" class="text-xs text-gray-500">Explore curated homes for sale & rent across Nairobi, Kiambu & Kajiado</p>
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <input type="text" id="filter-location" placeholder="Location (e.g. Kikuyu, Karen)" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-crimson w-44">
+
+          <div class="relative">
+            <select id="filter-type" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-crimson pr-8 appearance-none cursor-pointer">
+              <option value="">All Property Types</option>
+              <option value="Townhouse">Townhouse</option>
+              <option value="Villa">Villa</option>
+              <option value="Standalone House">Standalone House</option>
+              <option value="Mansion">Mansion</option>
             </select>
-            <input type="number" id="filter-maxprice" placeholder="Max Price (KSh)...">
-            <button onclick="loadListings()">Filter Listings</button>
+            <i class="fa-solid fa-chevron-down absolute right-3 top-3 text-[10px] text-gray-500 pointer-events-none"></i>
+          </div>
+
+          <input type="number" id="filter-maxprice" placeholder="Max Budget (KSh)" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-crimson w-40">
+
+          <button onclick="loadListings()" class="px-5 py-2 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson hover:opacity-95 transition flex items-center space-x-1.5">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+          </button>
         </div>
 
-        <!-- OWNER / CREATOR EXECUTIVE SUITE -->
-        <section id="creator-section" class="hidden">
-            
-            <!-- ANALYTICS SUITE -->
-            <div class="analytics-container">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
-                    <h2 style="margin: 0;">📊 Executive Performance Analytics</h2>
-                    <button class="btn-outline" onclick="loadAnalytics()">🔄 Refresh Analytics</button>
-                </div>
-                <div class="kpi-grid">
-                    <div class="kpi-card"><div class="kpi-title">Registered Leads</div><div class="kpi-val" id="metric-customers">0</div></div>
-                    <div class="kpi-card"><div class="kpi-title">Catalog Impressions</div><div class="kpi-val" id="metric-views">0</div></div>
-                    <div class="kpi-card"><div class="kpi-title">Engagement Clicks</div><div class="kpi-val" id="metric-clicks">0</div></div>
-                    <div class="kpi-card"><div class="kpi-title">Avg. Conversion (CTR)</div><div class="kpi-val" id="metric-ctr">0%</div></div>
-                </div>
+      </div>
+    </section>
 
-                <h3>📈 Listing Metrics & Traffic</h3>
-                <div style="overflow-x:auto;">
-                    <table class="data-table">
-                        <thead><tr><th>Title</th><th>Location</th><th>Price</th><th>Status</th><th>Views</th><th>Clicks</th><th>CTR</th></tr></thead>
-                        <tbody id="table-property-metrics"></tbody>
-                    </table>
-                </div>
+    <!-- PROPERTY CATALOG GRID -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <div id="property-card-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        <!-- Rendered dynamically -->
+      </div>
 
-                <h3 style="margin-top: 2rem;">🔍 Customer Search Queries</h3>
-                <div style="max-height: 200px; overflow-y: auto;">
-                    <table class="data-table">
-                        <thead><tr><th>Query</th><th>Location</th><th>Max Price</th><th>Date</th></tr></thead>
-                        <tbody id="table-search-logs"></tbody>
-                    </table>
-                </div>
+      <!-- Empty State -->
+      <div id="emptyCatalogState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-brand-border">
+        <div class="w-16 h-16 mx-auto rounded-full bg-brand-softred flex items-center justify-center text-brand-crimson text-2xl mb-3">
+          <i class="fa-solid fa-house-circle-xmark"></i>
+        </div>
+        <h3 class="font-serif text-xl font-bold text-brand-charcoal">No Matching Properties Found</h3>
+        <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">Try clearing your location or budget filters to see all available homes.</p>
+        <button onclick="resetFilters()" class="mt-4 px-5 py-2 text-xs font-semibold crimson-gradient-bg text-white rounded-xl shadow-crimson">Reset All Filters</button>
+      </div>
 
-                <h3 style="margin-top: 2rem;">👥 Registered Customer Leads (CRM)</h3>
-                <div style="max-height: 200px; overflow-y: auto;">
-                    <table class="data-table">
-                        <thead><tr><th>Email Address</th><th>Role</th><th>Registered Date</th></tr></thead>
-                        <tbody id="table-customer-crm"></tbody>
-                    </table>
-                </div>
+      <!-- Freemium Lock Banner for Guests (Limits to 5 listings until signed in) -->
+      <div id="guest-lock-banner" class="hidden mt-10 bg-white border-2 border-brand-crimson/30 rounded-3xl p-8 text-center shadow-crimson relative overflow-hidden">
+        <div class="w-14 h-14 mx-auto rounded-2xl crimson-gradient-bg text-white flex items-center justify-center text-2xl shadow-crimson mb-4">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3 class="font-serif text-2xl font-bold text-brand-charcoal">Unlock Our Full Portfolio</h3>
+        <p id="lock-desc" class="text-xs sm:text-sm text-gray-600 mt-1.5 max-w-lg mx-auto">
+          You are viewing our 5 preview listings. Sign in or create a free client account to unlock all exclusive homes, pricing breakdowns, and video tours.
+        </p>
+        <div class="mt-5 flex items-center justify-center space-x-3">
+          <button onclick="openAuthModal('register')" class="px-6 py-2.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson hover:opacity-95 transition">
+            Create Free Account
+          </button>
+          <button onclick="openAuthModal('login')" class="px-6 py-2.5 text-xs font-bold bg-brand-alabaster border border-brand-border text-brand-charcoal rounded-xl hover:bg-gray-100 transition">
+            Sign In
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ############################################################# -->
+  <!-- ##################### OWNER ADMIN SUITE #################### -->
+  <!-- ############################################################# -->
+  <main id="ownerView" class="hidden flex-grow bg-zinc-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      
+      <!-- Owner Portal Top Header -->
+      <div class="bg-white p-6 rounded-3xl border border-brand-border shadow-sm mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="flex items-center space-x-4">
+          <div class="w-14 h-14 rounded-2xl crimson-gradient-bg text-white flex items-center justify-center text-2xl shadow-crimson">
+            <i class="fa-solid fa-building-user"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h1 class="font-serif text-2xl font-bold text-brand-charcoal">Ted With The House — Creator Studio</h1>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-300">Admin Live</span>
             </div>
-
-            <!-- CREATOR STUDIO: PUBLISH MULTI-PHOTO & MULTI-VIDEO LISTING -->
-            <div style="background: var(--white); padding: 2rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 2rem;">
-                <h2>Creator Studio: Publish New Listing</h2>
-                
-                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px;">
-                    <div class="form-group">
-                        <label>Property Title</label>
-                        <input type="text" id="add-title" placeholder="e.g. 4-Bedroom Townhouse with Private Elevator Lift">
-                    </div>
-                    <div class="form-group">
-                        <label>Property Type</label>
-                        <select id="add-type">
-                            <option value="Apartment">Apartment</option>
-                            <option value="Townhouse">Townhouse</option>
-                            <option value="Villa">Villa</option>
-                            <option value="Standalone House">Standalone House</option>
-                            <option value="Mansion">Mansion</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
-                    <div class="form-group">
-                        <label>Location</label>
-                        <input type="text" id="add-location" placeholder="e.g. Gikambura, Kikuyu">
-                    </div>
-                    <div class="form-group">
-                        <label>Price (KSh)</label>
-                        <input type="number" id="add-price" placeholder="e.g. 16500000">
-                    </div>
-                    <div class="form-group">
-                        <label>Bedrooms / Bathrooms</label>
-                        <div style="display:flex; gap: 5px;">
-                            <input type="number" id="add-beds" placeholder="Beds" value="3">
-                            <input type="number" id="add-baths" placeholder="Baths" value="3">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Description & Key Features</label>
-                    <textarea id="add-desc" rows="3" placeholder="Describe property finishes, compound, DSQ, etc..."></textarea>
-                </div>
-
-                <!-- AMENITIES TICK CHECKLIST (INCLUDING ELEVATOR LIFT) -->
-                <div class="form-group">
-                    <label>Amenities Checklist</label>
-                    <div class="checkbox-group" id="add-amenities-group">
-                        <label class="checkbox-label"><input type="checkbox" value="Elevator Lift"> Elevator Lift</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Gated Community"> Gated Community</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Borehole"> Borehole Water</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Swimming Pool"> Swimming Pool</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Parking"> Reserved Parking</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Garden"> Private Garden</label>
-                        <label class="checkbox-label"><input type="checkbox" value="24/7 Security"> 24/7 Security</label>
-                        <label class="checkbox-label"><input type="checkbox" value="DSQ"> Detached DSQ</label>
-                        <label class="checkbox-label"><input type="checkbox" value="CCTV Surveillance"> CCTV Surveillance</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Solar Water Heating"> Solar Water Heating</label>
-                    </div>
-                </div>
-
-                <!-- MULTIPLE PHOTOS & MULTIPLE VIDEO LINKS -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div class="form-group">
-                        <label>Upload Multiple Photos (Up to 15 images)</label>
-                        <input type="file" id="add-photos" multiple accept="image/*">
-                    </div>
-                    <div class="form-group">
-                        <label>Listing Status</label>
-                        <select id="add-status">
-                            <option value="Available">Available</option>
-                            <option value="Sold Out">Sold Out</option>
-                            <option value="Rented Out">Rented Out</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Multiple YouTube Video Tour Links (Enter one per line or comma-separated)</label>
-                    <textarea id="add-videos" rows="2" placeholder="https://www.youtube.com/watch?v=...\nhttps://youtu.be/..."></textarea>
-                </div>
-
-                <button onclick="publishListing()">Publish Listing</button>
-            </div>
-
-            <h3>Active Inventory Management</h3>
-            <div id="creator-admin-list" class="property-grid"></div>
-        </section>
-
-        <!-- PUBLIC LISTINGS FEED -->
-        <section id="listings-section">
-            <div id="property-card-list" class="property-grid"></div>
-            
-            <div id="guest-lock-banner" class="lock-banner hidden">
-                <h3 style="margin-top:0;">🔒 Unlock Exclusive Listings</h3>
-                <p id="lock-desc">Sign in or register for free to browse all properties across Kenya.</p>
-                <button onclick="openAuthModal()">Sign Up to View All</button>
-            </div>
-        </section>
-
-        <!-- PROPERTY DETAILS MODAL (MULTI-PHOTO, MULTI-VIDEO & INQUIRY) -->
-        <div id="details-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 250;">
-            <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 650px; max-height: 90vh; overflow-y: auto; position: relative;">
-                <button onclick="closeDetailsModal()" style="position: absolute; right: 15px; top: 15px; background: none; color: black; font-size: 1.2rem;">✕</button>
-                <h3 id="modal-title" style="margin-top:0; color: var(--primary);"></h3>
-                
-                <!-- MULTI-PHOTO GALLERY STRIP -->
-                <h4>Photo Gallery</h4>
-                <div id="modal-gallery" style="display: flex; gap: 8px; overflow-x: auto; margin-bottom: 1rem;"></div>
-
-                <!-- EMBEDDED VIDEO TOURS CONTAINER -->
-                <div id="modal-videos-section" class="hidden">
-                    <h4>Video Tours</h4>
-                    <div id="modal-videos-container" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 1rem;"></div>
-                </div>
-
-                <p id="modal-location" style="font-weight: 600; color: var(--gray);"></p>
-                <h4 id="modal-price" style="font-size: 1.4rem; color: var(--primary); margin: 0.5rem 0;"></h4>
-                <p id="modal-specs"></p>
-                <p id="modal-desc" style="color: #444; line-height: 1.5;"></p>
-                
-                <h4>Amenities</h4>
-                <div id="modal-amenities" style="margin-bottom: 1.2rem;"></div>
-
-                <!-- WHATSAPP & PHONE CALL ACTION BUTTONS -->
-                <div style="display: flex; gap: 10px; margin: 1.5rem 0;">
-                    <a id="modal-whatsapp-btn" href="#" target="_blank" class="btn-whatsapp">💬 WhatsApp Owner</a>
-                    <a id="modal-call-btn" href="#" class="btn-call">📞 Call Owner</a>
-                </div>
-
-                <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0;">
-
-                <!-- PROPERTY INQUIRY EMAIL FORM -->
-                <h4>Inquire About This Listing</h4>
-                <div id="property-inquiry-box">
-                    <div class="form-group" id="property-email-group">
-                        <label>Your Email Address</label>
-                        <input type="email" id="property-guest-email" placeholder="buyer@gmail.com">
-                    </div>
-                    <div class="form-group">
-                        <label>Your Message</label>
-                        <textarea id="property-inquiry-msg" rows="3" placeholder="Hello, I am interested in viewing this property. Please contact me."></textarea>
-                    </div>
-                    <button onclick="sendPropertyInquiry()">Send Email to Owner</button>
-                </div>
-            </div>
+            <p class="text-xs text-gray-500 mt-0.5">Manage listings, mark properties Sold/Rented, monitor viewer analytics & inspect buyer search logs.</p>
+          </div>
         </div>
 
-        <!-- EDIT LISTING MODAL -->
-        <div id="edit-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 300;">
-            <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; position: relative;">
-                <button onclick="closeEditModal()" style="position: absolute; right: 15px; top: 15px; background: none; color: black; font-size: 1.2rem;">✕</button>
-                <h3>Edit Listing & Status</h3>
-                
-                <input type="hidden" id="edit-id">
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" id="edit-title">
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div class="form-group">
-                        <label>Location</label>
-                        <input type="text" id="edit-location">
-                    </div>
-                    <div class="form-group">
-                        <label>Price (KSh)</label>
-                        <input type="number" id="edit-price">
-                    </div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select id="edit-status">
-                            <option value="Available">Available</option>
-                            <option value="Sold Out">Sold Out</option>
-                            <option value="Rented Out">Rented Out</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Property Type</label>
-                        <select id="edit-type">
-                            <option value="Apartment">Apartment</option>
-                            <option value="Townhouse">Townhouse</option>
-                            <option value="Villa">Villa</option>
-                            <option value="Standalone House">Standalone House</option>
-                            <option value="Mansion">Mansion</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea id="edit-desc" rows="3"></textarea>
-                </div>
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="switchOwnerTab('publish')" id="tabBtn-publish" class="owner-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 bg-brand-crimson text-white shadow-crimson">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span>Publish & Inventory</span>
+          </button>
+          <button onclick="switchOwnerTab('analytics')" id="tabBtn-analytics" class="owner-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 bg-white text-brand-charcoal hover:bg-brand-alabaster border border-brand-border">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Traffic & Search Logs</span>
+          </button>
+          <button onclick="switchOwnerTab('leads')" id="tabBtn-leads" class="owner-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 bg-white text-brand-charcoal hover:bg-brand-alabaster border border-brand-border">
+            <i class="fa-solid fa-users"></i>
+            <span>Registered Clients (<span id="ownerLeadsBadge">0</span>)</span>
+          </button>
+          <button onclick="switchOwnerTab('banners')" id="tabBtn-banners" class="owner-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 bg-white text-brand-charcoal hover:bg-brand-alabaster border border-brand-border">
+            <i class="fa-solid fa-rectangle-ad"></i>
+            <span>Spotlight Banners</span>
+          </button>
+        </div>
+      </div>
 
-                <div class="form-group">
-                    <label>Amenities Checklist</label>
-                    <div class="checkbox-group" id="edit-amenities-group">
-                        <label class="checkbox-label"><input type="checkbox" value="Elevator Lift"> Elevator Lift</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Gated Community"> Gated Community</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Borehole"> Borehole Water</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Swimming Pool"> Swimming Pool</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Parking"> Reserved Parking</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Garden"> Private Garden</label>
-                        <label class="checkbox-label"><input type="checkbox" value="24/7 Security"> 24/7 Security</label>
-                        <label class="checkbox-label"><input type="checkbox" value="DSQ"> Detached DSQ</label>
-                        <label class="checkbox-label"><input type="checkbox" value="CCTV Surveillance"> CCTV Surveillance</label>
-                        <label class="checkbox-label"><input type="checkbox" value="Solar Water Heating"> Solar Water Heating</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>YouTube Video Tour Links</label>
-                    <textarea id="edit-videos" rows="2"></textarea>
-                </div>
-                <button onclick="submitEdit()">Save Changes</button>
+      <!-- ================= 1. PUBLISH & INVENTORY TAB ================= -->
+      <section id="ownerTab-publish" class="owner-tab-content space-y-8">
+        
+        <!-- Publish New Property Card -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-border shadow-sm">
+          <div class="flex items-center justify-between pb-4 border-b border-brand-border mb-6">
+            <div>
+              <h2 class="font-serif text-xl font-bold text-brand-charcoal">Publish New Property Listing</h2>
+              <p class="text-xs text-gray-500">Upload up to 15 photos, attach multiple YouTube walkthroughs, and tick amenities.</p>
             </div>
+            <span class="text-xs font-semibold px-3 py-1 bg-brand-softred text-brand-crimson rounded-full">
+              <i class="fa-solid fa-bolt mr-1"></i> Instant Auto-Refresh Active
+            </span>
+          </div>
+
+          <form id="publishPropertyForm" onsubmit="publishListing(event)" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div class="md:col-span-2">
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Property Title *</label>
+                <input type="text" id="add-title" required placeholder="e.g. 4-Bedroom All-Ensuite Townhouse with Private Elevator Lift" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Property Type *</label>
+                <select id="add-type" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson">
+                  <option value="Townhouse">Townhouse</option>
+                  <option value="Villa">Villa</option>
+                  <option value="Standalone House">Standalone House</option>
+                  <option value="Mansion">Mansion</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div>
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Location *</label>
+                <input type="text" id="add-location" required placeholder="e.g. Gikambura, Kikuyu" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Price (KSh) *</label>
+                <input type="number" id="add-price" required placeholder="e.g. 16500000" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson font-bold">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Bedrooms & Baths</label>
+                <div class="flex gap-2">
+                  <input type="number" id="add-beds" value="4" min="1" placeholder="Beds" class="w-1/2 text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-crimson">
+                  <input type="number" id="add-baths" value="4" min="1" placeholder="Baths" class="w-1/2 text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-crimson">
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Availability Status</label>
+                <select id="add-status" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson font-semibold">
+                  <option value="Available">Available</option>
+                  <option value="Sold Out">Sold Out</option>
+                  <option value="Rented Out">Rented Out</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Property Description & Highlights</label>
+              <textarea id="add-desc" rows="2" placeholder="Describe architectural finishes, compound size, proximity to tarmac, DSQ details..." class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson"></textarea>
+            </div>
+
+            <!-- AMENITIES CHECKLIST (INCLUDING ELEVATOR LIFT) -->
+            <div class="bg-brand-alabaster p-5 rounded-2xl border border-brand-border">
+              <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-3">Tick Included Amenities</label>
+              <div id="add-amenities-group" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 text-xs">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="Elevator Lift" class="accent-brand-crimson">
+                  <span class="font-medium">Elevator Lift</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="Gated Community" class="accent-brand-crimson">
+                  <span class="font-medium">Gated Community</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="Borehole" class="accent-brand-crimson">
+                  <span class="font-medium">Borehole Water</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="Swimming Pool" class="accent-brand-crimson">
+                  <span class="font-medium">Swimming Pool</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="Parking" class="accent-brand-crimson">
+                  <span class="font-medium">Ample Parking</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="Garden" class="accent-brand-crimson">
+                  <span class="font-medium">Private Garden</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="24/7 Security" class="accent-brand-crimson">
+                  <span class="font-medium">24/7 Security</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="DSQ" class="accent-brand-crimson">
+                  <span class="font-medium">Detached DSQ</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="CCTV Surveillance" class="accent-brand-crimson">
+                  <span class="font-medium">CCTV Cameras</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
+                  <input type="checkbox" value="Solar Water Heating" class="accent-brand-crimson">
+                  <span class="font-medium">Solar Heating</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- MULTI-PHOTO & MULTI-VIDEO UPLOAD -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div class="bg-brand-alabaster p-4 rounded-2xl border border-brand-border">
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">
+                  <i class="fa-solid fa-images text-brand-crimson mr-1"></i> Upload Multiple Photos (Max 15)
+                </label>
+                <input type="file" id="add-photos" multiple accept="image/*" class="w-full text-xs bg-white border border-brand-border rounded-xl px-3 py-2 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-softred file:text-brand-crimson">
+                <p class="text-[11px] text-gray-500 mt-1.5">Hold Ctrl / Cmd to select multiple exterior & interior photos at once.</p>
+              </div>
+
+              <div class="bg-brand-alabaster p-4 rounded-2xl border border-brand-border">
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">
+                  <i class="fa-brands fa-youtube text-brand-crimson mr-1"></i> Multiple YouTube Video Tour Links
+                </label>
+                <textarea id="add-videos" rows="2" placeholder="Paste YouTube URLs (one per line or comma-separated)..." class="w-full text-xs bg-white border border-brand-border rounded-xl px-3.5 py-2 focus:outline-none focus:border-brand-crimson"></textarea>
+              </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-2">
+              <button type="reset" class="px-5 py-2.5 text-xs font-semibold rounded-xl border border-brand-border hover:bg-gray-100">Clear Form</button>
+              <button type="submit" class="px-7 py-2.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson hover:opacity-95 transition flex items-center space-x-2">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Publish Listing Now</span>
+              </button>
+            </div>
+          </form>
         </div>
 
-        <!-- GENERAL CONTACT US MODAL -->
-        <div id="contact-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 280;">
-            <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 450px; position: relative;">
-                <button onclick="closeContactModal()" style="position: absolute; right: 15px; top: 15px; background: none; color: black; font-size: 1.2rem;">✕</button>
-                <h3>Contact Us</h3>
-                <p style="font-size: 0.85rem; color: var(--gray);">Send a message straight to our office inbox.</p>
-                <div class="form-group" id="general-email-group">
-                    <label>Your Email Address</label>
-                    <input type="email" id="general-guest-email" placeholder="buyer@gmail.com">
-                </div>
-                <div class="form-group">
-                    <label>Your Message</label>
-                    <textarea id="general-inquiry-msg" rows="4" placeholder="How can we assist you?"></textarea>
-                </div>
-                <button onclick="sendGeneralInquiry()" style="width: 100%;">Send Email</button>
-            </div>
+        <!-- Manage Active Inventory -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-serif text-xl font-bold text-brand-charcoal">Live Property Inventory</h3>
+            <span id="adminInventoryBadge" class="text-xs font-bold bg-brand-softred text-brand-crimson px-3 py-1 rounded-full">0 Properties</span>
+          </div>
+          <div id="creator-admin-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+      </section>
+
+      <!-- ================= 2. ANALYTICS & SEARCH LOGS TAB ================= -->
+      <section id="ownerTab-analytics" class="owner-tab-content hidden space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-sm">
+            <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Registered Clients</span>
+            <h3 id="metric-customers" class="text-2xl font-bold font-serif text-brand-charcoal mt-1">0</h3>
+            <span class="text-[11px] text-emerald-600 font-semibold mt-1 inline-block"><i class="fa-solid fa-user-check mr-1"></i> Active accounts</span>
+          </div>
+          <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-sm">
+            <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Catalog Views</span>
+            <h3 id="metric-views" class="text-2xl font-bold font-serif text-brand-charcoal mt-1">0</h3>
+            <span class="text-[11px] text-blue-600 font-semibold mt-1 inline-block"><i class="fa-solid fa-eye mr-1"></i> Total impressions</span>
+          </div>
+          <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-sm">
+            <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Property Clicks</span>
+            <h3 id="metric-clicks" class="text-2xl font-bold font-serif text-brand-crimson mt-1">0</h3>
+            <span class="text-[11px] text-brand-crimson font-semibold mt-1 inline-block"><i class="fa-solid fa-arrow-pointer mr-1"></i> Gallery & tour opens</span>
+          </div>
+          <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-sm">
+            <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Conversion CTR</span>
+            <h3 id="metric-ctr" class="text-2xl font-bold font-serif text-brand-charcoal mt-1">0%</h3>
+            <span class="text-[11px] text-gray-500 mt-1 inline-block">Click-to-view ratio</span>
+          </div>
         </div>
 
-        <!-- AUTH MODAL -->
-        <div id="auth-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 200;">
-            <div style="background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 400px; position: relative;">
-                <button onclick="closeAuthModal()" style="position: absolute; right: 10px; top: 10px; background: none; color: black;">✕</button>
-                <div id="modal-login">
-                    <h3>Account Login</h3>
-                    <div class="form-group"><label>Email Address</label><input type="email" id="log-email"></div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <div class="pwd-wrapper">
-                            <input type="password" id="log-password">
-                            <button type="button" class="pwd-toggle" onclick="togglePeek('log-password', this)">👁️</button>
-                        </div>
-                    </div>
-                    <button onclick="handleLogin()" style="width: 100%;">Sign In</button>
-                    <p style="font-size: 0.85rem; margin-top: 15px; text-align: center;"><a href="javascript:void(0)" onclick="toggleAuthViews()">Create Customer Account</a></p>
-                </div>
-                <div id="modal-register" class="hidden">
-                    <h3>Create Free Account</h3>
-                    <div class="form-group"><label>Email Address</label><input type="email" id="reg-email"></div>
-                    <div class="form-group">
-                        <label>Create Password</label>
-                        <div class="pwd-wrapper">
-                            <input type="password" id="reg-password">
-                            <button type="button" class="pwd-toggle" onclick="togglePeek('reg-password', this)">👁️</button>
-                        </div>
-                    </div>
-                    <button onclick="handleRegister()" style="width: 100%;">Register</button>
-                    <p style="font-size: 0.85rem; margin-top: 15px; text-align: center;"><a href="javascript:void(0)" onclick="toggleAuthViews()">Back to Sign In</a></p>
-                </div>
+        <!-- Visual Chart & Listing Performance -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded-3xl border border-brand-border shadow-sm">
+            <h3 class="font-serif text-base font-bold text-brand-charcoal mb-4">Views vs. Clicks Overview</h3>
+            <div class="h-60">
+              <canvas id="trafficAnalyticsChart"></canvas>
             </div>
+          </div>
+
+          <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-brand-border shadow-sm overflow-hidden">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-serif text-base font-bold text-brand-charcoal">Listing-by-Listing Traffic</h3>
+              <button onclick="loadAnalytics()" class="text-xs font-semibold text-brand-crimson hover:underline"><i class="fa-solid fa-rotate mr-1"></i> Refresh</button>
+            </div>
+            <div class="overflow-x-auto max-h-60">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="bg-brand-alabaster border-b border-brand-border text-gray-500 uppercase text-[10px]">
+                    <th class="py-2.5 px-3">Property</th>
+                    <th class="py-2.5 px-3">Status</th>
+                    <th class="py-2.5 px-3">Views</th>
+                    <th class="py-2.5 px-3">Clicks</th>
+                    <th class="py-2.5 px-3">CTR</th>
+                  </tr>
+                </thead>
+                <tbody id="table-property-metrics" class="divide-y divide-brand-border"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
+
+        <!-- Customer Search History Table -->
+        <div class="bg-white p-6 rounded-3xl border border-brand-border shadow-sm">
+          <h3 class="font-serif text-lg font-bold text-brand-charcoal mb-1">🔍 Customer Search Intelligence</h3>
+          <p class="text-xs text-gray-500 mb-4">Exact locations, property types, and budgets buyers have searched for.</p>
+          <div class="overflow-x-auto max-h-64">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-brand-alabaster border-b border-brand-border text-gray-500 uppercase text-[10px]">
+                  <th class="py-3 px-4">Search Query</th>
+                  <th class="py-3 px-4">Location Filter</th>
+                  <th class="py-3 px-4">Max Price Filter</th>
+                  <th class="py-3 px-4">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="table-search-logs" class="divide-y divide-brand-border"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. REGISTERED CUSTOMERS CRM TAB ================= -->
+      <section id="ownerTab-leads" class="owner-tab-content hidden">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-border shadow-sm">
+          <div class="pb-4 border-b border-brand-border mb-5 flex items-center justify-between">
+            <div>
+              <h3 class="font-serif text-lg font-bold text-brand-charcoal">Registered Buyer Accounts</h3>
+              <p class="text-xs text-gray-500">Clients who created accounts to unlock the full property catalog.</p>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-brand-alabaster border-b border-brand-border text-gray-500 uppercase text-[10px]">
+                  <th class="py-3 px-4">Client Email</th>
+                  <th class="py-3 px-4">Account Role</th>
+                  <th class="py-3 px-4">Registration Date</th>
+                </tr>
+              </thead>
+              <tbody id="table-customer-crm" class="divide-y divide-brand-border"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4. HERO BANNER CUSTOMIZER TAB ================= -->
+      <section id="ownerTab-banners" class="owner-tab-content hidden space-y-6">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-border shadow-sm">
+          <h3 class="font-serif text-xl font-bold text-brand-charcoal mb-1">Hero Spotlight Carousel Manager</h3>
+          <p class="text-xs text-gray-500 mb-6">Customize the large showcase slides at the top of your homepage.</p>
+          <form onsubmit="handleAddBanner(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold mb-1">Headline *</label>
+              <input type="text" id="bannerTitleInput" required placeholder="e.g. Executive 5-Bedroom Villas in Karen" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5">
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-1">Subtitle</label>
+              <input type="text" id="bannerSubInput" placeholder="e.g. Flexible mortgage & installment plans available" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5">
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-1">Background Image URL *</label>
+              <input type="url" id="bannerImgInput" required placeholder="https://images.unsplash.com/..." class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5">
+            </div>
+            <div>
+              <label class="block text-xs font-bold mb-1">Filter Category Target</label>
+              <select id="bannerCatInput" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5">
+                <option value="All">All Properties</option>
+                <option value="Townhouse">Townhouses</option>
+                <option value="Villa">Villas</option>
+                <option value="Mansion">Mansions</option>
+              </select>
+            </div>
+            <div class="md:col-span-2 flex justify-end">
+              <button type="submit" class="px-6 py-2.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">Add Slide</button>
+            </div>
+          </form>
+        </div>
+      </section>
 
     </div>
+  </main>
 
-    <script>
-        let currentUser = null;
-        let allPropertiesCache = [];
-        let activePropertyTitle = "";
-        const OWNER_PHONE = "+254700000000"; // <-- Put your WhatsApp/phone number here
+  <!-- ================= PROPERTY DETAILS & LIGHTBOX MODAL ================= -->
+  <div id="details-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl border border-brand-border overflow-hidden max-h-[92vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="crimson-gradient-bg p-5 text-white flex items-center justify-between shrink-0">
+        <div>
+          <h3 id="modal-title" class="font-serif text-xl font-bold leading-tight">Property Details</h3>
+          <p id="modal-location" class="text-xs text-red-100 mt-0.5"></p>
+        </div>
+        <button onclick="closeDetailsModal()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
 
-        window.onload = async () => {
-            await verifySession();
-            await loadListings();
-        };
+      <!-- Modal Scrollable Content -->
+      <div class="p-6 overflow-y-auto space-y-6">
+        
+        <!-- Interactive Main Photo Viewer + Thumbnail Strip -->
+        <div class="space-y-3">
+          <div class="relative h-72 sm:h-96 bg-zinc-900 rounded-2xl overflow-hidden flex items-center justify-center">
+            <img id="modal-main-photo" src="" alt="Property Showcase" class="w-full h-full object-cover">
+            <button onclick="prevModalPhoto()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button onclick="nextModalPhoto()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <span id="modal-photo-counter" class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-3 py-1 rounded-full font-mono">1 / 1</span>
+          </div>
+          <div id="modal-gallery" class="flex gap-2.5 overflow-x-auto pb-1"></div>
+        </div>
 
-        async function verifySession() {
-            const res = await fetch('/api/session');
-            const data = await res.json();
-            if (data.loggedIn) {
-                currentUser = data;
-                document.getElementById('session-display').innerText = `${data.email} (${data.role.toUpperCase()})`;
-                document.getElementById('auth-entry-btn').classList.add('hidden');
-                document.getElementById('logout-btn').classList.remove('hidden');
+        <!-- Embedded Video Tours Section -->
+        <div id="modal-videos-section" class="hidden space-y-3">
+          <h4 class="font-serif text-base font-bold text-brand-charcoal flex items-center">
+            <i class="fa-brands fa-youtube text-brand-crimson mr-2 text-lg"></i> Video Walkthrough Tours
+          </h4>
+          <div id="modal-videos-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
 
-                document.getElementById('property-email-group').classList.add('hidden');
-                document.getElementById('general-email-group').classList.add('hidden');
+        <!-- Price, Specs & Direct Contact Buttons -->
+        <div class="bg-brand-alabaster p-5 rounded-2xl border border-brand-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-[11px] uppercase font-bold text-gray-500 tracking-wider">Asking Price</span>
+            <h4 id="modal-price" class="font-serif text-2xl sm:text-3xl font-bold text-brand-crimson"></h4>
+            <p id="modal-specs" class="text-xs font-semibold text-gray-600 mt-1"></p>
+          </div>
+          <div class="flex flex-wrap gap-2.5">
+            <a id="modal-whatsapp-btn" href="#" target="_blank" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center space-x-2 shadow transition">
+              <i class="fa-brands fa-whatsapp text-base"></i>
+              <span>WhatsApp Ted</span>
+            </a>
+            <a id="modal-call-btn" href="#" class="px-5 py-3 rounded-xl bg-brand-charcoal hover:bg-black text-white text-xs font-bold flex items-center space-x-2 shadow transition">
+              <i class="fa-solid fa-phone text-xs"></i>
+              <span>Call Direct</span>
+            </a>
+          </div>
+        </div>
 
-                if (data.role === 'owner') {
-                    document.getElementById('creator-section').classList.remove('hidden');
-                    loadAnalytics();
-                }
-            } else {
-                currentUser = null;
-                document.getElementById('session-display').innerText = "";
-                document.getElementById('auth-entry-btn').classList.remove('hidden');
-                document.getElementById('logout-btn').classList.add('hidden');
-                document.getElementById('creator-section').classList.add('hidden');
+        <!-- Description & Amenities -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 space-y-2">
+            <h4 class="font-serif text-base font-bold text-brand-charcoal">About This Property</h4>
+            <p id="modal-desc" class="text-xs sm:text-sm text-gray-600 leading-relaxed"></p>
+          </div>
+          <div class="space-y-2">
+            <h4 class="font-serif text-base font-bold text-brand-charcoal">Key Amenities</h4>
+            <div id="modal-amenities" class="flex flex-wrap gap-1.5"></div>
+          </div>
+        </div>
 
-                document.getElementById('property-email-group').classList.remove('hidden');
-                document.getElementById('general-email-group').classList.remove('hidden');
-            }
+        <!-- Direct Email Inquiry Box -->
+        <div class="bg-brand-softred/30 p-5 rounded-2xl border border-brand-crimson/20 space-y-3">
+          <h4 class="font-serif text-base font-bold text-brand-charcoal">Schedule a Viewing / Email Inquiry</h4>
+          <div id="property-email-group">
+            <label class="block text-xs font-bold mb-1">Your Email Address *</label>
+            <input type="email" id="property-guest-email" placeholder="buyer@example.com" class="w-full text-xs bg-white border border-brand-border rounded-xl px-3.5 py-2.5">
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1">Message *</label>
+            <textarea id="property-inquiry-msg" rows="2" placeholder="Hello Ted, I would like to schedule a site visit for this property..." class="w-full text-xs bg-white border border-brand-border rounded-xl px-3.5 py-2.5"></textarea>
+          </div>
+          <button onclick="sendPropertyInquiry()" class="px-6 py-2.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">
+            <i class="fa-solid fa-paper-plane mr-1.5"></i> Send Inquiry Email
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= EDIT LISTING MODAL (OWNER) ================= -->
+  <div id="edit-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-brand-border overflow-hidden max-h-[90vh] flex flex-col">
+      <div class="crimson-gradient-bg p-5 text-white flex items-center justify-between">
+        <h3 class="font-serif text-lg font-bold">Edit Listing & Availability Status</h3>
+        <button onclick="closeEditModal()" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center">✕</button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-4">
+        <input type="hidden" id="edit-id">
+        <div>
+          <label class="block text-xs font-bold mb-1">Property Title</label>
+          <input type="text" id="edit-title" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold mb-1">Location</label>
+            <input type="text" id="edit-location" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5">
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1">Price (KSh)</label>
+            <input type="number" id="edit-price" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5 font-bold">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold mb-1">Availability Status</label>
+            <select id="edit-status" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5 font-bold">
+              <option value="Available">Available</option>
+              <option value="Sold Out">Sold Out</option>
+              <option value="Rented Out">Rented Out</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1">Property Type</label>
+            <select id="edit-type" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5">
+              <option value="Townhouse">Townhouse</option>
+              <option value="Villa">Villa</option>
+              <option value="Standalone House">Standalone House</option>
+              <option value="Mansion">Mansion</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold mb-1">Description</label>
+          <textarea id="edit-desc" rows="2" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-bold mb-2">Update Amenities</label>
+          <div id="edit-amenities-group" class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Elevator Lift" class="accent-brand-crimson"><span>Elevator Lift</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Gated Community" class="accent-brand-crimson"><span>Gated Community</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Borehole" class="accent-brand-crimson"><span>Borehole</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Swimming Pool" class="accent-brand-crimson"><span>Swimming Pool</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Parking" class="accent-brand-crimson"><span>Parking</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Garden" class="accent-brand-crimson"><span>Garden</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="24/7 Security" class="accent-brand-crimson"><span>24/7 Security</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="DSQ" class="accent-brand-crimson"><span>Detached DSQ</span></label>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold mb-1">YouTube Video Links</label>
+          <textarea id="edit-videos" rows="2" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2"></textarea>
+        </div>
+        <div class="flex justify-end space-x-2 pt-2">
+          <button onclick="closeEditModal()" class="px-5 py-2 text-xs font-semibold rounded-xl border border-brand-border">Cancel</button>
+          <button onclick="submitEdit()" class="px-6 py-2 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SAVED PROPERTIES DRAWER ================= -->
+  <div id="savedModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end">
+    <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl">
+      <div class="p-5 border-b border-brand-border flex items-center justify-between bg-brand-alabaster">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-heart text-brand-crimson text-lg"></i>
+          <h3 class="font-serif text-lg font-bold">Shortlisted Homes</h3>
+        </div>
+        <button onclick="closeSavedModal()" class="w-8 h-8 rounded-full hover:bg-gray-200 flex items-center justify-center">✕</button>
+      </div>
+      <div id="savedListContainer" class="flex-grow overflow-y-auto p-5 space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- ================= GENERAL CONTACT MODAL ================= -->
+  <div id="contact-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-brand-border overflow-hidden">
+      <div class="crimson-gradient-bg p-5 text-white flex items-center justify-between">
+        <div>
+          <h3 class="font-serif text-lg font-bold">Contact Ted With The House</h3>
+          <p class="text-xs text-red-100">Direct email & WhatsApp concierge</p>
+        </div>
+        <button onclick="closeContactModal()" class="w-8 h-8 rounded-full bg-white/20 text-white flex items-center justify-center">✕</button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div id="general-email-group">
+          <label class="block text-xs font-bold mb-1">Your Email Address *</label>
+          <input type="email" id="general-guest-email" placeholder="client@example.com" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5">
+        </div>
+        <div>
+          <label class="block text-xs font-bold mb-1">How Can We Help? *</label>
+          <textarea id="general-inquiry-msg" rows="4" placeholder="Tell us your preferred neighborhood, budget, or ask a question..." class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5"></textarea>
+        </div>
+        <button onclick="sendGeneralInquiry()" class="w-full py-3 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">
+          Send Email to Ted
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= AUTH MODAL (LOGIN / REGISTER) ================= -->
+  <div id="authModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-brand-border overflow-hidden">
+      <div class="crimson-gradient-bg p-5 text-white flex items-center justify-between">
+        <div>
+          <h3 id="authModalTitle" class="font-serif text-lg font-bold">Sign In to Ted With The House</h3>
+          <p class="text-[11px] text-red-100">Unlock full property catalog & direct inquiries</p>
+        </div>
+        <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-white/20 text-white flex items-center justify-center">✕</button>
+      </div>
+
+      <div class="flex border-b border-brand-border bg-brand-alabaster p-1.5 gap-1.5 text-xs font-semibold">
+        <button onclick="switchAuthTab('login')" id="authTabBtn-login" class="flex-1 py-2 rounded-xl bg-brand-crimson text-white shadow-sm">Client Login</button>
+        <button onclick="switchAuthTab('register')" id="authTabBtn-register" class="flex-1 py-2 rounded-xl text-gray-600">Create Free Account</button>
+      </div>
+
+      <div class="p-6">
+        <form id="customerLoginForm" onsubmit="handleLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold mb-1">Email Address</label>
+            <input type="email" id="log-email" required placeholder="buyer@example.com" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5">
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1">Password</label>
+            <div class="relative flex items-center">
+              <input type="password" id="log-password" required placeholder="••••••••" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5 pr-10">
+              <button type="button" onclick="togglePeek('log-password', this)" class="absolute right-3 text-gray-500 text-sm">👁️</button>
+            </div>
+          </div>
+          <button type="submit" class="w-full py-3 text-xs font-bold uppercase tracking-wider crimson-gradient-bg text-white rounded-xl shadow-crimson">Sign In</button>
+        </form>
+
+        <form id="customerRegisterForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-bold mb-1">Email Address *</label>
+            <input type="email" id="reg-email" required placeholder="buyer@example.com" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5">
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1">Create Password *</label>
+            <div class="relative flex items-center">
+              <input type="password" id="reg-password" required placeholder="••••••••" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5 pr-10">
+              <button type="button" onclick="togglePeek('reg-password', this)" class="absolute right-3 text-gray-500 text-sm">👁️</button>
+            </div>
+          </div>
+          <button type="submit" class="w-full py-3 text-xs font-bold uppercase tracking-wider crimson-gradient-bg text-white rounded-xl shadow-crimson">Create Free Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DISCREET OWNER GATE MODAL ================= -->
+  <div id="hiddenOwnerModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl border-2 border-brand-crimson overflow-hidden">
+      <div class="bg-brand-charcoal p-5 text-white flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-full crimson-gradient-bg flex items-center justify-center"><i class="fa-solid fa-key text-xs"></i></div>
+          <div>
+            <h3 class="font-serif text-base font-bold">Creator Studio Gate</h3>
+            <p class="text-[10px] text-gray-400">Ted With The House Admin</p>
+          </div>
+        </div>
+        <button onclick="closeHiddenOwnerModal()" class="text-gray-400 hover:text-white">✕</button>
+      </div>
+      <form onsubmit="handleOwnerLogin(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold mb-1">Admin Email</label>
+          <input type="email" id="ownerGateEmail" value="admin@propertyportal.com" required class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5">
+        </div>
+        <div>
+          <label class="block text-xs font-bold mb-1">Master Password</label>
+          <input type="password" id="ownerGatePass" required placeholder="••••••••" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5 font-mono">
+        </div>
+        <button type="submit" class="w-full py-3 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">Unlock Creator Studio</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= FLOATING LIVE CHAT CONCIERGE ================= -->
+  <div class="fixed bottom-6 right-6 z-40">
+    <div id="liveChatWindow" class="hidden mb-3 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-brand-border overflow-hidden flex flex-col h-[430px]">
+      <div class="crimson-gradient-bg p-4 text-white flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center font-serif font-bold text-sm">TH</div>
+          <div>
+            <h4 class="font-serif font-bold text-sm leading-tight">Ted Realty Concierge</h4>
+            <span class="text-[10px] text-red-100 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> Online Now</span>
+          </div>
+        </div>
+        <button onclick="toggleLiveChat()" class="text-white p-1"><i class="fa-solid fa-chevron-down"></i></button>
+      </div>
+
+      <div id="chatMessagesThread" class="flex-grow p-4 overflow-y-auto space-y-3 text-xs bg-brand-alabaster">
+        <div class="flex items-start space-x-2">
+          <div class="w-7 h-7 rounded-full crimson-gradient-bg text-white flex items-center justify-center text-[10px] shrink-0 font-bold">TH</div>
+          <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-brand-border shadow-sm max-w-[80%]">
+            Karibu to <strong>Ted With The House</strong>! 👋 Looking for a home in Nairobi, Kikuyu, or Karen? Ask me anything or tap WhatsApp to book a viewing.
+          </div>
+        </div>
+      </div>
+
+      <form onsubmit="handleSendChatMessage(event)" class="p-3 border-t border-brand-border bg-white flex items-center space-x-2">
+        <input type="text" id="chatInputText" placeholder="Ask about a house or location..." class="flex-grow text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2 focus:outline-none focus:border-brand-crimson">
+        <button type="submit" class="w-9 h-9 rounded-xl crimson-gradient-bg text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-paper-plane text-xs"></i></button>
+      </form>
+    </div>
+
+    <button onclick="toggleLiveChat()" class="w-14 h-14 rounded-full crimson-gradient-bg text-white flex items-center justify-center shadow-crimson-lg hover:scale-105 transition-transform border-2 border-white">
+      <i class="fa-solid fa-comments text-xl"></i>
+    </button>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-brand-charcoal text-white border-t border-white/10 pt-12 pb-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-white/10 text-xs">
+        <div class="space-y-3">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-xl crimson-gradient-bg flex items-center justify-center"><i class="fa-solid fa-house-chimney text-white text-xs"></i></div>
+            <span class="font-serif text-lg font-bold text-white">Ted With The House</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed">Connecting discerning homebuyers and investors with verified townhouses, luxury villas, and prime real estate across Kenya.</p>
+        </div>
+
+        <div>
+          <h4 class="font-serif text-sm font-bold text-red-400 mb-3">Property Categories</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><button onclick="switchCategory('Townhouse')" class="hover:text-white">Gated Townhouses</button></li>
+            <li><button onclick="switchCategory('Villa')" class="hover:text-white">Executive Villas</button></li>
+            <li><button onclick="switchCategory('Standalone House')" class="hover:text-white">Standalone Compounds</button></li>
+            <li><button onclick="switchCategory('Mansion')" class="hover:text-white">Luxury Mansions</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-serif text-sm font-bold text-red-400 mb-3">Prime Locations</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li>Karen • Lavington • Kilimani</li>
+            <li>Westlands • Gigiri • Runda</li>
+            <li>Gikambura • Kikuyu • Ruiru</li>
+            <li>Ngong • Syokimau • Kiambu Rd</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-serif text-sm font-bold text-red-400 mb-3">Direct Desk</h4>
+          <p class="text-gray-400 mb-1.5">Phone / WhatsApp: <span class="text-white font-semibold">+254 700 000 000</span></p>
+          <p class="text-gray-400 mb-3">Email: <span class="text-white font-semibold">ted@tedwiththehouse.co.ke</span></p>
+          <div class="flex items-center justify-between pt-2">
+            <span class="bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 text-gray-300 text-[11px]">
+              <i class="fa-solid fa-shield-check text-brand-crimson mr-1"></i> Verified Listings
+            </span>
+            <!-- Discreet Owner Portal Trigger -->
+            <button onclick="openHiddenOwnerModal()" title="Creator Portal" class="text-gray-600 hover:text-brand-crimson transition p-1.5">
+              <i class="fa-solid fa-shield-halved"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500">
+        <p>&copy; <span id="currentYear"></span> Ted With The House Kenya. All rights reserved.</p>
+        <p class="mt-2 sm:mt-0">Built with Node.js & Express Architecture</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= APPLICATION JAVASCRIPT ================= -->
+  <script>
+    const OWNER_PHONE = "+254700000000"; // Update with your WhatsApp/Phone number
+    const STORAGE_KEY_SAVED = "ted_house_saved_ids_v1";
+    const STORAGE_KEY_BANNERS = "ted_house_banners_v1";
+
+    let currentUser = null;
+    let currentPortal = "visitor";
+    let allPropertiesCache = [];
+    let savedIds = JSON.parse(localStorage.getItem(STORAGE_KEY_SAVED)) || [];
+    let activeModalPhotos = [];
+    let activeModalPhotoIdx = 0;
+    let activePropertyTitle = "";
+    let trafficChartInstance = null;
+
+    let banners = JSON.parse(localStorage.getItem(STORAGE_KEY_BANNERS)) || [
+      {
+        title: "Modern Townhouses in Kikuyu & Gikambura",
+        subtitle: "Spacious 3 & 4-bedroom all-ensuite homes with private elevator lifts and clean title deeds.",
+        imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80",
+        category: "Townhouse"
+      },
+      {
+        title: "Signature Luxury Villas in Karen & Gigiri",
+        subtitle: "Sits on half-acre manicured gardens with detached DSQs and 24/7 diplomatic security.",
+        imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=80",
+        category: "Villa"
+      }
+    ];
+    let currentBannerIdx = 0;
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      document.getElementById("currentYear").textContent = new Date().getFullYear();
+      renderBannersSlider();
+      setInterval(nextBanner, 6500);
+      updateSavedBadge();
+      await verifySession();
+      await loadListings();
+    });
+
+    /* ================= SESSION & AUTHENTICATION ================= */
+    async function verifySession() {
+      try {
+        const res = await fetch("/api/session");
+        const data = await res.json();
+        currentUser = data.loggedIn ? data : null;
+      } catch (e) {
+        currentUser = null;
+      }
+      syncAuthUI();
+    }
+
+    function syncAuthUI() {
+      const topControls = document.getElementById("topBarAuthControls");
+      const navArea = document.getElementById("navUserArea");
+      const mobileAuth = document.getElementById("mobileAuthRow");
+
+      if (!currentUser) {
+        topControls.innerHTML = `<button onclick="openAuthModal('login')" class="text-white hover:underline text-xs font-semibold">Sign In</button>`;
+        navArea.innerHTML = `
+          <button onclick="openAuthModal('login')" class="text-xs font-semibold px-3.5 py-2 rounded-full border border-brand-border hover:border-brand-crimson text-brand-charcoal hover:bg-brand-softred/40 transition flex items-center space-x-1.5">
+            <i class="fa-regular fa-user text-brand-crimson"></i>
+            <span>Sign In</span>
+          </button>`;
+        if (mobileAuth) mobileAuth.innerHTML = `<span class="text-xs text-gray-500">Guest Mode (5 Listings)</span><button onclick="openAuthModal('login'); toggleMobileNav();" class="text-xs font-bold text-brand-crimson">Sign In / Join</button>`;
+        document.getElementById("property-email-group").classList.remove("hidden");
+        document.getElementById("general-email-group").classList.remove("hidden");
+        if (currentPortal === "owner") switchView("visitor");
+      } else if (currentUser.role === "owner") {
+        topControls.innerHTML = `
+          <button onclick="togglePortal()" class="bg-brand-charcoal text-white hover:bg-black text-xs px-3 py-1 rounded-full font-semibold transition flex items-center space-x-1.5">
+            <i class="fa-solid fa-sliders text-[10px] text-red-400"></i>
+            <span>${currentPortal === "owner" ? "Storefront View" : "Creator Studio"}</span>
+          </button>
+          <button onclick="logout()" title="Log Out" class="w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-power-off"></i></button>
+        `;
+        navArea.innerHTML = `
+          <div onclick="togglePortal()" class="cursor-pointer flex items-center space-x-2 bg-brand-softred px-3 py-1.5 rounded-full border border-brand-crimson/30">
+            <span class="w-5 h-5 rounded-full crimson-gradient-bg text-white flex items-center justify-center text-[10px]"><i class="fa-solid fa-crown"></i></span>
+            <span class="text-xs font-bold text-brand-crimson">Ted (Admin)</span>
+          </div>`;
+        document.getElementById("property-email-group").classList.add("hidden");
+        document.getElementById("general-email-group").classList.add("hidden");
+      } else {
+        const shortName = currentUser.email.split("@")[0];
+        topControls.innerHTML = `<span class="text-xs font-medium">Hi, ${shortName}</span><button onclick="logout()" class="text-[11px] underline ml-2">Logout</button>`;
+        navArea.innerHTML = `
+          <div class="flex items-center space-x-2 bg-brand-alabaster px-3 py-1.5 rounded-full border border-brand-border">
+            <span class="w-6 h-6 rounded-full crimson-gradient-bg text-white flex items-center justify-center text-xs font-bold uppercase">${shortName.charAt(0)}</span>
+            <span class="text-xs font-bold text-brand-charcoal max-w-[90px] truncate">${shortName}</span>
+          </div>`;
+        document.getElementById("property-email-group").classList.add("hidden");
+        document.getElementById("general-email-group").classList.add("hidden");
+      }
+    }
+
+    function togglePortal() {
+      if (!currentUser || currentUser.role !== "owner") {
+        openHiddenOwnerModal();
+        return;
+      }
+      switchView(currentPortal === "visitor" ? "owner" : "visitor");
+    }
+
+    function switchView(target) {
+      currentPortal = target;
+      if (target === "owner") {
+        document.getElementById("visitorView").classList.add("hidden");
+        document.getElementById("ownerView").classList.remove("hidden");
+        loadAnalytics();
+      } else {
+        document.getElementById("ownerView").classList.add("hidden");
+        document.getElementById("visitorView").classList.remove("hidden");
+      }
+      syncAuthUI();
+    }
+
+    /* ================= BANNER CAROUSEL ================= */
+    function renderBannersSlider() {
+      const slider = document.getElementById("bannerSlider");
+      const dots = document.getElementById("bannerDots");
+      if (!slider) return;
+
+      slider.innerHTML = banners.map((b, i) => `
+        <div class="absolute inset-0 transition-opacity duration-700 ${i === currentBannerIdx ? "opacity-100 z-10" : "opacity-0 z-0"}"
+             style="background-image: linear-gradient(to right, rgba(24,24,27,0.88), rgba(24,24,27,0.25)), url('${b.imageUrl}'); background-size: cover; background-position: center;">
+          <div class="max-w-7xl mx-auto h-full px-6 sm:px-14 flex flex-col justify-center items-start text-white">
+            <span class="crimson-gradient-bg text-white text-[11px] font-bold px-3.5 py-1 rounded-full uppercase tracking-wider mb-3 shadow-crimson">
+              Featured Listing Spotlight
+            </span>
+            <h1 class="font-serif text-2xl sm:text-4xl md:text-5xl font-bold max-w-2xl leading-tight mb-3">${b.title}</h1>
+            <p class="text-xs sm:text-sm text-gray-200 max-w-lg mb-6 leading-relaxed">${b.subtitle}</p>
+            <button onclick="switchCategory('${b.category}')" class="px-6 py-3 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson hover:opacity-95 transition flex items-center space-x-2">
+              <span>Explore Properties</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      `).join("");
+
+      dots.innerHTML = banners.map((_, i) => `
+        <button onclick="currentBannerIdx=${i}; renderBannersSlider();" class="h-2 rounded-full transition-all ${i === currentBannerIdx ? "bg-brand-crimson w-7" : "bg-white/50 w-2"}"></button>
+      `).join("");
+    }
+
+    function nextBanner() {
+      currentBannerIdx = (currentBannerIdx + 1) % banners.length;
+      renderBannersSlider();
+    }
+    function prevBanner() {
+      currentBannerIdx = (currentBannerIdx - 1 + banners.length) % banners.length;
+      renderBannersSlider();
+    }
+
+    function handleAddBanner(e) {
+      e.preventDefault();
+      banners.unshift({
+        title: document.getElementById("bannerTitleInput").value.trim(),
+        subtitle: document.getElementById("bannerSubInput").value.trim(),
+        imageUrl: document.getElementById("bannerImgInput").value.trim(),
+        category: document.getElementById("bannerCatInput").value
+      });
+      localStorage.setItem(STORAGE_KEY_BANNERS, JSON.stringify(banners));
+      renderBannersSlider();
+      e.target.reset();
+      showToast("New spotlight banner added to homepage!");
+    }
+
+    /* ================= LISTINGS & FILTERS ================= */
+    function switchCategory(cat) {
+      document.getElementById("filter-type").value = cat === "All" ? "" : cat;
+      document.getElementById("currentCategoryHeading").textContent = cat === "All" ? "Featured Kenya Properties" : `${cat}s For Sale & Rent`;
+      loadListings();
+    }
+
+    function handleQuickSearch(val) {
+      document.getElementById("filter-location").value = val;
+      loadListings();
+    }
+
+    function resetFilters() {
+      document.getElementById("filter-location").value = "";
+      document.getElementById("filter-type").value = "";
+      document.getElementById("filter-maxprice").value = "";
+      document.getElementById("topSearchInput").value = "";
+      loadListings();
+    }
+
+    async function loadListings() {
+      const location = document.getElementById("filter-location").value;
+      const propertyType = document.getElementById("filter-type").value;
+      const maxPrice = document.getElementById("filter-maxprice").value;
+
+      let url = `/api/properties?`;
+      if (location) url += `location=${encodeURIComponent(location)}&`;
+      if (propertyType) url += `propertyType=${encodeURIComponent(propertyType)}&`;
+      if (maxPrice) url += `maxPrice=${maxPrice}`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        allPropertiesCache = data.properties || [];
+
+        const grid = document.getElementById("property-card-list");
+        const emptyState = document.getElementById("emptyCatalogState");
+
+        if (allPropertiesCache.length === 0) {
+          grid.innerHTML = "";
+          emptyState.classList.remove("hidden");
+        } else {
+          emptyState.classList.add("hidden");
+          grid.innerHTML = allPropertiesCache.map(prop => {
+            recordMetric(prop._id, "view");
+            return generateCardHtml(prop, false);
+          }).join("");
         }
 
-        async function loadAnalytics() {
-            if (!currentUser || currentUser.role !== 'owner') return;
-            const res = await fetch('/api/admin/analytics');
-            if (!res.ok) return;
-            const data = await res.json();
-
-            document.getElementById('metric-customers').innerText = data.summary.totalCustomers;
-            document.getElementById('metric-views').innerText = data.summary.totalViews;
-            document.getElementById('metric-clicks').innerText = data.summary.totalClicks;
-            document.getElementById('metric-ctr').innerText = data.summary.overallCTR;
-
-            const propTbody = document.getElementById('table-property-metrics');
-            propTbody.innerHTML = "";
-            data.propertyMetrics.forEach(p => {
-                const ctr = p.views > 0 ? ((p.clicks / p.views) * 100).toFixed(1) + '%' : '0.0%';
-                propTbody.innerHTML += `
-                    <tr>
-                        <td><strong>${p.title}</strong></td>
-                        <td>${p.location}</td>
-                        <td>KSh ${Number(p.price).toLocaleString()}</td>
-                        <td><span class="badge-pill">${p.status}</span></td>
-                        <td>${p.views}</td>
-                        <td>${p.clicks}</td>
-                        <td><strong>${ctr}</strong></td>
-                    </tr>
-                `;
-            });
-
-            const searchTbody = document.getElementById('table-search-logs');
-            searchTbody.innerHTML = "";
-            data.searches.forEach(s => {
-                searchTbody.innerHTML += `
-                    <tr>
-                        <td>${s.queryTerm || 'N/A'}</td>
-                        <td>${s.location || 'All Locations'}</td>
-                        <td>${s.maxPrice ? 'KSh ' + Number(s.maxPrice).toLocaleString() : 'Any'}</td>
-                        <td><small>${new Date(s.createdAt).toLocaleString()}</small></td>
-                    </tr>
-                `;
-            });
-
-            const custTbody = document.getElementById('table-customer-crm');
-            custTbody.innerHTML = "";
-            data.customers.forEach(c => {
-                custTbody.innerHTML += `
-                    <tr>
-                        <td><strong>${c.email}</strong></td>
-                        <td><span class="badge-pill">${c.role}</span></td>
-                        <td><small>${new Date(c.createdAt).toLocaleDateString()}</small></td>
-                    </tr>
-                `;
-            });
+        // Freemium Lock Gate
+        const lockBanner = document.getElementById("guest-lock-banner");
+        if (data.isLocked) {
+          lockBanner.classList.remove("hidden");
+          document.getElementById("lock-desc").textContent = `Showing 5 of ${data.totalCount} verified properties. Sign in or create a free account to unlock the remaining ${data.unseenCount} listings!`;
+        } else {
+          lockBanner.classList.add("hidden");
         }
 
-        async function loadListings() {
-            const location = document.getElementById('filter-location').value;
-            const propertyType = document.getElementById('filter-type').value;
-            const maxPrice = document.getElementById('filter-maxprice').value;
-
-            let url = `/api/properties?`;
-            if (location) url += `location=${encodeURIComponent(location)}&`;
-            if (propertyType) url += `propertyType=${encodeURIComponent(propertyType)}&`;
-            if (maxPrice) url += `maxPrice=${maxPrice}`;
-
-            const res = await fetch(url);
-            const data = await res.json();
-            allPropertiesCache = data.properties;
-
-            const feedContainer = document.getElementById('property-card-list');
-            feedContainer.innerHTML = "";
-
-            data.properties.forEach(prop => {
-                feedContainer.innerHTML += generateCardHtml(prop, false);
-                recordMetric(prop._id, 'view');
-            });
-
-            const lockBanner = document.getElementById('guest-lock-banner');
-            if (data.isLocked) {
-                lockBanner.classList.remove('hidden');
-                document.getElementById('lock-desc').innerText = `Showing 5 of ${data.totalCount} listings. Sign in to view all properties!`;
-            } else {
-                lockBanner.classList.add('hidden');
-            }
-
-            if (currentUser && currentUser.role === 'owner') {
-                const adminList = document.getElementById('creator-admin-list');
-                adminList.innerHTML = "";
-                data.properties.forEach(prop => adminList.innerHTML += generateCardHtml(prop, true));
-            }
+        // Admin Inventory Grid
+        if (currentUser && currentUser.role === "owner") {
+          document.getElementById("adminInventoryBadge").textContent = `${allPropertiesCache.length} Properties`;
+          document.getElementById("creator-admin-list").innerHTML = allPropertiesCache.map(prop => generateCardHtml(prop, true)).join("");
         }
+      } catch (err) {
+        showToast("Could not reach server. Ensure Node.js is running.", true);
+      }
+    }
 
-        function generateCardHtml(prop, isEditable) {
-            const displayImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80';
-            const countBadge = prop.images && prop.images.length > 1 ? `<span class="photo-badge">📷 ${prop.images.length} photos</span>` : '';
-            const videoBadge = prop.videoUrls && prop.videoUrls.length > 0 ? `<span class="video-badge">▶ ${prop.videoUrls.length} Video${prop.videoUrls.length > 1 ? 's' : ''}</span>` : '';
+    function generateCardHtml(prop, isEditable) {
+      const img = prop.images && prop.images.length > 0 ? prop.images[0] : "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80";
+      const photoCount = prop.images ? prop.images.length : 1;
+      const videoCount = prop.videoUrls ? prop.videoUrls.length : 0;
+      const isSaved = savedIds.includes(prop._id);
 
-            let statusClass = prop.status === 'Sold Out' ? 'status-sold' : (prop.status === 'Rented Out' ? 'status-rented' : 'status-available');
-            const statusBadge = `<span class="status-badge ${statusClass}">${prop.status || 'Available'}</span>`;
+      let statusStyle = "bg-emerald-600 text-white";
+      if (prop.status === "Sold Out") statusStyle = "bg-brand-crimson text-white";
+      if (prop.status === "Rented Out") statusStyle = "bg-amber-500 text-white";
 
-            const amenitiesHtml = (prop.amenities || []).map(a => `<span class="badge-pill">${a}</span>`).join('');
+      const waText = encodeURIComponent(`Hello Ted! I am interested in "${prop.title}" located at ${prop.location} (KSh ${Number(prop.price).toLocaleString()}).`);
+      const waLink = `https://wa.me/${OWNER_PHONE.replace("+", "")}?text=${waText}`;
 
-            const waText = encodeURIComponent(`Hello, I am interested in: "${prop.title}" in ${prop.location}.`);
-            const waLink = `https://wa.me/${OWNER_PHONE.replace('+', '')}?text=${waText}`;
+      return `
+        <div onclick="openDetailsModal('${prop._id}')" class="bg-white rounded-3xl border border-brand-border overflow-hidden shadow-sm card-hover flex flex-col justify-between cursor-pointer">
+          <div>
+            <!-- Media Header -->
+            <div class="relative h-56 bg-zinc-900 overflow-hidden group">
+              <img src="${img}" alt="${prop.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+              
+              <div class="absolute top-3 left-3 flex flex-col gap-1.5">
+                <span class="bg-brand-charcoal/90 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">
+                  ${prop.propertyType || "Property"}
+                </span>
+                ${videoCount > 0 ? `<span class="crimson-gradient-bg text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow"><i class="fa-solid fa-play mr-1"></i>${videoCount} Video Tour</span>` : ""}
+              </div>
 
-            return `
-                <div class="property-card" onclick="openDetailsModal('${prop._id}')">
-                    <div class="media-container">
-                        <img src="${displayImage}" alt="${prop.title}">
-                        ${countBadge}
-                        ${videoBadge}
-                        ${statusBadge}
-                    </div>
-                    <div class="card-body">
-                        <div>
-                            <div class="card-price">KSh ${Number(prop.price).toLocaleString()}</div>
-                            <h4 style="margin: 0 0 5px 0;">${prop.title}</h4>
-                            <p style="color: var(--gray); font-size: 0.85rem; margin: 0;">📍 ${prop.location} • <em>${prop.propertyType}</em></p>
-                            <div class="card-specs">
-                                <span>🛏️ ${prop.bedrooms} Beds</span>
-                                <span>🚿 ${prop.bathrooms} Baths</span>
-                            </div>
-                            <p style="font-size: 0.85rem; color: #444; margin: 8px 0;">${prop.description || ''}</p>
-                            <div>${amenitiesHtml}</div>
-                            <div style="display: flex; gap: 8px; margin-top: 10px;" onclick="event.stopPropagation()">
-                                <a href="${waLink}" target="_blank" class="btn-whatsapp">💬 WhatsApp</a>
-                                <a href="tel:${OWNER_PHONE}" class="btn-call">📞 Call</a>
-                            </div>
-                        </div>
-                        ${isEditable ? `
-                            <div style="display:flex; gap: 5px; margin-top: 12px;" onclick="event.stopPropagation()">
-                                <button onclick="openEditModal('${prop._id}')" class="btn-secondary" style="flex:1; font-size:0.8rem; padding: 6px;">Edit / Status</button>
-                                <button onclick="deleteListing('${prop._id}')" style="background:#ef4444; font-size:0.8rem; padding: 6px;">Delete</button>
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-        }
+              <span class="absolute top-3 right-3 ${statusStyle} text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                ${prop.status || "Available"}
+              </span>
 
-        async function openDetailsModal(id) {
-            const prop = allPropertiesCache.find(p => p._id === id);
-            if (!prop) return;
+              <button onclick="event.stopPropagation(); toggleSaveProperty('${prop._id}')" title="Save Property" class="absolute bottom-3 left-3 w-8 h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow transition">
+                <i class="${isSaved ? "fa-solid text-brand-crimson" : "fa-regular text-gray-700"} fa-heart text-xs"></i>
+              </button>
 
-            await recordMetric(id, 'click');
-            activePropertyTitle = prop.title;
+              <span class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] px-2.5 py-1 rounded-full backdrop-blur-sm">
+                <i class="fa-regular fa-images mr-1"></i>${photoCount}
+              </span>
+            </div>
 
-            document.getElementById('modal-title').innerText = prop.title;
-            document.getElementById('modal-location').innerText = `📍 ${prop.location} (${prop.propertyType})`;
-            document.getElementById('modal-price').innerText = `KSh ${Number(prop.price).toLocaleString()}`;
-            document.getElementById('modal-specs').innerText = `🛏️ ${prop.bedrooms} Beds | 🚿 ${prop.bathrooms} Baths | Status: ${prop.status}`;
-            document.getElementById('modal-desc').innerText = prop.description || '';
+            <!-- Card Body -->
+            <div class="p-5">
+              <div class="font-serif text-xl font-bold text-brand-crimson mb-1">KSh ${Number(prop.price).toLocaleString()}</div>
+              <h3 class="font-serif text-base font-bold text-brand-charcoal line-clamp-1 mb-1">${prop.title}</h3>
+              <p class="text-xs text-gray-500 mb-3"><i class="fa-solid fa-location-dot text-brand-crimson mr-1"></i>${prop.location}</p>
 
-            // Render Multi-Photo Gallery
-            const gallery = document.getElementById('modal-gallery');
-            gallery.innerHTML = "";
-            (prop.images || []).forEach(img => {
-                gallery.innerHTML += `<img src="${img}" style="height: 100px; width: 140px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border);">`;
-            });
+              <div class="flex items-center space-x-4 text-xs font-medium text-gray-600 py-2.5 border-y border-brand-border/70 mb-3">
+                <span><i class="fa-solid fa-bed text-brand-crimson mr-1"></i> ${prop.bedrooms || 3} Beds</span>
+                <span><i class="fa-solid fa-bath text-brand-crimson mr-1"></i> ${prop.bathrooms || 3} Baths</span>
+              </div>
 
-            // Render Embedded Video Tours
-            const videosSec = document.getElementById('modal-videos-section');
-            const videosBox = document.getElementById('modal-videos-container');
-            videosBox.innerHTML = "";
-            if (prop.videoUrls && prop.videoUrls.length > 0) {
-                videosSec.classList.remove('hidden');
-                prop.videoUrls.forEach(url => {
-                    videosBox.innerHTML += `<iframe width="100%" height="240" src="${url}" frameborder="0" allowfullscreen style="border-radius:6px;"></iframe>`;
-                });
-            } else {
-                videosSec.classList.add('hidden');
-            }
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                ${(prop.amenities || []).slice(0, 4).map(a => `<span class="bg-brand-alabaster border border-brand-border text-gray-700 text-[10px] font-medium px-2.5 py-0.5 rounded-full">${a}</span>`).join("")}
+              </div>
+            </div>
+          </div>
 
-            const amenitiesBox = document.getElementById('modal-amenities');
-            amenitiesBox.innerHTML = (prop.amenities || []).map(a => `<span class="badge-pill">${a}</span>`).join('');
+          <!-- Card Footer Actions -->
+          <div class="px-5 pb-5 pt-1" onclick="event.stopPropagation()">
+            <div class="flex gap-2">
+              <a href="${waLink}" target="_blank" class="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span>WhatsApp</span>
+              </a>
+              <a href="tel:${OWNER_PHONE}" class="flex-1 py-2 rounded-xl bg-brand-charcoal hover:bg-black text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>Call</span>
+              </a>
+            </div>
 
-            const waText = encodeURIComponent(`Hello, I am inquiring about "${prop.title}" (${prop.location}).`);
-            document.getElementById('modal-whatsapp-btn').href = `https://wa.me/${OWNER_PHONE.replace('+', '')}?text=${waText}`;
-            document.getElementById('modal-call-btn').href = `tel:${OWNER_PHONE}`;
+            ${isEditable ? `
+              <div class="flex gap-2 mt-2.5 pt-2.5 border-t border-brand-border">
+                <button onclick="openEditModal('${prop._id}')" class="flex-1 py-1.5 rounded-xl bg-brand-alabaster hover:bg-gray-200 border border-brand-border text-brand-charcoal text-xs font-bold">
+                  <i class="fa-solid fa-pen-to-square mr-1"></i> Edit / Status
+                </button>
+                <button onclick="deleteListing('${prop._id}')" class="px-3 py-1.5 rounded-xl bg-brand-softred hover:bg-brand-crimson text-brand-crimson hover:text-white text-xs font-bold transition">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            ` : ""}
+          </div>
+        </div>
+      `;
+    }
 
-            document.getElementById('details-modal').classList.remove('hidden');
-        }
+    /* ================= DETAILS LIGHTBOX & GALLERY ================= */
+    async function openDetailsModal(id) {
+      const prop = allPropertiesCache.find(p => p._id === id);
+      if (!prop) return;
 
-        function closeDetailsModal() { document.getElementById('details-modal').classList.add('hidden'); }
+      await recordMetric(id, "click");
+      activePropertyTitle = prop.title;
 
-        async function recordMetric(id, action) {
-            try { 
-                await fetch(`/api/properties/${id}/track`, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify({ action }) 
-                }); 
-            } catch (err) {}
-        }
+      document.getElementById("modal-title").textContent = prop.title;
+      document.getElementById("modal-location").innerHTML = `<i class="fa-solid fa-location-dot mr-1"></i> ${prop.location} • ${prop.propertyType}`;
+      document.getElementById("modal-price").textContent = `KSh ${Number(prop.price).toLocaleString()}`;
+      document.getElementById("modal-specs").textContent = `${prop.bedrooms || 3} Bedrooms • ${prop.bathrooms || 3} Bathrooms • Status: ${prop.status || "Available"}`;
+      document.getElementById("modal-desc").textContent = prop.description || "Contact Ted With The House for full architectural specifications and site viewing.";
 
-        // PUBLISH WITH MULTI-PHOTO, MULTI-VIDEO & AMENITIES TICK CHECKLIST
-        async function publishListing() {
-            const title = document.getElementById('add-title').value;
-            const location = document.getElementById('add-location').value;
-            const propertyType = document.getElementById('add-type').value;
-            const price = document.getElementById('add-price').value;
-            const bedrooms = document.getElementById('add-beds').value;
-            const bathrooms = document.getElementById('add-baths').value;
-            const description = document.getElementById('add-desc').value;
-            const status = document.getElementById('add-status').value;
-            const videoUrls = document.getElementById('add-videos').value;
-            const photoFiles = document.getElementById('add-photos').files;
+      activeModalPhotos = prop.images && prop.images.length > 0 ? prop.images : ["https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80"];
+      activeModalPhotoIdx = 0;
+      updateModalGallery();
 
-            if (!title || !location || !price) {
-                alert("Please fill in Title, Location, and Price.");
-                return;
-            }
+      // Videos
+      const videosSec = document.getElementById("modal-videos-section");
+      const videosBox = document.getElementById("modal-videos-container");
+      videosBox.innerHTML = "";
+      if (prop.videoUrls && prop.videoUrls.length > 0) {
+        videosSec.classList.remove("hidden");
+        prop.videoUrls.forEach(url => {
+          videosBox.innerHTML += `<iframe class="w-full h-56 rounded-2xl border border-brand-border" src="${url}" frameborder="0" allowfullscreen></iframe>`;
+        });
+      } else {
+        videosSec.classList.add("hidden");
+      }
 
-            const formData = new FormData();
-            formData.append('title', title);
-            formData.append('location', location);
-            formData.append('propertyType', propertyType);
-            formData.append('price', price);
-            formData.append('bedrooms', bedrooms);
-            formData.append('bathrooms', bathrooms);
-            formData.append('description', description);
-            formData.append('status', status);
-            formData.append('videoUrls', videoUrls);
+      // Amenities
+      document.getElementById("modal-amenities").innerHTML = (prop.amenities || []).map(a =>
+        `<span class="bg-brand-softred/60 text-brand-darkred text-xs font-semibold px-3 py-1 rounded-full"><i class="fa-solid fa-check mr-1 text-[10px]"></i>${a}</span>`
+      ).join("");
 
-            // Append multiple uploaded photos
-            for (let i = 0; i < photoFiles.length; i++) {
-                formData.append('propertyImages', photoFiles[i]);
-            }
+      const waText = encodeURIComponent(`Hello Ted, I would like to inquire about "${prop.title}" (${prop.location}).`);
+      document.getElementById("modal-whatsapp-btn").href = `https://wa.me/${OWNER_PHONE.replace("+", "")}?text=${waText}`;
+      document.getElementById("modal-call-btn").href = `tel:${OWNER_PHONE}`;
 
-            // Append ticked amenities
-            const checkboxes = document.querySelectorAll('#add-amenities-group input[type="checkbox"]:checked');
-            checkboxes.forEach(cb => formData.append('amenities', cb.value));
+      document.getElementById("details-modal").classList.remove("hidden");
+    }
 
-            const res = await fetch('/api/properties', { method: 'POST', body: formData });
-            if (res.ok) {
-                alert("Property published with multiple media successfully!");
-                // Clear fields
-                document.getElementById('add-title').value = "";
-                document.getElementById('add-location').value = "";
-                document.getElementById('add-price').value = "";
-                document.getElementById('add-desc').value = "";
-                document.getElementById('add-videos').value = "";
-                document.getElementById('add-photos').value = "";
-                document.querySelectorAll('#add-amenities-group input[type="checkbox"]').forEach(cb => cb.checked = false);
+    function updateModalGallery() {
+      document.getElementById("modal-main-photo").src = activeModalPhotos[activeModalPhotoIdx];
+      document.getElementById("modal-photo-counter").textContent = `${activeModalPhotoIdx + 1} / ${activeModalPhotos.length}`;
+      document.getElementById("modal-gallery").innerHTML = activeModalPhotos.map((src, idx) => `
+        <img src="${src}" onclick="activeModalPhotoIdx=${idx}; updateModalGallery();" class="h-16 w-24 object-cover rounded-xl cursor-pointer border-2 transition ${idx === activeModalPhotoIdx ? "border-brand-crimson scale-105" : "border-transparent opacity-60"}">
+      `).join("");
+    }
+    function nextModalPhoto() { activeModalPhotoIdx = (activeModalPhotoIdx + 1) % activeModalPhotos.length; updateModalGallery(); }
+    function prevModalPhoto() { activeModalPhotoIdx = (activeModalPhotoIdx - 1 + activeModalPhotos.length) % activeModalPhotos.length; updateModalGallery(); }
+    function closeDetailsModal() { document.getElementById("details-modal").classList.add("hidden"); }
 
-                // AUTOMATIC REFRESH WITHOUT FULL PAGE RELOAD
-                await loadListings();
-                await loadAnalytics();
-            } else {
-                const err = await res.json();
-                alert(err.error);
-            }
-        }
+    /* ================= SAVED / SHORTLISTED HOMES ================= */
+    function toggleSaveProperty(id) {
+      if (savedIds.includes(id)) {
+        savedIds = savedIds.filter(item => item !== id);
+        showToast("Removed from shortlisted homes.");
+      } else {
+        savedIds.push(id);
+        showToast("Saved to your shortlist!");
+      }
+      localStorage.setItem(STORAGE_KEY_SAVED, JSON.stringify(savedIds));
+      updateSavedBadge();
+      loadListings();
+    }
 
-        // EDIT MODAL HANDLERS
-        function openEditModal(id) {
-            const prop = allPropertiesCache.find(p => p._id === id);
-            if (!prop) return;
+    function updateSavedBadge() {
+      document.getElementById("savedCountBadge").textContent = savedIds.length;
+    }
 
-            document.getElementById('edit-id').value = prop._id;
-            document.getElementById('edit-title').value = prop.title;
-            document.getElementById('edit-location').value = prop.location;
-            document.getElementById('edit-price').value = prop.price;
-            document.getElementById('edit-type').value = prop.propertyType;
-            document.getElementById('edit-status').value = prop.status || 'Available';
-            document.getElementById('edit-desc').value = prop.description || '';
-            document.getElementById('edit-videos').value = (prop.videoUrls || []).join('\n');
+    function openSavedModal() {
+      const container = document.getElementById("savedListContainer");
+      const savedProps = allPropertiesCache.filter(p => savedIds.includes(p._id));
+      if (savedProps.length === 0) {
+        container.innerHTML = `<div class="text-center py-12 text-gray-400 text-xs"><i class="fa-regular fa-heart text-3xl mb-2 text-brand-crimson"></i><p>No properties shortlisted yet. Tap the heart icon on any home to save it here.</p></div>`;
+      } else {
+        container.innerHTML = savedProps.map(p => `
+          <div class="bg-brand-alabaster p-3.5 rounded-2xl border border-brand-border flex items-center space-x-3">
+            <img src="${p.images?.[0] || ''}" class="w-16 h-16 rounded-xl object-cover shrink-0">
+            <div class="flex-grow min-w-0">
+              <h4 class="font-bold text-xs truncate">${p.title}</h4>
+              <p class="text-[11px] text-gray-500">${p.location}</p>
+              <span class="font-serif font-bold text-xs text-brand-crimson">KSh ${Number(p.price).toLocaleString()}</span>
+            </div>
+            <button onclick="closeSavedModal(); openDetailsModal('${p._id}')" class="px-3 py-1.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl">View</button>
+          </div>
+        `).join("");
+      }
+      document.getElementById("savedModal").classList.remove("hidden");
+    }
+    function closeSavedModal() { document.getElementById("savedModal").classList.add("hidden"); }
 
-            // Populate Checkboxes
-            const boxes = document.querySelectorAll('#edit-amenities-group input[type="checkbox"]');
-            boxes.forEach(cb => {
-                cb.checked = (prop.amenities || []).includes(cb.value);
-            });
+    /* ================= OWNER PUBLISH, EDIT & ANALYTICS ================= */
+    async function publishListing(e) {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("title", document.getElementById("add-title").value);
+      formData.append("propertyType", document.getElementById("add-type").value);
+      formData.append("location", document.getElementById("add-location").value);
+      formData.append("price", document.getElementById("add-price").value);
+      formData.append("bedrooms", document.getElementById("add-beds").value);
+      formData.append("bathrooms", document.getElementById("add-baths").value);
+      formData.append("status", document.getElementById("add-status").value);
+      formData.append("description", document.getElementById("add-desc").value);
+      formData.append("videoUrls", document.getElementById("add-videos").value);
 
-            document.getElementById('edit-modal').classList.remove('hidden');
-        }
+      const photos = document.getElementById("add-photos").files;
+      for (let i = 0; i < photos.length; i++) formData.append("propertyImages", photos[i]);
 
-        function closeEditModal() { document.getElementById('edit-modal').classList.add('hidden'); }
+      document.querySelectorAll("#add-amenities-group input[type='checkbox']:checked").forEach(cb => {
+        formData.append("amenities", cb.value);
+      });
 
-        async function submitEdit() {
-            const id = document.getElementById('edit-id').value;
-            const title = document.getElementById('edit-title').value;
-            const location = document.getElementById('edit-location').value;
-            const propertyType = document.getElementById('edit-type').value;
-            const price = document.getElementById('edit-price').value;
-            const status = document.getElementById('edit-status').value;
-            const description = document.getElementById('edit-desc').value;
-            const videoUrls = document.getElementById('edit-videos').value;
+      const res = await fetch("/api/properties", { method: "POST", body: formData });
+      if (res.ok) {
+        showToast("Property published to live storefront!");
+        document.getElementById("publishPropertyForm").reset();
+        await loadListings();
+        await loadAnalytics();
+      } else {
+        const err = await res.json();
+        showToast(err.error || "Failed to publish", true);
+      }
+    }
 
-            const selectedAmenities = [];
-            document.querySelectorAll('#edit-amenities-group input[type="checkbox"]:checked').forEach(cb => {
-                selectedAmenities.push(cb.value);
-            });
+    function openEditModal(id) {
+      const prop = allPropertiesCache.find(p => p._id === id);
+      if (!prop) return;
+      document.getElementById("edit-id").value = prop._id;
+      document.getElementById("edit-title").value = prop.title;
+      document.getElementById("edit-location").value = prop.location;
+      document.getElementById("edit-price").value = prop.price;
+      document.getElementById("edit-status").value = prop.status || "Available";
+      document.getElementById("edit-type").value = prop.propertyType || "Townhouse";
+      document.getElementById("edit-desc").value = prop.description || "";
+      document.getElementById("edit-videos").value = (prop.videoUrls || []).join("\n");
 
-            const res = await fetch(`/api/properties/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    title, location, propertyType, price, status, description, 
-                    videoUrls, amenities: selectedAmenities, bedrooms: 3, bathrooms: 3 
-                })
-            });
+      document.querySelectorAll("#edit-amenities-group input[type='checkbox']").forEach(cb => {
+        cb.checked = (prop.amenities || []).includes(cb.value);
+      });
+      document.getElementById("edit-modal").classList.remove("hidden");
+    }
+    function closeEditModal() { document.getElementById("edit-modal").classList.add("hidden"); }
 
-            if (res.ok) {
-                alert("Listing updated successfully!");
-                closeEditModal();
-                await loadListings();
-                await loadAnalytics();
-            } else {
-                alert("Failed to update listing.");
-            }
-        }
+    async function submitEdit() {
+      const id = document.getElementById("edit-id").value;
+      const amenities = [];
+      document.querySelectorAll("#edit-amenities-group input[type='checkbox']:checked").forEach(cb => amenities.push(cb.value));
 
-        async function deleteListing(id) {
-            if (confirm("Are you sure you want to remove this listing?")) {
-                await fetch(`/api/properties/${id}`, { method: 'DELETE' });
-                await loadListings();
-                await loadAnalytics();
-            }
-        }
+      const res = await fetch(`/api/properties/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: document.getElementById("edit-title").value,
+          location: document.getElementById("edit-location").value,
+          price: document.getElementById("edit-price").value,
+          status: document.getElementById("edit-status").value,
+          propertyType: document.getElementById("edit-type").value,
+          description: document.getElementById("edit-desc").value,
+          videoUrls: document.getElementById("edit-videos").value,
+          amenities,
+          bedrooms: 3,
+          bathrooms: 3
+        })
+      });
 
-        // EMAIL INQUIRY DISPATCH
-        async function sendPropertyInquiry() {
-            const guestEmail = currentUser ? currentUser.email : document.getElementById('property-guest-email').value;
-            const message = document.getElementById('property-inquiry-msg').value;
+      if (res.ok) {
+        showToast("Listing updated!");
+        closeEditModal();
+        await loadListings();
+        await loadAnalytics();
+      }
+    }
 
-            if (!guestEmail || !message) {
-                alert("Please provide your email and message.");
-                return;
-            }
+    async function deleteListing(id) {
+      if (!confirm("Remove this listing permanently?")) return;
+      await fetch(`/api/properties/${id}`, { method: "DELETE" });
+      showToast("Listing deleted.");
+      await loadListings();
+      await loadAnalytics();
+    }
 
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ guestEmail, message, propertyTitle: activePropertyTitle })
-            });
+    async function loadAnalytics() {
+      if (!currentUser || currentUser.role !== "owner") return;
+      const res = await fetch("/api/admin/analytics");
+      if (!res.ok) return;
+      const data = await res.json();
 
-            const data = await res.json();
-            if (res.ok) {
-                alert(data.message);
-                document.getElementById('property-inquiry-msg').value = "";
-                closeDetailsModal();
-            } else {
-                alert(data.error);
-            }
-        }
+      document.getElementById("metric-customers").textContent = data.summary.totalCustomers;
+      document.getElementById("ownerLeadsBadge").textContent = data.summary.totalCustomers;
+      document.getElementById("metric-views").textContent = data.summary.totalViews;
+      document.getElementById("metric-clicks").textContent = data.summary.totalClicks;
+      document.getElementById("metric-ctr").textContent = data.summary.overallCTR;
 
-        function openContactModal() { document.getElementById('contact-modal').classList.remove('hidden'); }
-        function closeContactModal() { document.getElementById('contact-modal').classList.add('hidden'); }
+      document.getElementById("table-property-metrics").innerHTML = data.propertyMetrics.map(p => {
+        const ctr = p.views > 0 ? ((p.clicks / p.views) * 100).toFixed(1) + "%" : "0.0%";
+        return `<tr><td class="py-2.5 px-3 font-bold">${p.title}</td><td class="py-2.5 px-3">${p.status}</td><td class="py-2.5 px-3">${p.views}</td><td class="py-2.5 px-3">${p.clicks}</td><td class="py-2.5 px-3 font-bold text-brand-crimson">${ctr}</td></tr>`;
+      }).join("");
 
-        async function sendGeneralInquiry() {
-            const guestEmail = currentUser ? currentUser.email : document.getElementById('general-guest-email').value;
-            const message = document.getElementById('general-inquiry-msg').value;
+      document.getElementById("table-search-logs").innerHTML = data.searches.map(s =>
+        `<tr><td class="py-2.5 px-4 font-medium">${s.queryTerm}</td><td class="py-2.5 px-4">${s.location || "All"}</td><td class="py-2.5 px-4">${s.maxPrice ? "KSh " + Number(s.maxPrice).toLocaleString() : "Any"}</td><td class="py-2.5 px-4 text-gray-400">${new Date(s.createdAt).toLocaleString()}</td></tr>`
+      ).join("");
 
-            if (!guestEmail || !message) {
-                alert("Please provide your email and message.");
-                return;
-            }
+      document.getElementById("table-customer-crm").innerHTML = data.customers.map(c =>
+        `<tr><td class="py-3 px-4 font-bold">${c.email}</td><td class="py-3 px-4"><span class="bg-brand-softred text-brand-crimson px-2.5 py-0.5 rounded-full font-bold">${c.role}</span></td><td class="py-3 px-4 text-gray-500">${new Date(c.createdAt).toLocaleDateString()}</td></tr>`
+      ).join("");
 
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ guestEmail, message, propertyTitle: "General Platform Inquiry" })
-            });
+      // Chart.js Visualization
+      const ctx = document.getElementById("trafficAnalyticsChart");
+      if (ctx) {
+        if (trafficChartInstance) trafficChartInstance.destroy();
+        trafficChartInstance = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["Catalog Views", "Detail Clicks", "Registered Leads"],
+            datasets: [{
+              data: [data.summary.totalViews, data.summary.totalClicks, data.summary.totalCustomers],
+              backgroundColor: ["#18181B", "#C62828", "#FCA5A5"]
+            }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } }
+        });
+      }
+    }
 
-            const data = await res.json();
-            if (res.ok) {
-                alert(data.message);
-                document.getElementById('general-inquiry-msg').value = "";
-                closeContactModal();
-            } else {
-                alert(data.error);
-            }
-        }
+    function switchOwnerTab(tab) {
+      document.querySelectorAll(".owner-tab-content").forEach(el => el.classList.add("hidden"));
+      document.querySelectorAll(".owner-tab-btn").forEach(btn => {
+        btn.classList.remove("bg-brand-crimson", "text-white", "shadow-crimson");
+        btn.classList.add("bg-white", "text-brand-charcoal");
+      });
+      document.getElementById(`ownerTab-${tab}`).classList.remove("hidden");
+      const activeBtn = document.getElementById(`tabBtn-${tab}`);
+      activeBtn.classList.add("bg-brand-crimson", "text-white", "shadow-crimson");
+      activeBtn.classList.remove("bg-white", "text-brand-charcoal");
+    }
 
-        // AUTH & MODALS
-        function openAuthModal() { document.getElementById('auth-modal').classList.remove('hidden'); }
-        function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); }
-        function toggleAuthViews() {
-            document.getElementById('modal-login').classList.toggle('hidden');
-            document.getElementById('modal-register').classList.toggle('hidden');
-        }
-        function togglePeek(id, btn) {
-            const input = document.getElementById(id);
-            if (input.type === 'password') { input.type = 'text'; btn.innerText = '🙈'; }
-            else { input.type = 'password'; btn.innerText = '👁️'; }
-        }
+    /* ================= CONTACT, LIVE CHAT & AUTH MODALS ================= */
+    async function sendPropertyInquiry() {
+      const guestEmail = currentUser ? currentUser.email : document.getElementById("property-guest-email").value;
+      const message = document.getElementById("property-inquiry-msg").value;
+      if (!guestEmail || !message) return showToast("Please enter your email and message.", true);
 
-        async function handleRegister() {
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
-            const res = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
-            const data = await res.json();
-            if (res.ok) { alert(data.message); toggleAuthViews(); } else alert(data.error);
-        }
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ guestEmail, message, propertyTitle: activePropertyTitle })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showToast(data.message);
+        document.getElementById("property-inquiry-msg").value = "";
+        closeDetailsModal();
+      } else showToast(data.error, true);
+    }
 
-        async function handleLogin() {
-            const email = document.getElementById('log-email').value;
-            const password = document.getElementById('log-password').value;
-            const res = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
-            const data = await res.json();
-            if (res.ok) {
-                closeAuthModal();
-                await verifySession();
-                await loadListings();
-            } else alert(data.error);
-        }
+    async function sendGeneralInquiry() {
+      const guestEmail = currentUser ? currentUser.email : document.getElementById("general-guest-email").value;
+      const message = document.getElementById("general-inquiry-msg").value;
+      if (!guestEmail || !message) return showToast("Please provide your email and message.", true);
 
-        async function logout() {
-            await fetch('/api/logout', { method: 'POST' });
-            location.reload();
-        }
-    </script>
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ guestEmail, message, propertyTitle: "General Website Inquiry" })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showToast(data.message);
+        document.getElementById("general-inquiry-msg").value = "";
+        closeContactModal();
+      } else showToast(data.error, true);
+    }
+
+    function toggleLiveChat() { document.getElementById("liveChatWindow").classList.toggle("hidden"); }
+    function handleSendChatMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById("chatInputText");
+      const msg = input.value.trim();
+      if (!msg) return;
+      const thread = document.getElementById("chatMessagesThread");
+      thread.innerHTML += `<div class="flex justify-end"><div class="bg-brand-charcoal text-white p-3 rounded-2xl rounded-tr-none max-w-[80%]">${msg}</div></div>`;
+      input.value = "";
+      thread.scrollTop = thread.scrollHeight;
+      setTimeout(() => {
+        thread.innerHTML += `<div class="flex items-start space-x-2"><div class="w-7 h-7 rounded-full crimson-gradient-bg text-white flex items-center justify-center text-[10px] shrink-0 font-bold">TH</div><div class="bg-white p-3 rounded-2xl rounded-tl-none border border-brand-border shadow-sm max-w-[80%]">Thank you! Tap the <strong>WhatsApp</strong> button on any property card or send an email via <strong>Contact Us</strong> to book an immediate viewing with Ted.</div></div>`;
+        thread.scrollTop = thread.scrollHeight;
+      }, 700);
+    }
+
+    function openAuthModal(tab = "login") { switchAuthTab(tab); document.getElementById("authModal").classList.remove("hidden"); }
+    function closeAuthModal() { document.getElementById("authModal").classList.add("hidden"); }
+    function switchAuthTab(tab) {
+      const isLogin = tab === "login";
+      document.getElementById("customerLoginForm").classList.toggle("hidden", !isLogin);
+      document.getElementById("customerRegisterForm").classList.toggle("hidden", isLogin);
+      document.getElementById("authTabBtn-login").className = isLogin ? "flex-1 py-2 rounded-xl bg-brand-crimson text-white shadow-sm" : "flex-1 py-2 rounded-xl text-gray-600";
+      document.getElementById("authTabBtn-register").className = !isLogin ? "flex-1 py-2 rounded-xl bg-brand-crimson text-white shadow-sm" : "flex-1 py-2 rounded-xl text-gray-600";
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: document.getElementById("log-email").value, password: document.getElementById("log-password").value })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        closeAuthModal();
+        showToast("Signed in! Full catalog unlocked.");
+        await verifySession();
+        if (currentUser?.role === "owner") switchView("owner");
+        await loadListings();
+      } else showToast(data.error, true);
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: document.getElementById("reg-email").value, password: document.getElementById("reg-password").value })
+      });
+      const data = await res.json();
+      if (res.ok) { showToast(data.message); switchAuthTab("login"); } else showToast(data.error, true);
+    }
+
+    function openHiddenOwnerModal() { document.getElementById("hiddenOwnerModal").classList.remove("hidden"); }
+    function closeHiddenOwnerModal() { document.getElementById("hiddenOwnerModal").classList.add("hidden"); }
+    async function handleOwnerLogin(e) {
+      e.preventDefault();
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: document.getElementById("ownerGateEmail").value, password: document.getElementById("ownerGatePass").value })
+      });
+      const data = await res.json();
+      if (res.ok && data.role === "owner") {
+        closeHiddenOwnerModal();
+        await verifySession();
+        switchView("owner");
+        await loadListings();
+        showToast("Welcome back to Creator Studio, Ted!");
+      } else showToast("Invalid administrator credentials.", true);
+    }
+
+    async function logout() {
+      await fetch("/api/logout", { method: "POST" });
+      currentUser = null;
+      switchView("visitor");
+      await loadListings();
+      showToast("Signed out.");
+    }
+
+    function openContactModal() { document.getElementById("contact-modal").classList.remove("hidden"); }
+    function closeContactModal() { document.getElementById("contact-modal").classList.add("hidden"); }
+    function toggleMobileNav() { document.getElementById("mobileNavMenu").classList.toggle("hidden"); }
+    function togglePeek(id, btn) {
+      const inp = document.getElementById(id);
+      inp.type = inp.type === "password" ? "text" : "password";
+      btn.textContent = inp.type === "password" ? "👁️" : "🙈";
+    }
+    async function recordMetric(id, action) {
+      try { await fetch(`/api/properties/${id}/track`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action }) }); } catch (e) {}
+    }
+
+    function showToast(msg, isError = false) {
+      const t = document.getElementById("toast");
+      document.getElementById("toastMsg").textContent = msg;
+      document.getElementById("toastIcon").className = isError ? "fa-solid fa-circle-exclamation text-rose-400 text-lg" : "fa-solid fa-circle-check text-emerald-400 text-lg";
+      t.classList.remove("translate-x-full", "opacity-0");
+      setTimeout(() => t.classList.add("translate-x-full", "opacity-0"), 3500);
+    }
+
+    // Secret shortcut Ctrl + Shift + K opens Creator Studio login
+    window.addEventListener("keydown", e => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        openHiddenOwnerModal();
+      }
+    });
+  </script>
 </body>
 </html>
