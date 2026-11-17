@@ -21,14 +21,14 @@
         extend: {
           colors: {
             brand: {
-              alabaster: '#FAFAFA',
+              alabaster: '#F8FAFC',
               snow: '#FFFFFF',
-              crimson: '#C62828',
-              darkred: '#8E0000',
-              softred: '#FEE2E2',
-              charcoal: '#18181B',
-              slate: '#27272A',
-              border: '#E4E4E7'
+              blue: '#1D4ED8',
+              darkblue: '#1E3A8A',
+              softblue: '#DBEAFE',
+              charcoal: '#0F172A',
+              slate: '#1E293B',
+              border: '#E2E8F0'
             }
           },
           fontFamily: {
@@ -36,8 +36,8 @@
             sans: ['"Inter"', 'sans-serif']
           },
           boxShadow: {
-            'crimson': '0 10px 25px -5px rgba(198, 40, 40, 0.22)',
-            'crimson-lg': '0 18px 35px -5px rgba(198, 40, 40, 0.30)'
+            'royal': '0 10px 25px -5px rgba(29, 78, 216, 0.22)',
+            'royal-lg': '0 18px 35px -5px rgba(29, 78, 216, 0.30)'
           }
         }
       }
@@ -46,15 +46,15 @@
 
   <style>
     ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #FAFAFA; }
-    ::-webkit-scrollbar-thumb { background: #C62828; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #8E0000; }
+    ::-webkit-scrollbar-track { background: #F8FAFC; }
+    ::-webkit-scrollbar-thumb { background: #1D4ED8; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #1E3A8A; }
 
-    .crimson-gradient-bg {
-      background: linear-gradient(135deg, #DC2626 0%, #C62828 55%, #8E0000 100%);
+    .blue-gradient-bg {
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 55%, #1E3A8A 100%);
     }
-    .crimson-text-gradient {
-      background: linear-gradient(135deg, #8E0000 0%, #C62828 60%, #EF4444 100%);
+    .blue-text-gradient {
+      background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 60%, #3B82F6 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -64,20 +64,20 @@
     }
     .card-hover:hover {
       transform: translateY(-5px);
-      box-shadow: 0 18px 30px -10px rgba(198, 40, 40, 0.18);
+      box-shadow: 0 18px 30px -10px rgba(29, 78, 216, 0.18);
     }
   </style>
 </head>
 
-<body class="bg-brand-alabaster text-brand-charcoal font-sans antialiased selection:bg-brand-crimson selection:text-white flex flex-col min-h-screen">
+<body class="bg-brand-alabaster text-brand-charcoal font-sans antialiased selection:bg-brand-blue selection:text-white flex flex-col min-h-screen">
 
   <!-- ================= TOP PROMO & QUICK CONTACT BAR ================= -->
-  <aside aria-label="Announcement bar" class="crimson-gradient-bg text-white text-xs sm:text-sm font-medium tracking-wide py-2 px-4 shadow-sm flex items-center justify-between">
+  <aside aria-label="Announcement bar" class="blue-gradient-bg text-white text-xs sm:text-sm font-medium tracking-wide py-2 px-4 shadow-sm flex items-center justify-between">
     <div class="hidden sm:flex items-center space-x-4 w-1/3">
-      <a href="tel:+254707355994" class="hover:underline flex items-center">
-        <i class="fa-solid fa-phone mr-1.5 text-red-200"></i> +254 707355994
+      <a href="tel:+254700000000" class="hover:underline flex items-center">
+        <i class="fa-solid fa-phone mr-1.5 text-blue-200"></i> +254 700 000 000
       </a>
-      <a href="https://wa.me/254707355994" target="_blank" class="hover:underline flex items-center text-emerald-200 font-semibold">
+      <a href="https://wa.me/254700000000" target="_blank" class="hover:underline flex items-center text-emerald-200 font-semibold">
         <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Direct
       </a>
     </div>
@@ -97,23 +97,23 @@
         
         <!-- Brand Logo -->
         <div class="flex items-center space-x-3 cursor-pointer" onclick="switchCategory('All')">
-          <div class="w-11 h-11 rounded-2xl crimson-gradient-bg flex items-center justify-center shadow-crimson border-2 border-white">
+          <div class="w-11 h-11 rounded-2xl blue-gradient-bg flex items-center justify-center shadow-royal border-2 border-white">
             <i class="fa-solid fa-house-chimney text-white text-lg"></i>
           </div>
           <div>
-            <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight crimson-text-gradient block leading-none">Ted With The House</span>
+            <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight blue-text-gradient block leading-none">Ted With The House</span>
             <span class="text-[10px] uppercase font-bold tracking-[0.22em] text-gray-500 block mt-1">Premier Kenya Realty</span>
           </div>
         </div>
 
         <!-- Navigation Links -->
         <nav id="visitorNavLinks" class="hidden lg:flex items-center space-x-7 text-sm font-medium text-brand-slate">
-          <button onclick="switchCategory('All')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">All Properties</button>
-          <button onclick="switchCategory('Townhouse')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">Townhouses</button>
-          <button onclick="switchCategory('Villa')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">Luxury Villas</button>
-          <button onclick="switchCategory('Standalone House')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">Standalone</button>
-          <button onclick="switchCategory('Mansion')" class="hover:text-brand-crimson transition py-1 border-b-2 border-transparent hover:border-brand-crimson">Mansions</button>
-          <button onclick="openContactModal()" class="text-brand-crimson font-semibold hover:text-brand-darkred transition flex items-center space-x-1">
+          <button onclick="switchCategory('All')" class="hover:text-brand-blue transition py-1 border-b-2 border-transparent hover:border-brand-blue">All Properties</button>
+          <button onclick="switchCategory('Townhouse')" class="hover:text-brand-blue transition py-1 border-b-2 border-transparent hover:border-brand-blue">Townhouses</button>
+          <button onclick="switchCategory('Villa')" class="hover:text-brand-blue transition py-1 border-b-2 border-transparent hover:border-brand-blue">Luxury Villas</button>
+          <button onclick="switchCategory('Standalone House')" class="hover:text-brand-blue transition py-1 border-b-2 border-transparent hover:border-brand-blue">Standalone</button>
+          <button onclick="switchCategory('Mansion')" class="hover:text-brand-blue transition py-1 border-b-2 border-transparent hover:border-brand-blue">Mansions</button>
+          <button onclick="openContactModal()" class="text-brand-blue font-semibold hover:text-brand-darkblue transition flex items-center space-x-1">
             <i class="fa-regular fa-envelope text-xs"></i>
             <span>Contact Us</span>
           </button>
@@ -121,19 +121,17 @@
 
         <!-- Right Action Controls -->
         <div class="flex items-center space-x-3">
-          <!-- Quick Search -->
           <div class="relative hidden sm:block">
-            <input type="text" id="topSearchInput" oninput="handleQuickSearch(this.value)" placeholder="Search Karen, Kikuyu..." class="pl-9 pr-4 py-1.5 text-xs rounded-full border border-brand-border focus:outline-none focus:border-brand-crimson bg-brand-alabaster w-40 xl:w-56 transition">
+            <input type="text" id="topSearchInput" oninput="handleQuickSearch(this.value)" placeholder="Search Karen, Kikuyu..." class="pl-9 pr-4 py-1.5 text-xs rounded-full border border-brand-border focus:outline-none focus:border-brand-blue bg-brand-alabaster w-40 xl:w-56 transition">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-gray-400"></i>
           </div>
 
-          <!-- User Profile / Auth Pill -->
           <div id="navUserArea"></div>
 
           <!-- Saved / Shortlisted Properties Button -->
-          <button onclick="openSavedModal()" title="Saved Properties" class="relative p-2.5 rounded-full bg-brand-alabaster hover:bg-brand-softred text-brand-charcoal transition border border-brand-border flex items-center">
-            <i class="fa-regular fa-heart text-base text-brand-crimson"></i>
-            <span id="savedCountBadge" class="absolute -top-1 -right-1 bg-brand-crimson text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+          <button onclick="openSavedModal()" title="Saved Properties" class="relative p-2.5 rounded-full bg-brand-alabaster hover:bg-brand-softblue text-brand-charcoal transition border border-brand-border flex items-center">
+            <i class="fa-regular fa-heart text-base text-brand-blue"></i>
+            <span id="savedCountBadge" class="absolute -top-1 -right-1 bg-brand-blue text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
           </button>
 
           <!-- Mobile Menu Button -->
@@ -148,19 +146,19 @@
       <nav id="mobileNavMenu" class="hidden lg:hidden py-4 border-t border-brand-border flex flex-col space-y-2.5 text-sm">
         <input type="text" oninput="handleQuickSearch(this.value)" placeholder="Search location or title..." class="w-full px-4 py-2 text-xs rounded-xl border border-brand-border mb-1">
         <div id="mobileAuthRow" class="pb-2 mb-1 border-b border-brand-border flex items-center justify-between"></div>
-        <button onclick="switchCategory('All'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">All Properties</button>
-        <button onclick="switchCategory('Townhouse'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">Townhouses</button>
-        <button onclick="switchCategory('Villa'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">Luxury Villas</button>
-        <button onclick="switchCategory('Standalone House'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">Standalone Houses</button>
-        <button onclick="switchCategory('Mansion'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">Mansions</button>
-        <button onclick="openContactModal(); toggleMobileNav();" class="text-left font-semibold text-brand-crimson py-1.5 px-3 rounded-xl hover:bg-brand-softred/50">✉️ Contact Office</button>
+        <button onclick="switchCategory('All'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softblue/50">All Properties</button>
+        <button onclick="switchCategory('Townhouse'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softblue/50">Townhouses</button>
+        <button onclick="switchCategory('Villa'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softblue/50">Luxury Villas</button>
+        <button onclick="switchCategory('Standalone House'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softblue/50">Standalone Houses</button>
+        <button onclick="switchCategory('Mansion'); toggleMobileNav();" class="text-left font-medium py-1.5 px-3 rounded-xl hover:bg-brand-softblue/50">Mansions</button>
+        <button onclick="openContactModal(); toggleMobileNav();" class="text-left font-semibold text-brand-blue py-1.5 px-3 rounded-xl hover:bg-brand-softblue/50">✉️ Contact Office</button>
       </nav>
     </div>
   </header>
 
   <!-- ================= TOAST NOTIFICATION ================= -->
-  <div id="toast" class="fixed top-24 right-5 z-50 transform translate-x-full opacity-0 transition-all duration-300 ease-out bg-brand-charcoal text-white px-5 py-3.5 rounded-2xl shadow-2xl border-l-4 border-brand-crimson flex items-center space-x-3 pointer-events-none">
-    <i id="toastIcon" class="fa-solid fa-circle-check text-brand-crimson text-lg"></i>
+  <div id="toast" class="fixed top-24 right-5 z-50 transform translate-x-full opacity-0 transition-all duration-300 ease-out bg-brand-charcoal text-white px-5 py-3.5 rounded-2xl shadow-2xl border-l-4 border-brand-blue flex items-center space-x-3 pointer-events-none">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-brand-blue text-lg"></i>
     <span id="toastMsg" class="text-xs sm:text-sm font-medium">Notification</span>
   </div>
 
@@ -171,7 +169,7 @@
     
     <!-- HERO SPOTLIGHT BANNER CAROUSEL -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-      <div class="relative rounded-3xl overflow-hidden shadow-crimson border border-brand-border bg-brand-charcoal h-[280px] sm:h-[360px] md:h-[420px]">
+      <div class="relative rounded-3xl overflow-hidden shadow-royal border border-brand-border bg-brand-charcoal h-[280px] sm:h-[360px] md:h-[420px]">
         <div id="bannerSlider" class="w-full h-full relative"></div>
         <div id="bannerDots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20"></div>
         <button onclick="prevBanner()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md flex items-center justify-center transition z-20">
@@ -187,7 +185,7 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-white p-4 rounded-2xl border border-brand-border flex items-center space-x-3.5 shadow-sm">
-          <div class="w-10 h-10 rounded-xl bg-brand-softred text-brand-crimson flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-brand-softblue text-brand-blue flex items-center justify-center shrink-0">
             <i class="fa-solid fa-file-contract text-lg"></i>
           </div>
           <div>
@@ -196,16 +194,16 @@
           </div>
         </div>
         <div class="bg-white p-4 rounded-2xl border border-brand-border flex items-center space-x-3.5 shadow-sm">
-          <div class="w-10 h-10 rounded-xl bg-brand-softred text-brand-crimson flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-brand-softblue text-brand-blue flex items-center justify-center shrink-0">
             <i class="fa-solid fa-video text-lg"></i>
           </div>
           <div>
             <h4 class="text-xs sm:text-sm font-bold text-brand-charcoal">HD Video Tours</h4>
-            <p class="text-[11px] text-gray-500">Walkthroughs before visiting</p>
+            <p class="text-[11px] text-gray-500">Walkthroughs & TikTok reels</p>
           </div>
         </div>
         <div class="bg-white p-4 rounded-2xl border border-brand-border flex items-center space-x-3.5 shadow-sm">
-          <div class="w-10 h-10 rounded-xl bg-brand-softred text-brand-crimson flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-brand-softblue text-brand-blue flex items-center justify-center shrink-0">
             <i class="fa-solid fa-calendar-check text-lg"></i>
           </div>
           <div>
@@ -214,7 +212,7 @@
           </div>
         </div>
         <div class="bg-white p-4 rounded-2xl border border-brand-border flex items-center space-x-3.5 shadow-sm">
-          <div class="w-10 h-10 rounded-xl bg-brand-softred text-brand-crimson flex items-center justify-center shrink-0">
+          <div class="w-10 h-10 rounded-xl bg-brand-softblue text-brand-blue flex items-center justify-center shrink-0">
             <i class="fa-solid fa-building-shield text-lg"></i>
           </div>
           <div>
@@ -230,7 +228,7 @@
       <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         
         <div class="flex items-center space-x-3">
-          <span class="w-2.5 h-8 crimson-gradient-bg rounded-full inline-block"></span>
+          <span class="w-2.5 h-8 blue-gradient-bg rounded-full inline-block"></span>
           <div>
             <h2 id="currentCategoryHeading" class="font-serif text-2xl font-bold text-brand-charcoal">Featured Kenya Properties</h2>
             <p id="productCountSubtitle" class="text-xs text-gray-500">Explore curated homes for sale & rent across Nairobi, Kiambu & Kajiado</p>
@@ -239,10 +237,10 @@
 
         <!-- Filter Controls -->
         <div class="flex flex-wrap items-center gap-2.5">
-          <input type="text" id="filter-location" placeholder="Location (e.g. Kikuyu, Karen)" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-crimson w-44">
+          <input type="text" id="filter-location" placeholder="Location (e.g. Kikuyu, Karen)" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-blue w-44">
 
           <div class="relative">
-            <select id="filter-type" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-crimson pr-8 appearance-none cursor-pointer">
+            <select id="filter-type" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-blue pr-8 appearance-none cursor-pointer">
               <option value="">All Property Types</option>
               <option value="Townhouse">Townhouse</option>
               <option value="Villa">Villa</option>
@@ -252,9 +250,9 @@
             <i class="fa-solid fa-chevron-down absolute right-3 top-3 text-[10px] text-gray-500 pointer-events-none"></i>
           </div>
 
-          <input type="number" id="filter-maxprice" placeholder="Max Budget (KSh)" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-crimson w-40">
+          <input type="number" id="filter-maxprice" placeholder="Max Budget (KSh)" class="text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2 font-medium text-brand-charcoal focus:outline-none focus:border-brand-blue w-40">
 
-          <button onclick="loadListings()" class="px-5 py-2 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson hover:opacity-95 transition flex items-center space-x-1.5">
+          <button onclick="loadListings()" class="px-5 py-2 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal hover:opacity-95 transition flex items-center space-x-1.5">
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Search</span>
           </button>
@@ -271,17 +269,17 @@
 
       <!-- Empty State -->
       <div id="emptyCatalogState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-brand-border">
-        <div class="w-16 h-16 mx-auto rounded-full bg-brand-softred flex items-center justify-center text-brand-crimson text-2xl mb-3">
+        <div class="w-16 h-16 mx-auto rounded-full bg-brand-softblue flex items-center justify-center text-brand-blue text-2xl mb-3">
           <i class="fa-solid fa-house-circle-xmark"></i>
         </div>
         <h3 class="font-serif text-xl font-bold text-brand-charcoal">No Matching Properties Found</h3>
         <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">Try clearing your location or budget filters to see all available homes.</p>
-        <button onclick="resetFilters()" class="mt-4 px-5 py-2 text-xs font-semibold crimson-gradient-bg text-white rounded-xl shadow-crimson">Reset All Filters</button>
+        <button onclick="resetFilters()" class="mt-4 px-5 py-2 text-xs font-semibold blue-gradient-bg text-white rounded-xl shadow-royal">Reset All Filters</button>
       </div>
 
-      <!-- Freemium Lock Banner for Guests (Limits to 5 listings until signed in) -->
-      <div id="guest-lock-banner" class="hidden mt-10 bg-white border-2 border-brand-crimson/30 rounded-3xl p-8 text-center shadow-crimson relative overflow-hidden">
-        <div class="w-14 h-14 mx-auto rounded-2xl crimson-gradient-bg text-white flex items-center justify-center text-2xl shadow-crimson mb-4">
+      <!-- Freemium Lock Banner for Guests -->
+      <div id="guest-lock-banner" class="hidden mt-10 bg-white border-2 border-brand-blue/30 rounded-3xl p-8 text-center shadow-royal relative overflow-hidden">
+        <div class="w-14 h-14 mx-auto rounded-2xl blue-gradient-bg text-white flex items-center justify-center text-2xl shadow-royal mb-4">
           <i class="fa-solid fa-lock"></i>
         </div>
         <h3 class="font-serif text-2xl font-bold text-brand-charcoal">Unlock Our Full Portfolio</h3>
@@ -289,7 +287,7 @@
           You are viewing our 5 preview listings. Sign in or create a free client account to unlock all exclusive homes, pricing breakdowns, and video tours.
         </p>
         <div class="mt-5 flex items-center justify-center space-x-3">
-          <button onclick="openAuthModal('register')" class="px-6 py-2.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson hover:opacity-95 transition">
+          <button onclick="openAuthModal('register')" class="px-6 py-2.5 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal hover:opacity-95 transition">
             Create Free Account
           </button>
           <button onclick="openAuthModal('login')" class="px-6 py-2.5 text-xs font-bold bg-brand-alabaster border border-brand-border text-brand-charcoal rounded-xl hover:bg-gray-100 transition">
@@ -304,13 +302,13 @@
   <!-- ############################################################# -->
   <!-- ##################### OWNER ADMIN SUITE #################### -->
   <!-- ############################################################# -->
-  <main id="ownerView" class="hidden flex-grow bg-zinc-100">
+  <main id="ownerView" class="hidden flex-grow bg-slate-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
       <!-- Owner Portal Top Header -->
       <div class="bg-white p-6 rounded-3xl border border-brand-border shadow-sm mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div class="flex items-center space-x-4">
-          <div class="w-14 h-14 rounded-2xl crimson-gradient-bg text-white flex items-center justify-center text-2xl shadow-crimson">
+          <div class="w-14 h-14 rounded-2xl blue-gradient-bg text-white flex items-center justify-center text-2xl shadow-royal">
             <i class="fa-solid fa-building-user"></i>
           </div>
           <div>
@@ -318,13 +316,13 @@
               <h1 class="font-serif text-2xl font-bold text-brand-charcoal">Ted With The House — Creator Studio</h1>
               <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-300">Admin Live</span>
             </div>
-            <p class="text-xs text-gray-500 mt-0.5">Manage listings, mark properties Sold/Rented, monitor viewer analytics & inspect buyer search logs.</p>
+            <p class="text-xs text-gray-500 mt-0.5">Manage listings, mark properties Sold/Rented, upload walkthrough videos & add TikTok links.</p>
           </div>
         </div>
 
         <!-- Navigation Tabs -->
         <div class="flex flex-wrap gap-2">
-          <button onclick="switchOwnerTab('publish')" id="tabBtn-publish" class="owner-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 bg-brand-crimson text-white shadow-crimson">
+          <button onclick="switchOwnerTab('publish')" id="tabBtn-publish" class="owner-tab-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 bg-brand-blue text-white shadow-royal">
             <i class="fa-solid fa-plus-circle"></i>
             <span>Publish & Inventory</span>
           </button>
@@ -351,9 +349,9 @@
           <div class="flex items-center justify-between pb-4 border-b border-brand-border mb-6">
             <div>
               <h2 class="font-serif text-xl font-bold text-brand-charcoal">Publish New Property Listing</h2>
-              <p class="text-xs text-gray-500">Upload up to 15 photos, attach multiple YouTube walkthroughs, and tick amenities.</p>
+              <p class="text-xs text-gray-500">Upload up to 15 photos, attach one video walkthrough file, add a TikTok link, and tick amenities.</p>
             </div>
-            <span class="text-xs font-semibold px-3 py-1 bg-brand-softred text-brand-crimson rounded-full">
+            <span class="text-xs font-semibold px-3 py-1 bg-brand-softblue text-brand-blue rounded-full">
               <i class="fa-solid fa-bolt mr-1"></i> Instant Auto-Refresh Active
             </span>
           </div>
@@ -362,11 +360,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div class="md:col-span-2">
                 <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Property Title *</label>
-                <input type="text" id="add-title" required placeholder="e.g. 4-Bedroom All-Ensuite Townhouse with Private Elevator Lift" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson">
+                <input type="text" id="add-title" required placeholder="e.g. 4-Bedroom All-Ensuite Townhouse with Private Elevator Lift" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-blue">
               </div>
               <div>
                 <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Property Type *</label>
-                <select id="add-type" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson">
+                <select id="add-type" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-blue">
                   <option value="Townhouse">Townhouse</option>
                   <option value="Villa">Villa</option>
                   <option value="Standalone House">Standalone House</option>
@@ -378,22 +376,22 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               <div>
                 <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Location *</label>
-                <input type="text" id="add-location" required placeholder="e.g. Gikambura, Kikuyu" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson">
+                <input type="text" id="add-location" required placeholder="e.g. Gikambura, Kikuyu" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-blue">
               </div>
               <div>
                 <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Price (KSh) *</label>
-                <input type="number" id="add-price" required placeholder="e.g. 16500000" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson font-bold">
+                <input type="number" id="add-price" required placeholder="e.g. 16500000" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-blue font-bold">
               </div>
               <div>
                 <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Bedrooms & Baths</label>
                 <div class="flex gap-2">
-                  <input type="number" id="add-beds" value="4" min="1" placeholder="Beds" class="w-1/2 text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-crimson">
-                  <input type="number" id="add-baths" value="4" min="1" placeholder="Baths" class="w-1/2 text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-crimson">
+                  <input type="number" id="add-beds" value="4" min="1" placeholder="Beds" class="w-1/2 text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-blue">
+                  <input type="number" id="add-baths" value="4" min="1" placeholder="Baths" class="w-1/2 text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-blue">
                 </div>
               </div>
               <div>
                 <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Availability Status</label>
-                <select id="add-status" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson font-semibold">
+                <select id="add-status" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-blue font-semibold">
                   <option value="Available">Available</option>
                   <option value="Sold Out">Sold Out</option>
                   <option value="Rented Out">Rented Out</option>
@@ -403,77 +401,86 @@
 
             <div>
               <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">Property Description & Highlights</label>
-              <textarea id="add-desc" rows="2" placeholder="Describe architectural finishes, compound size, proximity to tarmac, DSQ details..." class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-crimson"></textarea>
+              <textarea id="add-desc" rows="2" placeholder="Describe architectural finishes, compound size, proximity to tarmac, DSQ details..." class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-blue"></textarea>
             </div>
 
-            <!-- AMENITIES CHECKLIST (INCLUDING ELEVATOR LIFT) -->
+            <!-- AMENITIES CHECKLIST -->
             <div class="bg-brand-alabaster p-5 rounded-2xl border border-brand-border">
               <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-3">Tick Included Amenities</label>
               <div id="add-amenities-group" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 text-xs">
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="Elevator Lift" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="Elevator Lift" class="accent-brand-blue">
                   <span class="font-medium">Elevator Lift</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="Gated Community" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="Gated Community" class="accent-brand-blue">
                   <span class="font-medium">Gated Community</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="Borehole" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="Borehole" class="accent-brand-blue">
                   <span class="font-medium">Borehole Water</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="Swimming Pool" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="Swimming Pool" class="accent-brand-blue">
                   <span class="font-medium">Swimming Pool</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="Parking" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="Parking" class="accent-brand-blue">
                   <span class="font-medium">Ample Parking</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="Garden" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="Garden" class="accent-brand-blue">
                   <span class="font-medium">Private Garden</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="24/7 Security" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="24/7 Security" class="accent-brand-blue">
                   <span class="font-medium">24/7 Security</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="DSQ" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="DSQ" class="accent-brand-blue">
                   <span class="font-medium">Detached DSQ</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="CCTV Surveillance" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="CCTV Surveillance" class="accent-brand-blue">
                   <span class="font-medium">CCTV Cameras</span>
                 </label>
-                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-crimson">
-                  <input type="checkbox" value="Solar Water Heating" class="accent-brand-crimson">
+                <label class="flex items-center space-x-2 cursor-pointer bg-white p-2.5 rounded-xl border border-brand-border hover:border-brand-blue">
+                  <input type="checkbox" value="Solar Water Heating" class="accent-brand-blue">
                   <span class="font-medium">Solar Heating</span>
                 </label>
               </div>
             </div>
 
-            <!-- MULTI-PHOTO & MULTI-VIDEO UPLOAD -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- PHOTOS + ONE VIDEO UPLOAD + TIKTOK LINK -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div class="bg-brand-alabaster p-4 rounded-2xl border border-brand-border">
                 <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">
-                  <i class="fa-solid fa-images text-brand-crimson mr-1"></i> Upload Multiple Photos (Max 15)
+                  <i class="fa-solid fa-images text-brand-blue mr-1"></i> Upload Photos (Max 15)
                 </label>
-                <input type="file" id="add-photos" multiple accept="image/*" class="w-full text-xs bg-white border border-brand-border rounded-xl px-3 py-2 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-softred file:text-brand-crimson">
-                <p class="text-[11px] text-gray-500 mt-1.5">Hold Ctrl / Cmd to select multiple exterior & interior photos at once.</p>
+                <input type="file" id="add-photos" multiple accept="image/*" class="w-full text-xs bg-white border border-brand-border rounded-xl px-3 py-2 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-softblue file:text-brand-blue">
+                <p class="text-[11px] text-gray-500 mt-1.5">Select multiple exterior & interior photos.</p>
               </div>
 
               <div class="bg-brand-alabaster p-4 rounded-2xl border border-brand-border">
                 <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">
-                  <i class="fa-brands fa-youtube text-brand-crimson mr-1"></i> Multiple YouTube Video Tour Links
+                  <i class="fa-solid fa-film text-brand-blue mr-1"></i> Upload One Video Tour
                 </label>
-                <textarea id="add-videos" rows="2" placeholder="Paste YouTube URLs (one per line or comma-separated)..." class="w-full text-xs bg-white border border-brand-border rounded-xl px-3.5 py-2 focus:outline-none focus:border-brand-crimson"></textarea>
+                <input type="file" id="add-video-file" accept="video/mp4,video/webm,video/quicktime" class="w-full text-xs bg-white border border-brand-border rounded-xl px-3 py-2 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-softblue file:text-brand-blue">
+                <p class="text-[11px] text-gray-500 mt-1.5">Attach 1 walkthrough MP4/MOV video file.</p>
+              </div>
+
+              <div class="bg-brand-alabaster p-4 rounded-2xl border border-brand-border">
+                <label class="block text-xs font-bold text-brand-charcoal uppercase tracking-wider mb-2">
+                  <i class="fa-brands fa-tiktok text-brand-blue mr-1"></i> TikTok Video Link
+                </label>
+                <input type="url" id="add-tiktok-url" placeholder="https://www.tiktok.com/@tedwiththehouse/video/..." class="w-full text-xs bg-white border border-brand-border rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-brand-blue">
+                <p class="text-[11px] text-gray-500 mt-1.5">Paste your TikTok property reel link here.</p>
               </div>
             </div>
 
             <div class="flex justify-end space-x-3 pt-2">
               <button type="reset" class="px-5 py-2.5 text-xs font-semibold rounded-xl border border-brand-border hover:bg-gray-100">Clear Form</button>
-              <button type="submit" class="px-7 py-2.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson hover:opacity-95 transition flex items-center space-x-2">
+              <button type="submit" class="px-7 py-2.5 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal hover:opacity-95 transition flex items-center space-x-2">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <span>Publish Listing Now</span>
               </button>
@@ -485,7 +492,7 @@
         <div>
           <div class="flex items-center justify-between mb-4">
             <h3 class="font-serif text-xl font-bold text-brand-charcoal">Live Property Inventory</h3>
-            <span id="adminInventoryBadge" class="text-xs font-bold bg-brand-softred text-brand-crimson px-3 py-1 rounded-full">0 Properties</span>
+            <span id="adminInventoryBadge" class="text-xs font-bold bg-brand-softblue text-brand-blue px-3 py-1 rounded-full">0 Properties</span>
           </div>
           <div id="creator-admin-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
@@ -506,8 +513,8 @@
           </div>
           <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-sm">
             <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Property Clicks</span>
-            <h3 id="metric-clicks" class="text-2xl font-bold font-serif text-brand-crimson mt-1">0</h3>
-            <span class="text-[11px] text-brand-crimson font-semibold mt-1 inline-block"><i class="fa-solid fa-arrow-pointer mr-1"></i> Gallery & tour opens</span>
+            <h3 id="metric-clicks" class="text-2xl font-bold font-serif text-brand-blue mt-1">0</h3>
+            <span class="text-[11px] text-brand-blue font-semibold mt-1 inline-block"><i class="fa-solid fa-arrow-pointer mr-1"></i> Gallery & tour opens</span>
           </div>
           <div class="bg-white p-5 rounded-3xl border border-brand-border shadow-sm">
             <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Conversion CTR</span>
@@ -516,7 +523,6 @@
           </div>
         </div>
 
-        <!-- Visual Chart & Listing Performance -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div class="bg-white p-6 rounded-3xl border border-brand-border shadow-sm">
             <h3 class="font-serif text-base font-bold text-brand-charcoal mb-4">Views vs. Clicks Overview</h3>
@@ -528,7 +534,7 @@
           <div class="lg:col-span-2 bg-white p-6 rounded-3xl border border-brand-border shadow-sm overflow-hidden">
             <div class="flex items-center justify-between mb-4">
               <h3 class="font-serif text-base font-bold text-brand-charcoal">Listing-by-Listing Traffic</h3>
-              <button onclick="loadAnalytics()" class="text-xs font-semibold text-brand-crimson hover:underline"><i class="fa-solid fa-rotate mr-1"></i> Refresh</button>
+              <button onclick="loadAnalytics()" class="text-xs font-semibold text-brand-blue hover:underline"><i class="fa-solid fa-rotate mr-1"></i> Refresh</button>
             </div>
             <div class="overflow-x-auto max-h-60">
               <table class="w-full text-left text-xs border-collapse">
@@ -547,7 +553,6 @@
           </div>
         </div>
 
-        <!-- Customer Search History Table -->
         <div class="bg-white p-6 rounded-3xl border border-brand-border shadow-sm">
           <h3 class="font-serif text-lg font-bold text-brand-charcoal mb-1">🔍 Customer Search Intelligence</h3>
           <p class="text-xs text-gray-500 mb-4">Exact locations, property types, and budgets buyers have searched for.</p>
@@ -619,7 +624,7 @@
               </select>
             </div>
             <div class="md:col-span-2 flex justify-end">
-              <button type="submit" class="px-6 py-2.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">Add Slide</button>
+              <button type="submit" class="px-6 py-2.5 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal">Add Slide</button>
             </div>
           </form>
         </div>
@@ -633,10 +638,10 @@
     <div class="bg-white w-full max-w-4xl rounded-3xl shadow-2xl border border-brand-border overflow-hidden max-h-[92vh] flex flex-col">
       
       <!-- Modal Header -->
-      <div class="crimson-gradient-bg p-5 text-white flex items-center justify-between shrink-0">
+      <div class="blue-gradient-bg p-5 text-white flex items-center justify-between shrink-0">
         <div>
           <h3 id="modal-title" class="font-serif text-xl font-bold leading-tight">Property Details</h3>
-          <p id="modal-location" class="text-xs text-red-100 mt-0.5"></p>
+          <p id="modal-location" class="text-xs text-blue-100 mt-0.5"></p>
         </div>
         <button onclick="closeDetailsModal()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition">
           <i class="fa-solid fa-xmark text-lg"></i>
@@ -646,34 +651,48 @@
       <!-- Modal Scrollable Content -->
       <div class="p-6 overflow-y-auto space-y-6">
         
-        <!-- Interactive Main Photo Viewer + Thumbnail Strip -->
+        <!-- Interactive Photo Viewer (object-contain so desktop photos aren't over-zoomed) + Full Screen Scroll Trigger -->
         <div class="space-y-3">
-          <div class="relative h-72 sm:h-96 bg-zinc-900 rounded-2xl overflow-hidden flex items-center justify-center">
-            <img id="modal-main-photo" src="" alt="Property Showcase" class="w-full h-full object-cover">
-            <button onclick="prevModalPhoto()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center">
+          <div class="relative h-72 sm:h-[420px] bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center group">
+            <img id="modal-main-photo" src="" alt="Property Showcase" onclick="openFullscreenGallery()" class="max-h-full max-w-full w-auto h-auto object-contain cursor-zoom-in transition">
+            
+            <button onclick="prevModalPhoto()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-sm flex items-center justify-center">
               <i class="fa-solid fa-chevron-left"></i>
             </button>
-            <button onclick="nextModalPhoto()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center">
+            <button onclick="nextModalPhoto()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-sm flex items-center justify-center">
               <i class="fa-solid fa-chevron-right"></i>
             </button>
-            <span id="modal-photo-counter" class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-3 py-1 rounded-full font-mono">1 / 1</span>
+
+            <!-- Full Screen Scroll Gallery Button -->
+            <button onclick="openFullscreenGallery()" class="absolute top-3 right-3 bg-brand-blue hover:bg-brand-darkblue text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-lg flex items-center space-x-1.5 transition">
+              <i class="fa-solid fa-expand"></i>
+              <span>Full Screen Scroll</span>
+            </button>
+
+            <span id="modal-photo-counter" class="absolute bottom-3 right-3 bg-black/75 text-white text-xs px-3 py-1 rounded-full font-mono">1 / 1</span>
           </div>
           <div id="modal-gallery" class="flex gap-2.5 overflow-x-auto pb-1"></div>
         </div>
 
-        <!-- Embedded Video Tours Section -->
+        <!-- Uploaded Video Tour & TikTok Link Section -->
         <div id="modal-videos-section" class="hidden space-y-3">
-          <h4 class="font-serif text-base font-bold text-brand-charcoal flex items-center">
-            <i class="fa-brands fa-youtube text-brand-crimson mr-2 text-lg"></i> Video Walkthrough Tours
-          </h4>
-          <div id="modal-videos-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h4 class="font-serif text-base font-bold text-brand-charcoal flex items-center">
+              <i class="fa-solid fa-film text-brand-blue mr-2 text-lg"></i> Property Video Walkthrough & TikTok
+            </h4>
+            <a id="modal-tiktok-btn" href="#" target="_blank" class="hidden px-4 py-2 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold flex items-center space-x-2 shadow transition">
+              <i class="fa-brands fa-tiktok text-cyan-400"></i>
+              <span>Watch on TikTok</span>
+            </a>
+          </div>
+          <div id="modal-videos-container" class="space-y-3"></div>
         </div>
 
         <!-- Price, Specs & Direct Contact Buttons -->
         <div class="bg-brand-alabaster p-5 rounded-2xl border border-brand-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span class="text-[11px] uppercase font-bold text-gray-500 tracking-wider">Asking Price</span>
-            <h4 id="modal-price" class="font-serif text-2xl sm:text-3xl font-bold text-brand-crimson"></h4>
+            <h4 id="modal-price" class="font-serif text-2xl sm:text-3xl font-bold text-brand-blue"></h4>
             <p id="modal-specs" class="text-xs font-semibold text-gray-600 mt-1"></p>
           </div>
           <div class="flex flex-wrap gap-2.5">
@@ -701,7 +720,7 @@
         </div>
 
         <!-- Direct Email Inquiry Box -->
-        <div class="bg-brand-softred/30 p-5 rounded-2xl border border-brand-crimson/20 space-y-3">
+        <div class="bg-brand-softblue/40 p-5 rounded-2xl border border-brand-blue/20 space-y-3">
           <h4 class="font-serif text-base font-bold text-brand-charcoal">Schedule a Viewing / Email Inquiry</h4>
           <div id="property-email-group">
             <label class="block text-xs font-bold mb-1">Your Email Address *</label>
@@ -711,7 +730,7 @@
             <label class="block text-xs font-bold mb-1">Message *</label>
             <textarea id="property-inquiry-msg" rows="2" placeholder="Hello Ted, I would like to schedule a site visit for this property..." class="w-full text-xs bg-white border border-brand-border rounded-xl px-3.5 py-2.5"></textarea>
           </div>
-          <button onclick="sendPropertyInquiry()" class="px-6 py-2.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">
+          <button onclick="sendPropertyInquiry()" class="px-6 py-2.5 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal">
             <i class="fa-solid fa-paper-plane mr-1.5"></i> Send Inquiry Email
           </button>
         </div>
@@ -720,10 +739,30 @@
     </div>
   </div>
 
+  <!-- ================= FULL-SCREEN SCROLLABLE GALLERY OVERLAY ================= -->
+  <div id="fullscreenGalleryModal" class="fixed inset-0 z-[60] bg-slate-950/95 backdrop-blur-md hidden flex flex-col">
+    <!-- Sticky Top Bar -->
+    <div class="px-6 py-4 bg-slate-900/90 border-b border-white/10 text-white flex items-center justify-between shrink-0">
+      <div>
+        <h3 id="fsGalleryTitle" class="font-serif text-base sm:text-lg font-bold">Full Screen Photo Tour</h3>
+        <p id="fsGallerySubtitle" class="text-xs text-blue-300">Scroll down to inspect all high-resolution photos</p>
+      </div>
+      <button onclick="closeFullscreenGallery()" class="px-4 py-2 rounded-xl bg-brand-blue hover:bg-brand-darkblue text-white text-xs font-bold flex items-center space-x-2 transition">
+        <i class="fa-solid fa-compress"></i>
+        <span>Exit Full Screen</span>
+      </button>
+    </div>
+
+    <!-- Vertical Scrollable Image Feed -->
+    <div id="fsGalleryScrollFeed" class="flex-grow overflow-y-auto px-4 sm:px-10 py-8 space-y-8 flex flex-col items-center">
+      <!-- Populated dynamically with full-resolution uncropped images -->
+    </div>
+  </div>
+
   <!-- ================= EDIT LISTING MODAL (OWNER) ================= -->
   <div id="edit-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-brand-border overflow-hidden max-h-[90vh] flex flex-col">
-      <div class="crimson-gradient-bg p-5 text-white flex items-center justify-between">
+      <div class="blue-gradient-bg p-5 text-white flex items-center justify-between">
         <h3 class="font-serif text-lg font-bold">Edit Listing & Availability Status</h3>
         <button onclick="closeEditModal()" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center">✕</button>
       </div>
@@ -769,23 +808,23 @@
         <div>
           <label class="block text-xs font-bold mb-2">Update Amenities</label>
           <div id="edit-amenities-group" class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Elevator Lift" class="accent-brand-crimson"><span>Elevator Lift</span></label>
-            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Gated Community" class="accent-brand-crimson"><span>Gated Community</span></label>
-            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Borehole" class="accent-brand-crimson"><span>Borehole</span></label>
-            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Swimming Pool" class="accent-brand-crimson"><span>Swimming Pool</span></label>
-            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Parking" class="accent-brand-crimson"><span>Parking</span></label>
-            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Garden" class="accent-brand-crimson"><span>Garden</span></label>
-            <label class="flex items-center space-x-1.5"><input type="checkbox" value="24/7 Security" class="accent-brand-crimson"><span>24/7 Security</span></label>
-            <label class="flex items-center space-x-1.5"><input type="checkbox" value="DSQ" class="accent-brand-crimson"><span>Detached DSQ</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Elevator Lift" class="accent-brand-blue"><span>Elevator Lift</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Gated Community" class="accent-brand-blue"><span>Gated Community</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Borehole" class="accent-brand-blue"><span>Borehole</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Swimming Pool" class="accent-brand-blue"><span>Swimming Pool</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Parking" class="accent-brand-blue"><span>Parking</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="Garden" class="accent-brand-blue"><span>Garden</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="24/7 Security" class="accent-brand-blue"><span>24/7 Security</span></label>
+            <label class="flex items-center space-x-1.5"><input type="checkbox" value="DSQ" class="accent-brand-blue"><span>Detached DSQ</span></label>
           </div>
         </div>
         <div>
-          <label class="block text-xs font-bold mb-1">YouTube Video Links</label>
-          <textarea id="edit-videos" rows="2" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2"></textarea>
+          <label class="block text-xs font-bold mb-1">TikTok Video Link</label>
+          <input type="url" id="edit-tiktok-url" placeholder="https://www.tiktok.com/@..." class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2">
         </div>
         <div class="flex justify-end space-x-2 pt-2">
           <button onclick="closeEditModal()" class="px-5 py-2 text-xs font-semibold rounded-xl border border-brand-border">Cancel</button>
-          <button onclick="submitEdit()" class="px-6 py-2 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">Save Changes</button>
+          <button onclick="submitEdit()" class="px-6 py-2 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal">Save Changes</button>
         </div>
       </div>
     </div>
@@ -796,7 +835,7 @@
     <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl">
       <div class="p-5 border-b border-brand-border flex items-center justify-between bg-brand-alabaster">
         <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-heart text-brand-crimson text-lg"></i>
+          <i class="fa-solid fa-heart text-brand-blue text-lg"></i>
           <h3 class="font-serif text-lg font-bold">Shortlisted Homes</h3>
         </div>
         <button onclick="closeSavedModal()" class="w-8 h-8 rounded-full hover:bg-gray-200 flex items-center justify-center">✕</button>
@@ -808,10 +847,10 @@
   <!-- ================= GENERAL CONTACT MODAL ================= -->
   <div id="contact-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-brand-border overflow-hidden">
-      <div class="crimson-gradient-bg p-5 text-white flex items-center justify-between">
+      <div class="blue-gradient-bg p-5 text-white flex items-center justify-between">
         <div>
           <h3 class="font-serif text-lg font-bold">Contact Ted With The House</h3>
-          <p class="text-xs text-red-100">Direct email & WhatsApp concierge</p>
+          <p class="text-xs text-blue-100">Direct email & WhatsApp concierge</p>
         </div>
         <button onclick="closeContactModal()" class="w-8 h-8 rounded-full bg-white/20 text-white flex items-center justify-center">✕</button>
       </div>
@@ -824,7 +863,7 @@
           <label class="block text-xs font-bold mb-1">How Can We Help? *</label>
           <textarea id="general-inquiry-msg" rows="4" placeholder="Tell us your preferred neighborhood, budget, or ask a question..." class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5"></textarea>
         </div>
-        <button onclick="sendGeneralInquiry()" class="w-full py-3 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">
+        <button onclick="sendGeneralInquiry()" class="w-full py-3 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal">
           Send Email to Ted
         </button>
       </div>
@@ -834,16 +873,16 @@
   <!-- ================= AUTH MODAL (LOGIN / REGISTER) ================= -->
   <div id="authModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-brand-border overflow-hidden">
-      <div class="crimson-gradient-bg p-5 text-white flex items-center justify-between">
+      <div class="blue-gradient-bg p-5 text-white flex items-center justify-between">
         <div>
           <h3 id="authModalTitle" class="font-serif text-lg font-bold">Sign In to Ted With The House</h3>
-          <p class="text-[11px] text-red-100">Unlock full property catalog & direct inquiries</p>
+          <p class="text-[11px] text-blue-100">Unlock full property catalog & direct inquiries</p>
         </div>
         <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-white/20 text-white flex items-center justify-center">✕</button>
       </div>
 
       <div class="flex border-b border-brand-border bg-brand-alabaster p-1.5 gap-1.5 text-xs font-semibold">
-        <button onclick="switchAuthTab('login')" id="authTabBtn-login" class="flex-1 py-2 rounded-xl bg-brand-crimson text-white shadow-sm">Client Login</button>
+        <button onclick="switchAuthTab('login')" id="authTabBtn-login" class="flex-1 py-2 rounded-xl bg-brand-blue text-white shadow-sm">Client Login</button>
         <button onclick="switchAuthTab('register')" id="authTabBtn-register" class="flex-1 py-2 rounded-xl text-gray-600">Create Free Account</button>
       </div>
 
@@ -860,7 +899,7 @@
               <button type="button" onclick="togglePeek('log-password', this)" class="absolute right-3 text-gray-500 text-sm">👁️</button>
             </div>
           </div>
-          <button type="submit" class="w-full py-3 text-xs font-bold uppercase tracking-wider crimson-gradient-bg text-white rounded-xl shadow-crimson">Sign In</button>
+          <button type="submit" class="w-full py-3 text-xs font-bold uppercase tracking-wider blue-gradient-bg text-white rounded-xl shadow-royal">Sign In</button>
         </form>
 
         <form id="customerRegisterForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
@@ -875,7 +914,7 @@
               <button type="button" onclick="togglePeek('reg-password', this)" class="absolute right-3 text-gray-500 text-sm">👁️</button>
             </div>
           </div>
-          <button type="submit" class="w-full py-3 text-xs font-bold uppercase tracking-wider crimson-gradient-bg text-white rounded-xl shadow-crimson">Create Free Account</button>
+          <button type="submit" class="w-full py-3 text-xs font-bold uppercase tracking-wider blue-gradient-bg text-white rounded-xl shadow-royal">Create Free Account</button>
         </form>
       </div>
     </div>
@@ -883,10 +922,10 @@
 
   <!-- ================= DISCREET OWNER GATE MODAL ================= -->
   <div id="hiddenOwnerModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl border-2 border-brand-crimson overflow-hidden">
+    <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl border-2 border-brand-blue overflow-hidden">
       <div class="bg-brand-charcoal p-5 text-white flex items-center justify-between">
         <div class="flex items-center space-x-2.5">
-          <div class="w-8 h-8 rounded-full crimson-gradient-bg flex items-center justify-center"><i class="fa-solid fa-key text-xs"></i></div>
+          <div class="w-8 h-8 rounded-full blue-gradient-bg flex items-center justify-center"><i class="fa-solid fa-key text-xs"></i></div>
           <div>
             <h3 class="font-serif text-base font-bold">Creator Studio Gate</h3>
             <p class="text-[10px] text-gray-400">Ted With The House Admin</p>
@@ -903,7 +942,7 @@
           <label class="block text-xs font-bold mb-1">Master Password</label>
           <input type="password" id="ownerGatePass" required placeholder="••••••••" class="w-full text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3.5 py-2.5 font-mono">
         </div>
-        <button type="submit" class="w-full py-3 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson">Unlock Creator Studio</button>
+        <button type="submit" class="w-full py-3 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal">Unlock Creator Studio</button>
       </form>
     </div>
   </div>
@@ -911,12 +950,12 @@
   <!-- ================= FLOATING LIVE CHAT CONCIERGE ================= -->
   <div class="fixed bottom-6 right-6 z-40">
     <div id="liveChatWindow" class="hidden mb-3 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-brand-border overflow-hidden flex flex-col h-[430px]">
-      <div class="crimson-gradient-bg p-4 text-white flex items-center justify-between">
+      <div class="blue-gradient-bg p-4 text-white flex items-center justify-between">
         <div class="flex items-center space-x-2.5">
           <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center font-serif font-bold text-sm">TH</div>
           <div>
             <h4 class="font-serif font-bold text-sm leading-tight">Ted Realty Concierge</h4>
-            <span class="text-[10px] text-red-100 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> Online Now</span>
+            <span class="text-[10px] text-blue-100 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> Online Now</span>
           </div>
         </div>
         <button onclick="toggleLiveChat()" class="text-white p-1"><i class="fa-solid fa-chevron-down"></i></button>
@@ -924,7 +963,7 @@
 
       <div id="chatMessagesThread" class="flex-grow p-4 overflow-y-auto space-y-3 text-xs bg-brand-alabaster">
         <div class="flex items-start space-x-2">
-          <div class="w-7 h-7 rounded-full crimson-gradient-bg text-white flex items-center justify-center text-[10px] shrink-0 font-bold">TH</div>
+          <div class="w-7 h-7 rounded-full blue-gradient-bg text-white flex items-center justify-center text-[10px] shrink-0 font-bold">TH</div>
           <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-brand-border shadow-sm max-w-[80%]">
             Karibu to <strong>Ted With The House</strong>! 👋 Looking for a home in Nairobi, Kikuyu, or Karen? Ask me anything or tap WhatsApp to book a viewing.
           </div>
@@ -932,12 +971,12 @@
       </div>
 
       <form onsubmit="handleSendChatMessage(event)" class="p-3 border-t border-brand-border bg-white flex items-center space-x-2">
-        <input type="text" id="chatInputText" placeholder="Ask about a house or location..." class="flex-grow text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2 focus:outline-none focus:border-brand-crimson">
-        <button type="submit" class="w-9 h-9 rounded-xl crimson-gradient-bg text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-paper-plane text-xs"></i></button>
+        <input type="text" id="chatInputText" placeholder="Ask about a house or location..." class="flex-grow text-xs bg-brand-alabaster border border-brand-border rounded-xl px-3 py-2 focus:outline-none focus:border-brand-blue">
+        <button type="submit" class="w-9 h-9 rounded-xl blue-gradient-bg text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-paper-plane text-xs"></i></button>
       </form>
     </div>
 
-    <button onclick="toggleLiveChat()" class="w-14 h-14 rounded-full crimson-gradient-bg text-white flex items-center justify-center shadow-crimson-lg hover:scale-105 transition-transform border-2 border-white">
+    <button onclick="toggleLiveChat()" class="w-14 h-14 rounded-full blue-gradient-bg text-white flex items-center justify-center shadow-royal-lg hover:scale-105 transition-transform border-2 border-white">
       <i class="fa-solid fa-comments text-xl"></i>
     </button>
   </div>
@@ -948,14 +987,14 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-white/10 text-xs">
         <div class="space-y-3">
           <div class="flex items-center space-x-2.5">
-            <div class="w-8 h-8 rounded-xl crimson-gradient-bg flex items-center justify-center"><i class="fa-solid fa-house-chimney text-white text-xs"></i></div>
+            <div class="w-8 h-8 rounded-xl blue-gradient-bg flex items-center justify-center"><i class="fa-solid fa-house-chimney text-white text-xs"></i></div>
             <span class="font-serif text-lg font-bold text-white">Ted With The House</span>
           </div>
           <p class="text-gray-400 leading-relaxed">Connecting discerning homebuyers and investors with verified townhouses, luxury villas, and prime real estate across Kenya.</p>
         </div>
 
         <div>
-          <h4 class="font-serif text-sm font-bold text-red-400 mb-3">Property Categories</h4>
+          <h4 class="font-serif text-sm font-bold text-blue-400 mb-3">Property Categories</h4>
           <ul class="space-y-2 text-gray-400">
             <li><button onclick="switchCategory('Townhouse')" class="hover:text-white">Gated Townhouses</button></li>
             <li><button onclick="switchCategory('Villa')" class="hover:text-white">Executive Villas</button></li>
@@ -965,7 +1004,7 @@
         </div>
 
         <div>
-          <h4 class="font-serif text-sm font-bold text-red-400 mb-3">Prime Locations</h4>
+          <h4 class="font-serif text-sm font-bold text-blue-400 mb-3">Prime Locations</h4>
           <ul class="space-y-2 text-gray-400">
             <li>Karen • Lavington • Kilimani</li>
             <li>Westlands • Gigiri • Runda</li>
@@ -975,15 +1014,15 @@
         </div>
 
         <div>
-          <h4 class="font-serif text-sm font-bold text-red-400 mb-3">Direct Desk</h4>
-          <p class="text-gray-400 mb-1.5">Phone / WhatsApp: <span class="text-white font-semibold">+254707355994</span></p>
-          <p class="text-gray-400 mb-3">Email: <span class="text-white font-semibold">tedtheuri20@gmail.com</span></p>
+          <h4 class="font-serif text-sm font-bold text-blue-400 mb-3">Direct Desk</h4>
+          <p class="text-gray-400 mb-1.5">Phone / WhatsApp: <span class="text-white font-semibold">+254 700 000 000</span></p>
+          <p class="text-gray-400 mb-3">Email: <span class="text-white font-semibold">ted@tedwiththehouse.co.ke</span></p>
           <div class="flex items-center justify-between pt-2">
             <span class="bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 text-gray-300 text-[11px]">
-              <i class="fa-solid fa-shield-check text-brand-crimson mr-1"></i> Verified Listings
+              <i class="fa-solid fa-shield-check text-blue-400 mr-1"></i> Verified Listings
             </span>
             <!-- Discreet Owner Portal Trigger -->
-            <button onclick="openHiddenOwnerModal()" title="Creator Portal" class="text-gray-600 hover:text-brand-crimson transition p-1.5">
+            <button onclick="openHiddenOwnerModal()" title="Creator Portal" class="text-gray-600 hover:text-blue-400 transition p-1.5">
               <i class="fa-solid fa-shield-halved"></i>
             </button>
           </div>
@@ -992,21 +1031,23 @@
 
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500">
         <p>&copy; <span id="currentYear"></span> Ted With The House Kenya. All rights reserved.</p>
-        <p class="mt-2 sm:mt-0">Built with Node.js & Express Architecture</p>
+        <p class="mt-2 sm:mt-0 font-medium text-gray-400">Built with NexaStudio</p>
       </div>
     </div>
   </footer>
 
   <!-- ================= APPLICATION JAVASCRIPT ================= -->
   <script>
-    const OWNER_PHONE = "+254707355994"; // Update with your WhatsApp/Phone number
+    const OWNER_PHONE = "+254700000000";
     const STORAGE_KEY_SAVED = "ted_house_saved_ids_v1";
     const STORAGE_KEY_BANNERS = "ted_house_banners_v1";
+    const STORAGE_KEY_MEDIA_EXTRAS = "ted_house_media_extras_v1";
 
     let currentUser = null;
     let currentPortal = "visitor";
     let allPropertiesCache = [];
     let savedIds = JSON.parse(localStorage.getItem(STORAGE_KEY_SAVED)) || [];
+    let mediaExtrasCache = JSON.parse(localStorage.getItem(STORAGE_KEY_MEDIA_EXTRAS)) || {};
     let activeModalPhotos = [];
     let activeModalPhotoIdx = 0;
     let activePropertyTitle = "";
@@ -1057,26 +1098,26 @@
       if (!currentUser) {
         topControls.innerHTML = `<button onclick="openAuthModal('login')" class="text-white hover:underline text-xs font-semibold">Sign In</button>`;
         navArea.innerHTML = `
-          <button onclick="openAuthModal('login')" class="text-xs font-semibold px-3.5 py-2 rounded-full border border-brand-border hover:border-brand-crimson text-brand-charcoal hover:bg-brand-softred/40 transition flex items-center space-x-1.5">
-            <i class="fa-regular fa-user text-brand-crimson"></i>
+          <button onclick="openAuthModal('login')" class="text-xs font-semibold px-3.5 py-2 rounded-full border border-brand-border hover:border-brand-blue text-brand-charcoal hover:bg-brand-softblue/40 transition flex items-center space-x-1.5">
+            <i class="fa-regular fa-user text-brand-blue"></i>
             <span>Sign In</span>
           </button>`;
-        if (mobileAuth) mobileAuth.innerHTML = `<span class="text-xs text-gray-500">Guest Mode (5 Listings)</span><button onclick="openAuthModal('login'); toggleMobileNav();" class="text-xs font-bold text-brand-crimson">Sign In / Join</button>`;
+        if (mobileAuth) mobileAuth.innerHTML = `<span class="text-xs text-gray-500">Guest Mode (5 Listings)</span><button onclick="openAuthModal('login'); toggleMobileNav();" class="text-xs font-bold text-brand-blue">Sign In / Join</button>`;
         document.getElementById("property-email-group").classList.remove("hidden");
         document.getElementById("general-email-group").classList.remove("hidden");
         if (currentPortal === "owner") switchView("visitor");
       } else if (currentUser.role === "owner") {
         topControls.innerHTML = `
           <button onclick="togglePortal()" class="bg-brand-charcoal text-white hover:bg-black text-xs px-3 py-1 rounded-full font-semibold transition flex items-center space-x-1.5">
-            <i class="fa-solid fa-sliders text-[10px] text-red-400"></i>
+            <i class="fa-solid fa-sliders text-[10px] text-blue-400"></i>
             <span>${currentPortal === "owner" ? "Storefront View" : "Creator Studio"}</span>
           </button>
           <button onclick="logout()" title="Log Out" class="w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-power-off"></i></button>
         `;
         navArea.innerHTML = `
-          <div onclick="togglePortal()" class="cursor-pointer flex items-center space-x-2 bg-brand-softred px-3 py-1.5 rounded-full border border-brand-crimson/30">
-            <span class="w-5 h-5 rounded-full crimson-gradient-bg text-white flex items-center justify-center text-[10px]"><i class="fa-solid fa-crown"></i></span>
-            <span class="text-xs font-bold text-brand-crimson">Ted (Admin)</span>
+          <div onclick="togglePortal()" class="cursor-pointer flex items-center space-x-2 bg-brand-softblue px-3 py-1.5 rounded-full border border-brand-blue/30">
+            <span class="w-5 h-5 rounded-full blue-gradient-bg text-white flex items-center justify-center text-[10px]"><i class="fa-solid fa-crown"></i></span>
+            <span class="text-xs font-bold text-brand-blue">Ted (Admin)</span>
           </div>`;
         document.getElementById("property-email-group").classList.add("hidden");
         document.getElementById("general-email-group").classList.add("hidden");
@@ -1085,7 +1126,7 @@
         topControls.innerHTML = `<span class="text-xs font-medium">Hi, ${shortName}</span><button onclick="logout()" class="text-[11px] underline ml-2">Logout</button>`;
         navArea.innerHTML = `
           <div class="flex items-center space-x-2 bg-brand-alabaster px-3 py-1.5 rounded-full border border-brand-border">
-            <span class="w-6 h-6 rounded-full crimson-gradient-bg text-white flex items-center justify-center text-xs font-bold uppercase">${shortName.charAt(0)}</span>
+            <span class="w-6 h-6 rounded-full blue-gradient-bg text-white flex items-center justify-center text-xs font-bold uppercase">${shortName.charAt(0)}</span>
             <span class="text-xs font-bold text-brand-charcoal max-w-[90px] truncate">${shortName}</span>
           </div>`;
         document.getElementById("property-email-group").classList.add("hidden");
@@ -1122,14 +1163,14 @@
 
       slider.innerHTML = banners.map((b, i) => `
         <div class="absolute inset-0 transition-opacity duration-700 ${i === currentBannerIdx ? "opacity-100 z-10" : "opacity-0 z-0"}"
-             style="background-image: linear-gradient(to right, rgba(24,24,27,0.88), rgba(24,24,27,0.25)), url('${b.imageUrl}'); background-size: cover; background-position: center;">
+             style="background-image: linear-gradient(to right, rgba(15,23,42,0.88), rgba(15,23,42,0.25)), url('${b.imageUrl}'); background-size: cover; background-position: center;">
           <div class="max-w-7xl mx-auto h-full px-6 sm:px-14 flex flex-col justify-center items-start text-white">
-            <span class="crimson-gradient-bg text-white text-[11px] font-bold px-3.5 py-1 rounded-full uppercase tracking-wider mb-3 shadow-crimson">
+            <span class="blue-gradient-bg text-white text-[11px] font-bold px-3.5 py-1 rounded-full uppercase tracking-wider mb-3 shadow-royal">
               Featured Listing Spotlight
             </span>
             <h1 class="font-serif text-2xl sm:text-4xl md:text-5xl font-bold max-w-2xl leading-tight mb-3">${b.title}</h1>
             <p class="text-xs sm:text-sm text-gray-200 max-w-lg mb-6 leading-relaxed">${b.subtitle}</p>
-            <button onclick="switchCategory('${b.category}')" class="px-6 py-3 text-xs font-bold crimson-gradient-bg text-white rounded-xl shadow-crimson hover:opacity-95 transition flex items-center space-x-2">
+            <button onclick="switchCategory('${b.category}')" class="px-6 py-3 text-xs font-bold blue-gradient-bg text-white rounded-xl shadow-royal hover:opacity-95 transition flex items-center space-x-2">
               <span>Explore Properties</span>
               <i class="fa-solid fa-arrow-right"></i>
             </button>
@@ -1138,7 +1179,7 @@
       `).join("");
 
       dots.innerHTML = banners.map((_, i) => `
-        <button onclick="currentBannerIdx=${i}; renderBannersSlider();" class="h-2 rounded-full transition-all ${i === currentBannerIdx ? "bg-brand-crimson w-7" : "bg-white/50 w-2"}"></button>
+        <button onclick="currentBannerIdx=${i}; renderBannersSlider();" class="h-2 rounded-full transition-all ${i === currentBannerIdx ? "bg-brand-blue w-7" : "bg-white/50 w-2"}"></button>
       `).join("");
     }
 
@@ -1214,7 +1255,6 @@
           }).join("");
         }
 
-        // Freemium Lock Gate
         const lockBanner = document.getElementById("guest-lock-banner");
         if (data.isLocked) {
           lockBanner.classList.remove("hidden");
@@ -1223,7 +1263,6 @@
           lockBanner.classList.add("hidden");
         }
 
-        // Admin Inventory Grid
         if (currentUser && currentUser.role === "owner") {
           document.getElementById("adminInventoryBadge").textContent = `${allPropertiesCache.length} Properties`;
           document.getElementById("creator-admin-list").innerHTML = allPropertiesCache.map(prop => generateCardHtml(prop, true)).join("");
@@ -1233,14 +1272,22 @@
       }
     }
 
+    function getPropMediaExtras(prop) {
+      const stored = mediaExtrasCache[prop._id] || mediaExtrasCache[prop.title] || {};
+      const tiktokUrl = prop.tiktokUrl || stored.tiktokUrl || (prop.videoUrls && prop.videoUrls.find(u => u.includes("tiktok.com"))) || "";
+      const uploadedVideo = prop.videoFileUrl || stored.videoFileUrl || "";
+      return { tiktokUrl, uploadedVideo };
+    }
+
     function generateCardHtml(prop, isEditable) {
       const img = prop.images && prop.images.length > 0 ? prop.images[0] : "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80";
       const photoCount = prop.images ? prop.images.length : 1;
-      const videoCount = prop.videoUrls ? prop.videoUrls.length : 0;
+      const extras = getPropMediaExtras(prop);
+      const hasVideoOrTikTok = Boolean(extras.uploadedVideo || extras.tiktokUrl || (prop.videoUrls && prop.videoUrls.length > 0));
       const isSaved = savedIds.includes(prop._id);
 
       let statusStyle = "bg-emerald-600 text-white";
-      if (prop.status === "Sold Out") statusStyle = "bg-brand-crimson text-white";
+      if (prop.status === "Sold Out") statusStyle = "bg-rose-600 text-white";
       if (prop.status === "Rented Out") statusStyle = "bg-amber-500 text-white";
 
       const waText = encodeURIComponent(`Hello Ted! I am interested in "${prop.title}" located at ${prop.location} (KSh ${Number(prop.price).toLocaleString()}).`);
@@ -1250,14 +1297,14 @@
         <div onclick="openDetailsModal('${prop._id}')" class="bg-white rounded-3xl border border-brand-border overflow-hidden shadow-sm card-hover flex flex-col justify-between cursor-pointer">
           <div>
             <!-- Media Header -->
-            <div class="relative h-56 bg-zinc-900 overflow-hidden group">
+            <div class="relative h-56 bg-slate-900 overflow-hidden group">
               <img src="${img}" alt="${prop.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
               
               <div class="absolute top-3 left-3 flex flex-col gap-1.5">
                 <span class="bg-brand-charcoal/90 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">
                   ${prop.propertyType || "Property"}
                 </span>
-                ${videoCount > 0 ? `<span class="crimson-gradient-bg text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow"><i class="fa-solid fa-play mr-1"></i>${videoCount} Video Tour</span>` : ""}
+                ${hasVideoOrTikTok ? `<span class="blue-gradient-bg text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow"><i class="fa-solid fa-play mr-1"></i>Video / TikTok Tour</span>` : ""}
               </div>
 
               <span class="absolute top-3 right-3 ${statusStyle} text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
@@ -1265,7 +1312,7 @@
               </span>
 
               <button onclick="event.stopPropagation(); toggleSaveProperty('${prop._id}')" title="Save Property" class="absolute bottom-3 left-3 w-8 h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow transition">
-                <i class="${isSaved ? "fa-solid text-brand-crimson" : "fa-regular text-gray-700"} fa-heart text-xs"></i>
+                <i class="${isSaved ? "fa-solid text-brand-blue" : "fa-regular text-gray-700"} fa-heart text-xs"></i>
               </button>
 
               <span class="absolute bottom-3 right-3 bg-black/70 text-white text-[10px] px-2.5 py-1 rounded-full backdrop-blur-sm">
@@ -1275,13 +1322,13 @@
 
             <!-- Card Body -->
             <div class="p-5">
-              <div class="font-serif text-xl font-bold text-brand-crimson mb-1">KSh ${Number(prop.price).toLocaleString()}</div>
+              <div class="font-serif text-xl font-bold text-brand-blue mb-1">KSh ${Number(prop.price).toLocaleString()}</div>
               <h3 class="font-serif text-base font-bold text-brand-charcoal line-clamp-1 mb-1">${prop.title}</h3>
-              <p class="text-xs text-gray-500 mb-3"><i class="fa-solid fa-location-dot text-brand-crimson mr-1"></i>${prop.location}</p>
+              <p class="text-xs text-gray-500 mb-3"><i class="fa-solid fa-location-dot text-brand-blue mr-1"></i>${prop.location}</p>
 
               <div class="flex items-center space-x-4 text-xs font-medium text-gray-600 py-2.5 border-y border-brand-border/70 mb-3">
-                <span><i class="fa-solid fa-bed text-brand-crimson mr-1"></i> ${prop.bedrooms || 3} Beds</span>
-                <span><i class="fa-solid fa-bath text-brand-crimson mr-1"></i> ${prop.bathrooms || 3} Baths</span>
+                <span><i class="fa-solid fa-bed text-brand-blue mr-1"></i> ${prop.bedrooms || 3} Beds</span>
+                <span><i class="fa-solid fa-bath text-brand-blue mr-1"></i> ${prop.bathrooms || 3} Baths</span>
               </div>
 
               <div class="flex flex-wrap gap-1.5 mb-3">
@@ -1308,7 +1355,7 @@
                 <button onclick="openEditModal('${prop._id}')" class="flex-1 py-1.5 rounded-xl bg-brand-alabaster hover:bg-gray-200 border border-brand-border text-brand-charcoal text-xs font-bold">
                   <i class="fa-solid fa-pen-to-square mr-1"></i> Edit / Status
                 </button>
-                <button onclick="deleteListing('${prop._id}')" class="px-3 py-1.5 rounded-xl bg-brand-softred hover:bg-brand-crimson text-brand-crimson hover:text-white text-xs font-bold transition">
+                <button onclick="deleteListing('${prop._id}')" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-bold transition">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </div>
@@ -1318,7 +1365,7 @@
       `;
     }
 
-    /* ================= DETAILS LIGHTBOX & GALLERY ================= */
+    /* ================= DETAILS LIGHTBOX & FULLSCREEN SCROLL GALLERY ================= */
     async function openDetailsModal(id) {
       const prop = allPropertiesCache.find(p => p._id === id);
       if (!prop) return;
@@ -1336,22 +1383,38 @@
       activeModalPhotoIdx = 0;
       updateModalGallery();
 
-      // Videos
+      // Uploaded Video + TikTok Link
+      const extras = getPropMediaExtras(prop);
       const videosSec = document.getElementById("modal-videos-section");
       const videosBox = document.getElementById("modal-videos-container");
+      const tiktokBtn = document.getElementById("modal-tiktok-btn");
       videosBox.innerHTML = "";
-      if (prop.videoUrls && prop.videoUrls.length > 0) {
+
+      if (extras.tiktokUrl) {
+        tiktokBtn.href = extras.tiktokUrl;
+        tiktokBtn.classList.remove("hidden");
+      } else {
+        tiktokBtn.classList.add("hidden");
+      }
+
+      if (extras.uploadedVideo) {
+        videosBox.innerHTML += `
+          <video controls playsinline class="w-full max-h-80 rounded-2xl bg-black border border-brand-border">
+            <source src="${extras.uploadedVideo}">
+            Your browser does not support video playback.
+          </video>
+        `;
+      }
+
+      if (extras.uploadedVideo || extras.tiktokUrl) {
         videosSec.classList.remove("hidden");
-        prop.videoUrls.forEach(url => {
-          videosBox.innerHTML += `<iframe class="w-full h-56 rounded-2xl border border-brand-border" src="${url}" frameborder="0" allowfullscreen></iframe>`;
-        });
       } else {
         videosSec.classList.add("hidden");
       }
 
       // Amenities
       document.getElementById("modal-amenities").innerHTML = (prop.amenities || []).map(a =>
-        `<span class="bg-brand-softred/60 text-brand-darkred text-xs font-semibold px-3 py-1 rounded-full"><i class="fa-solid fa-check mr-1 text-[10px]"></i>${a}</span>`
+        `<span class="bg-brand-softblue/60 text-brand-darkblue text-xs font-semibold px-3 py-1 rounded-full"><i class="fa-solid fa-check mr-1 text-[10px]"></i>${a}</span>`
       ).join("");
 
       const waText = encodeURIComponent(`Hello Ted, I would like to inquire about "${prop.title}" (${prop.location}).`);
@@ -1365,12 +1428,33 @@
       document.getElementById("modal-main-photo").src = activeModalPhotos[activeModalPhotoIdx];
       document.getElementById("modal-photo-counter").textContent = `${activeModalPhotoIdx + 1} / ${activeModalPhotos.length}`;
       document.getElementById("modal-gallery").innerHTML = activeModalPhotos.map((src, idx) => `
-        <img src="${src}" onclick="activeModalPhotoIdx=${idx}; updateModalGallery();" class="h-16 w-24 object-cover rounded-xl cursor-pointer border-2 transition ${idx === activeModalPhotoIdx ? "border-brand-crimson scale-105" : "border-transparent opacity-60"}">
+        <img src="${src}" onclick="activeModalPhotoIdx=${idx}; updateModalGallery();" class="h-16 w-24 object-cover rounded-xl cursor-pointer border-2 transition ${idx === activeModalPhotoIdx ? "border-brand-blue scale-105" : "border-transparent opacity-60"}">
       `).join("");
     }
     function nextModalPhoto() { activeModalPhotoIdx = (activeModalPhotoIdx + 1) % activeModalPhotos.length; updateModalGallery(); }
     function prevModalPhoto() { activeModalPhotoIdx = (activeModalPhotoIdx - 1 + activeModalPhotos.length) % activeModalPhotos.length; updateModalGallery(); }
     function closeDetailsModal() { document.getElementById("details-modal").classList.add("hidden"); }
+
+    /* ================= FULL-SCREEN SCROLLABLE GALLERY ================= */
+    function openFullscreenGallery() {
+      document.getElementById("fsGalleryTitle").textContent = activePropertyTitle || "Property Photo Tour";
+      document.getElementById("fsGallerySubtitle").textContent = `Scrolling ${activeModalPhotos.length} full-resolution photos`;
+
+      const feed = document.getElementById("fsGalleryScrollFeed");
+      feed.innerHTML = activeModalPhotos.map((src, idx) => `
+        <div class="w-full max-w-5xl bg-slate-900/60 border border-white/10 rounded-2xl p-3 flex flex-col items-center">
+          <img src="${src}" alt="Photo ${idx + 1}" class="w-full h-auto max-h-[85vh] object-contain rounded-xl">
+          <span class="text-xs text-gray-400 mt-2 font-mono">Photo ${idx + 1} of ${activeModalPhotos.length}</span>
+        </div>
+      `).join("");
+
+      document.getElementById("fullscreenGalleryModal").classList.remove("hidden");
+      feed.scrollTop = 0;
+    }
+
+    function closeFullscreenGallery() {
+      document.getElementById("fullscreenGalleryModal").classList.add("hidden");
+    }
 
     /* ================= SAVED / SHORTLISTED HOMES ================= */
     function toggleSaveProperty(id) {
@@ -1394,7 +1478,7 @@
       const container = document.getElementById("savedListContainer");
       const savedProps = allPropertiesCache.filter(p => savedIds.includes(p._id));
       if (savedProps.length === 0) {
-        container.innerHTML = `<div class="text-center py-12 text-gray-400 text-xs"><i class="fa-regular fa-heart text-3xl mb-2 text-brand-crimson"></i><p>No properties shortlisted yet. Tap the heart icon on any home to save it here.</p></div>`;
+        container.innerHTML = `<div class="text-center py-12 text-gray-400 text-xs"><i class="fa-regular fa-heart text-3xl mb-2 text-brand-blue"></i><p>No properties shortlisted yet. Tap the heart icon on any home to save it here.</p></div>`;
       } else {
         container.innerHTML = savedProps.map(p => `
           <div class="bg-brand-alabaster p-3.5 rounded-2xl border border-brand-border flex items-center space-x-3">
@@ -1402,9 +1486,9 @@
             <div class="flex-grow min-w-0">
               <h4 class="font-bold text-xs truncate">${p.title}</h4>
               <p class="text-[11px] text-gray-500">${p.location}</p>
-              <span class="font-serif font-bold text-xs text-brand-crimson">KSh ${Number(p.price).toLocaleString()}</span>
+              <span class="font-serif font-bold text-xs text-brand-blue">KSh ${Number(p.price).toLocaleString()}</span>
             </div>
-            <button onclick="closeSavedModal(); openDetailsModal('${p._id}')" class="px-3 py-1.5 text-xs font-bold crimson-gradient-bg text-white rounded-xl">View</button>
+            <button onclick="closeSavedModal(); openDetailsModal('${p._id}')" class="px-3 py-1.5 text-xs font-bold blue-gradient-bg text-white rounded-xl">View</button>
           </div>
         `).join("");
       }
@@ -1415,8 +1499,12 @@
     /* ================= OWNER PUBLISH, EDIT & ANALYTICS ================= */
     async function publishListing(e) {
       e.preventDefault();
+      const title = document.getElementById("add-title").value;
+      const tiktokUrl = document.getElementById("add-tiktok-url").value.trim();
+      const videoFile = document.getElementById("add-video-file").files[0];
+
       const formData = new FormData();
-      formData.append("title", document.getElementById("add-title").value);
+      formData.append("title", title);
       formData.append("propertyType", document.getElementById("add-type").value);
       formData.append("location", document.getElementById("add-location").value);
       formData.append("price", document.getElementById("add-price").value);
@@ -1424,7 +1512,8 @@
       formData.append("bathrooms", document.getElementById("add-baths").value);
       formData.append("status", document.getElementById("add-status").value);
       formData.append("description", document.getElementById("add-desc").value);
-      formData.append("videoUrls", document.getElementById("add-videos").value);
+      if (tiktokUrl) formData.append("tiktokUrl", tiktokUrl);
+      if (videoFile) formData.append("propertyVideo", videoFile);
 
       const photos = document.getElementById("add-photos").files;
       for (let i = 0; i < photos.length; i++) formData.append("propertyImages", photos[i]);
@@ -1435,6 +1524,13 @@
 
       const res = await fetch("/api/properties", { method: "POST", body: formData });
       if (res.ok) {
+        const created = await res.json();
+        const propId = created._id || title;
+        const localVideoUrl = videoFile ? URL.createObjectURL(videoFile) : "";
+        mediaExtrasCache[propId] = { tiktokUrl, videoFileUrl: localVideoUrl };
+        mediaExtrasCache[title] = { tiktokUrl, videoFileUrl: localVideoUrl };
+        localStorage.setItem(STORAGE_KEY_MEDIA_EXTRAS, JSON.stringify(mediaExtrasCache));
+
         showToast("Property published to live storefront!");
         document.getElementById("publishPropertyForm").reset();
         await loadListings();
@@ -1448,6 +1544,8 @@
     function openEditModal(id) {
       const prop = allPropertiesCache.find(p => p._id === id);
       if (!prop) return;
+      const extras = getPropMediaExtras(prop);
+
       document.getElementById("edit-id").value = prop._id;
       document.getElementById("edit-title").value = prop.title;
       document.getElementById("edit-location").value = prop.location;
@@ -1455,7 +1553,7 @@
       document.getElementById("edit-status").value = prop.status || "Available";
       document.getElementById("edit-type").value = prop.propertyType || "Townhouse";
       document.getElementById("edit-desc").value = prop.description || "";
-      document.getElementById("edit-videos").value = (prop.videoUrls || []).join("\n");
+      document.getElementById("edit-tiktok-url").value = extras.tiktokUrl || "";
 
       document.querySelectorAll("#edit-amenities-group input[type='checkbox']").forEach(cb => {
         cb.checked = (prop.amenities || []).includes(cb.value);
@@ -1466,6 +1564,8 @@
 
     async function submitEdit() {
       const id = document.getElementById("edit-id").value;
+      const title = document.getElementById("edit-title").value;
+      const tiktokUrl = document.getElementById("edit-tiktok-url").value.trim();
       const amenities = [];
       document.querySelectorAll("#edit-amenities-group input[type='checkbox']:checked").forEach(cb => amenities.push(cb.value));
 
@@ -1473,13 +1573,13 @@
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: document.getElementById("edit-title").value,
+          title,
           location: document.getElementById("edit-location").value,
           price: document.getElementById("edit-price").value,
           status: document.getElementById("edit-status").value,
           propertyType: document.getElementById("edit-type").value,
           description: document.getElementById("edit-desc").value,
-          videoUrls: document.getElementById("edit-videos").value,
+          tiktokUrl,
           amenities,
           bedrooms: 3,
           bathrooms: 3
@@ -1487,6 +1587,11 @@
       });
 
       if (res.ok) {
+        const existing = mediaExtrasCache[id] || {};
+        mediaExtrasCache[id] = { ...existing, tiktokUrl };
+        mediaExtrasCache[title] = { ...existing, tiktokUrl };
+        localStorage.setItem(STORAGE_KEY_MEDIA_EXTRAS, JSON.stringify(mediaExtrasCache));
+
         showToast("Listing updated!");
         closeEditModal();
         await loadListings();
@@ -1516,7 +1621,7 @@
 
       document.getElementById("table-property-metrics").innerHTML = data.propertyMetrics.map(p => {
         const ctr = p.views > 0 ? ((p.clicks / p.views) * 100).toFixed(1) + "%" : "0.0%";
-        return `<tr><td class="py-2.5 px-3 font-bold">${p.title}</td><td class="py-2.5 px-3">${p.status}</td><td class="py-2.5 px-3">${p.views}</td><td class="py-2.5 px-3">${p.clicks}</td><td class="py-2.5 px-3 font-bold text-brand-crimson">${ctr}</td></tr>`;
+        return `<tr><td class="py-2.5 px-3 font-bold">${p.title}</td><td class="py-2.5 px-3">${p.status}</td><td class="py-2.5 px-3">${p.views}</td><td class="py-2.5 px-3">${p.clicks}</td><td class="py-2.5 px-3 font-bold text-brand-blue">${ctr}</td></tr>`;
       }).join("");
 
       document.getElementById("table-search-logs").innerHTML = data.searches.map(s =>
@@ -1524,10 +1629,9 @@
       ).join("");
 
       document.getElementById("table-customer-crm").innerHTML = data.customers.map(c =>
-        `<tr><td class="py-3 px-4 font-bold">${c.email}</td><td class="py-3 px-4"><span class="bg-brand-softred text-brand-crimson px-2.5 py-0.5 rounded-full font-bold">${c.role}</span></td><td class="py-3 px-4 text-gray-500">${new Date(c.createdAt).toLocaleDateString()}</td></tr>`
+        `<tr><td class="py-3 px-4 font-bold">${c.email}</td><td class="py-3 px-4"><span class="bg-brand-softblue text-brand-blue px-2.5 py-0.5 rounded-full font-bold">${c.role}</span></td><td class="py-3 px-4 text-gray-500">${new Date(c.createdAt).toLocaleDateString()}</td></tr>`
       ).join("");
 
-      // Chart.js Visualization
       const ctx = document.getElementById("trafficAnalyticsChart");
       if (ctx) {
         if (trafficChartInstance) trafficChartInstance.destroy();
@@ -1537,7 +1641,7 @@
             labels: ["Catalog Views", "Detail Clicks", "Registered Leads"],
             datasets: [{
               data: [data.summary.totalViews, data.summary.totalClicks, data.summary.totalCustomers],
-              backgroundColor: ["#18181B", "#C62828", "#FCA5A5"]
+              backgroundColor: ["#0F172A", "#1D4ED8", "#93C5FD"]
             }]
           },
           options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } }
@@ -1548,12 +1652,12 @@
     function switchOwnerTab(tab) {
       document.querySelectorAll(".owner-tab-content").forEach(el => el.classList.add("hidden"));
       document.querySelectorAll(".owner-tab-btn").forEach(btn => {
-        btn.classList.remove("bg-brand-crimson", "text-white", "shadow-crimson");
+        btn.classList.remove("bg-brand-blue", "text-white", "shadow-royal");
         btn.classList.add("bg-white", "text-brand-charcoal");
       });
       document.getElementById(`ownerTab-${tab}`).classList.remove("hidden");
       const activeBtn = document.getElementById(`tabBtn-${tab}`);
-      activeBtn.classList.add("bg-brand-crimson", "text-white", "shadow-crimson");
+      activeBtn.classList.add("bg-brand-blue", "text-white", "shadow-royal");
       activeBtn.classList.remove("bg-white", "text-brand-charcoal");
     }
 
@@ -1605,7 +1709,7 @@
       input.value = "";
       thread.scrollTop = thread.scrollHeight;
       setTimeout(() => {
-        thread.innerHTML += `<div class="flex items-start space-x-2"><div class="w-7 h-7 rounded-full crimson-gradient-bg text-white flex items-center justify-center text-[10px] shrink-0 font-bold">TH</div><div class="bg-white p-3 rounded-2xl rounded-tl-none border border-brand-border shadow-sm max-w-[80%]">Thank you! Tap the <strong>WhatsApp</strong> button on any property card or send an email via <strong>Contact Us</strong> to book an immediate viewing with Ted.</div></div>`;
+        thread.innerHTML += `<div class="flex items-start space-x-2"><div class="w-7 h-7 rounded-full blue-gradient-bg text-white flex items-center justify-center text-[10px] shrink-0 font-bold">TH</div><div class="bg-white p-3 rounded-2xl rounded-tl-none border border-brand-border shadow-sm max-w-[80%]">Thank you! Tap the <strong>WhatsApp</strong> button on any property card or send an email via <strong>Contact Us</strong> to book an immediate viewing with Ted.</div></div>`;
         thread.scrollTop = thread.scrollHeight;
       }, 700);
     }
@@ -1616,8 +1720,8 @@
       const isLogin = tab === "login";
       document.getElementById("customerLoginForm").classList.toggle("hidden", !isLogin);
       document.getElementById("customerRegisterForm").classList.toggle("hidden", isLogin);
-      document.getElementById("authTabBtn-login").className = isLogin ? "flex-1 py-2 rounded-xl bg-brand-crimson text-white shadow-sm" : "flex-1 py-2 rounded-xl text-gray-600";
-      document.getElementById("authTabBtn-register").className = !isLogin ? "flex-1 py-2 rounded-xl bg-brand-crimson text-white shadow-sm" : "flex-1 py-2 rounded-xl text-gray-600";
+      document.getElementById("authTabBtn-login").className = isLogin ? "flex-1 py-2 rounded-xl bg-brand-blue text-white shadow-sm" : "flex-1 py-2 rounded-xl text-gray-600";
+      document.getElementById("authTabBtn-register").className = !isLogin ? "flex-1 py-2 rounded-xl bg-brand-blue text-white shadow-sm" : "flex-1 py-2 rounded-xl text-gray-600";
     }
 
     async function handleLogin(e) {
@@ -1695,12 +1799,12 @@
       setTimeout(() => t.classList.add("translate-x-full", "opacity-0"), 3500);
     }
 
-    // Secret shortcut Ctrl + Shift + K opens Creator Studio login
     window.addEventListener("keydown", e => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "k") {
         e.preventDefault();
         openHiddenOwnerModal();
       }
+      if (e.key === "Escape") closeFullscreenGallery();
     });
   </script>
 </body>
