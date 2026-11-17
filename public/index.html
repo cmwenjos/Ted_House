@@ -651,7 +651,7 @@
       <!-- Modal Scrollable Content -->
       <div class="p-6 overflow-y-auto space-y-6">
         
-        <!-- Interactive Photo Viewer (object-contain so desktop photos aren't over-zoomed) + Full Screen Scroll Trigger -->
+        <!-- Interactive Photo Viewer (object-contain prevents zoomed/cropped photos on laptop) + Full Screen Scroll Button -->
         <div class="space-y-3">
           <div class="relative h-72 sm:h-[420px] bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center group">
             <img id="modal-main-photo" src="" alt="Property Showcase" onclick="openFullscreenGallery()" class="max-h-full max-w-full w-auto h-auto object-contain cursor-zoom-in transition">
@@ -1274,7 +1274,7 @@
 
     function getPropMediaExtras(prop) {
       const stored = mediaExtrasCache[prop._id] || mediaExtrasCache[prop.title] || {};
-      const tiktokUrl = prop.tiktokUrl || stored.tiktokUrl || (prop.videoUrls && prop.videoUrls.find(u => u.includes("tiktok.com"))) || "";
+      const tiktokUrl = prop.tiktokUrl || stored.tiktokUrl || "";
       const uploadedVideo = prop.videoFileUrl || stored.videoFileUrl || "";
       return { tiktokUrl, uploadedVideo };
     }
@@ -1283,7 +1283,7 @@
       const img = prop.images && prop.images.length > 0 ? prop.images[0] : "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80";
       const photoCount = prop.images ? prop.images.length : 1;
       const extras = getPropMediaExtras(prop);
-      const hasVideoOrTikTok = Boolean(extras.uploadedVideo || extras.tiktokUrl || (prop.videoUrls && prop.videoUrls.length > 0));
+      const hasVideoOrTikTok = Boolean(extras.uploadedVideo || extras.tiktokUrl);
       const isSaved = savedIds.includes(prop._id);
 
       let statusStyle = "bg-emerald-600 text-white";
@@ -1526,9 +1526,9 @@
       if (res.ok) {
         const created = await res.json();
         const propId = created._id || title;
-        const localVideoUrl = videoFile ? URL.createObjectURL(videoFile) : "";
-        mediaExtrasCache[propId] = { tiktokUrl, videoFileUrl: localVideoUrl };
-        mediaExtrasCache[title] = { tiktokUrl, videoFileUrl: localVideoUrl };
+        const serverVideoUrl = created.videoFileUrl || (videoFile ? URL.createObjectURL(videoFile) : "");
+        mediaExtrasCache[propId] = { tiktokUrl, videoFileUrl: serverVideoUrl };
+        mediaExtrasCache[title] = { tiktokUrl, videoFileUrl: serverVideoUrl };
         localStorage.setItem(STORAGE_KEY_MEDIA_EXTRAS, JSON.stringify(mediaExtrasCache));
 
         showToast("Property published to live storefront!");
